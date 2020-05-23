@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('', 'PagesController@welcome');
+Route::get('', 'PagesController@index')->middleware('auth');
 
-Route::get('home', 'PagesController@index');
+Route::get('home', 'PagesController@index')->middleware('auth');
+
+Route::get('moviesearch', 'PagesController@moviesearch')->middleware('auth');
+
+Auth::routes();
