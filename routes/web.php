@@ -17,6 +17,10 @@ Route::get('', 'PagesController@index')->middleware('auth');
 
 Route::get('home', 'PagesController@index')->middleware('auth');
 
-Route::get('moviesearch', 'PagesController@moviesearch')->middleware('auth');
+// Route::get('moviesearch', 'PagesController@moviesearch')->middleware('auth');
+
+Route::post('search', 'PagesController@search');
+
+Route::get('results', 'PagesController@results');
 
 Auth::routes();

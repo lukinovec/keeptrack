@@ -12,19 +12,18 @@
             <path class="secondary"
                 d="M9 5h6a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 8h6a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z" />
         </svg>
-        <h1 class="mb-4">Movies & TV Series</h1>
+        <h1 class="mb-4 unselectable">Movies & TV Series</h1>
         <div class="row px-sm-0 px-mega-10">
             <div class="col-sm-6" id="search">
                 <a href="{{url('moviesearch')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            class="icon-search">
-                            <circle cx="10" cy="10" r="7" fill="white" />
+                            class="icon-trophy">
                             <path class="secondary"
-                                d="M16.32 14.9l1.1 1.1c.4-.02.83.13 1.14.44l3 3a1.5 1.5 0 0 1-2.12 2.12l-3-3a1.5 1.5 0 0 1-.44-1.14l-1.1-1.1a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                        </svg>
+                                d="M7 4v2H4v4c0 1.1.9 2 2 2h1v2H6a4 4 0 0 1-4-4V6c0-1.1.9-2 2-2h3zm10 2V4h3a2 2 0 0 1 2 2v4a4 4 0 0 1-4 4h-1v-2h1a2 2 0 0 0 2-2V6h-3zm-3 14h2a1 1 0 0 1 0 2H8a1 1 0 0 1 0-2h2a1 1 0 0 0 1-1v-3h2v3a1 1 0 0 0 1 1z" />
+                            <path class="primary" d="M8 2h8a2 2 0 0 1 2 2v7a6 6 0 1 1-12 0V4c0-1.1.9-2 2-2z" /></svg>
                     </div>
-                    <h3>Search</h3>
+                    <h3 class="unselectable">Peoples Favorites</h3>
                 </a>
             </div>
             <div class="col-sm-6">
@@ -36,7 +35,7 @@
                                 d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
                         </svg>
                     </div>
-                    <h3>Your List</h3>
+                    <h3 class="unselectable">Your List</h3>
                 </a>
             </div>
         </div>
@@ -50,19 +49,18 @@
                     d="M12 21V5a5 5 0 0 1 4-2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4.34a2 2 0 0 0-1.42.59l-.83.82A2 2 0 0 1 12 21z" />
             </g>
         </svg>
-        <h1 class="mb-4">Books</h1>
+        <h1 class="mb-4 unselectable">Books</h1>
         <div class="row px-sm-0 px-mega-10">
             <div class="col-sm-6" id="search">
                 <a href="{{url('booksearch')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                            class="icon-search">
-                            <circle cx="10" cy="10" r="7" fill="white" />
+                            class="icon-trophy">
                             <path class="secondary"
-                                d="M16.32 14.9l1.1 1.1c.4-.02.83.13 1.14.44l3 3a1.5 1.5 0 0 1-2.12 2.12l-3-3a1.5 1.5 0 0 1-.44-1.14l-1.1-1.1a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                        </svg>
+                                d="M7 4v2H4v4c0 1.1.9 2 2 2h1v2H6a4 4 0 0 1-4-4V6c0-1.1.9-2 2-2h3zm10 2V4h3a2 2 0 0 1 2 2v4a4 4 0 0 1-4 4h-1v-2h1a2 2 0 0 0 2-2V6h-3zm-3 14h2a1 1 0 0 1 0 2H8a1 1 0 0 1 0-2h2a1 1 0 0 0 1-1v-3h2v3a1 1 0 0 0 1 1z" />
+                            <path class="primary" d="M8 2h8a2 2 0 0 1 2 2v7a6 6 0 1 1-12 0V4c0-1.1.9-2 2-2z" /></svg>
                     </div>
-                    <h3>Search</h3>
+                    <h3 class="unselectable">Peoples Favorites</h3>
                 </a>
             </div>
             <div class="col-sm-6">
@@ -74,7 +72,7 @@
                                 d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
                         </svg>
                     </div>
-                    <h3>Your List</h3>
+                    <h3 class="unselectable">Your List</h3>
                 </a>
             </div>
         </div>
