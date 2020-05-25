@@ -78,4 +78,10 @@
         </div>
     </div>
 </div>
+
+<br>
+<h1 id="searchland">Search results: </h1>
+<div class="searches m-5">
+
+</div>
 @endsection

@@ -125,11 +125,6 @@
 
         <main class="py-4 w-100 h-100">
             @yield('content')
-            <br>
-            <h1 id="searchland">Search results:</h1>
-            <div class="searchresults">
-
-            </div>
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
