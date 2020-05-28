@@ -123,7 +123,7 @@
             </div>
         </nav>
 
-        <main class="py-4 w-100 h-100">
+        <main class="py-4 w-100 h-100 mt-5">
             @yield('content')
         </main>
     </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use aharen\OMDbAPI;
+use Curl\Curl;
 
 class PagesController extends Controller
 {
@@ -19,21 +20,46 @@ class PagesController extends Controller
         return view('home')->with($data);
     }
 
+    public function xmlToJson($xml_string)
+    {
+        $xml = simplexml_load_string($xml_string, 'SimpleXMLElement', LIBXML_NOCDATA);
+        return json_encode($xml);
+    }
+
+    public function getBooks($search)
+    {
+        $curl = new Curl();
+        return $curl->get('https://www.goodreads.com/search.xml', array(
+            'key' => 'FD5YvIsvRnGRKmSPcZxt6g',
+            'q' => urlencode($search),
+        ));
+    }
+
     public function search(Request $request)
     {
+
         $searchtype = $request->input('searchtype');
         $search = $request->input('userinput');
+
+        // Search movies
         if ($searchtype == "movies") {
             $omdb = new OMDbAPI('22d5a333');
             $search = $omdb->search($search)->data;
+            // Search books
         } elseif ($searchtype == "books") {
-            $search = "kniha";
+            $xmlresp = $this->getBooks($search);
+            $dump = var_dump($xmlresp);
+            echo "XML: " . var_dump($xmlresp);
+            $response = $this->xmlToJson($xmlresp);
+            echo "JSONIFIED: " . $response;
         }
 
         if (isset($search->Error)) {
-            return "Not Found";
-        } else {
+            return $search->Error;
+        } elseif (isset($search->Search)) {
             return $search->Search;
+        } else {
+            echo "Search object doesn't exist";
         }
     }
 
