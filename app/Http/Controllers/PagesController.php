@@ -23,7 +23,7 @@ class PagesController extends Controller
     public function xmlToJson($xml_string)
     {
         $xml = simplexml_load_string($xml_string, 'SimpleXMLElement', LIBXML_NOCDATA);
-        return json_encode($xml);
+        return json_decode(json_encode($xml));
     }
 
     public function getBooks($search)
@@ -48,18 +48,19 @@ class PagesController extends Controller
             // Search books
         } elseif ($searchtype == "books") {
             $xmlresp = $this->getBooks($search);
-            $dump = var_dump($xmlresp);
-            echo "XML: " . var_dump($xmlresp);
-            $response = $this->xmlToJson($xmlresp);
-            echo "JSONIFIED: " . $response;
+            // echo "XML: " . var_dump($xmlresp->response);
+            $response = $this->xmlToJson($xmlresp->response);
+            $search = $response->search->results->work;
         }
 
         if (isset($search->Error)) {
             return $search->Error;
         } elseif (isset($search->Search)) {
             return $search->Search;
+        } elseif (isset($search[0]->id)) {
+            return $search;
         } else {
-            echo "Search object doesn't exist";
+            echo "Search object or array doesn't exist";
         }
     }
 
