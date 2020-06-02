@@ -18,6 +18,9 @@ $(document).ready(function () {
         };
     }
 
+
+
+
     // Search function
     $('#searchinput').keyup(delay((e) => {
         e.preventDefault();
@@ -80,18 +83,20 @@ $(document).ready(function () {
         classes.forEach(cl => elementNames[el].classList.add(cl));
     }
 
+    // function passRecord() {
 
+    // }
 
     function getResults() {
         function createElements(result) {
             if (searchtype == "books") {
                 result.Title = result.title;
                 result.Poster = result.image_url;
-            } else {
+                // result.imdbID = result.id["0"];
             }
 
             // Row
-            newElement("row", ["row", "p-5"]);
+            newElement("row", ["row", "p-5"], "div", 0);
 
             // Title
             newElement("searchresults", ["col-sm-4", "searchresults"], 0, 0, 0, `<h4> ${result.Title} (${result.Year}) </h4>`);
@@ -107,10 +112,25 @@ $(document).ready(function () {
             newElement("dropdownbtn", ["btn", "btn-secondary", "dropdown-toggle"], "button", "Add To List", { "type": "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" });
 
             // Dropdown menu and items
-            newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton" });
-            newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "href": "ptw" });
-            newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "href": "watching" });
-            newElement("completed", ["dropdown-item"], "a", "Completed", { "href": "completed" });
+            newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton" }); //, "id": result.imdbID
+
+            newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "completed" });
+
+            function forMovies() {
+                newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "status": "ptw" });
+                newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "status": "watching" });
+            }
+
+            function forBooks() {
+                newElement("plan", ["dropdown-item"], "a", "Plan To Read", { "status": "ptw" });
+                newElement("watching", ["dropdown-item"], "a", "Currently Reading", { "status": "watching" });
+            }
+
+            if (searchtype == "movies") {
+                forMovies();
+            } else if (searchtype == "books") {
+                forBooks();
+            }
 
             // Appending items to the menu
             elementNames["dropdownmenu"].append(elementNames["plan"], elementNames["watching"], elementNames["completed"]);
@@ -124,17 +144,17 @@ $(document).ready(function () {
             elementNames["row"].append(elementNames["searchresults"], elementNames["poster"], elementNames["addto"]);
             document.querySelector('.searches').append(elementNames["row"]);
         }
+
         axios.post('search', data)
             .then(function (response) {
+                console.log(response.data);
                 results = response.data;
                 $('.searches').empty();
                 // Display each result
                 if (searchtype == "movies") {
-                    console.log(results);
                     results.forEach(result => {
                         if (result.Type != "game") {
                             appendElements(result);
-                            console.log(result);
                         }
                     })
                 } else if (searchtype == "books") {
@@ -142,6 +162,38 @@ $(document).ready(function () {
                         appendElements(result.best_book);
                     });
                 }
+
+                // $(".dropdown-item").click(function (e) {
+                //     e.preventDefault();
+                //     let status = this.getAttribute("status");
+                //     let send = {};
+                //     results.forEach(result => {
+                //         if (result.imdbID == this.parentElement.id) {
+                //             result.status = status;
+                //             send = {
+                //                 status: status,
+                //                 image: result.Poster,
+                //                 name: result.Title,
+                //                 directors: result.Directors,
+                //                 year: result.Year
+                //             };
+
+                //         }
+                //     });
+
+                //     axios.post('send', send)
+                //         .then(function (response) {
+                //             // handle success
+                //             console.log("yeet");
+                //         })
+                //         .catch(function (error) {
+                //             // handle error
+                //             console.log(error);
+                //         })
+
+
+                // });
+
             })
             .catch(function (error) {
                 console.log(error);
