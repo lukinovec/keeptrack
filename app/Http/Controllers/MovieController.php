@@ -14,7 +14,9 @@ class MovieController extends Controller
         // $title = $request->input('');
         // $search = $request->input('userinput');
 
-        $userid = Auth::user()->id;
-        $insert = DB::insert('insert into movies (imdbID, name) values (?, ?)', [1, 'Dayle']);
+        //$userid = Auth::user()->id;
+        //$insert = DB::insert('insert into movies (imdbID, image, name, director, description, year) values (?, ?)', [1, 'Dayle']);
+        $name = $request->input('name');
+        return $name;
     }
 }

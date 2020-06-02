@@ -112,7 +112,7 @@ $(document).ready(function () {
             newElement("dropdownbtn", ["btn", "btn-secondary", "dropdown-toggle"], "button", "Add To List", { "type": "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" });
 
             // Dropdown menu and items
-            newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton" }); //, "id": result.imdbID
+            newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton", "id": result.imdbID });
 
             newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "completed" });
 
@@ -147,8 +147,8 @@ $(document).ready(function () {
 
         axios.post('search', data)
             .then(function (response) {
-                console.log(response.data);
                 results = response.data;
+                results = results.map(item => item.data);
                 $('.searches').empty();
                 // Display each result
                 if (searchtype == "movies") {
@@ -163,36 +163,39 @@ $(document).ready(function () {
                     });
                 }
 
-                // $(".dropdown-item").click(function (e) {
-                //     e.preventDefault();
-                //     let status = this.getAttribute("status");
-                //     let send = {};
-                //     results.forEach(result => {
-                //         if (result.imdbID == this.parentElement.id) {
-                //             result.status = status;
-                //             send = {
-                //                 status: status,
-                //                 image: result.Poster,
-                //                 name: result.Title,
-                //                 directors: result.Directors,
-                //                 year: result.Year
-                //             };
-
-                //         }
-                //     });
-
-                //     axios.post('send', send)
-                //         .then(function (response) {
-                //             // handle success
-                //             console.log("yeet");
-                //         })
-                //         .catch(function (error) {
-                //             // handle error
-                //             console.log(error);
-                //         })
+                $(".dropdown-item").click(function (event) {
+                    event.preventDefault();
+                    let status = this.getAttribute("status");
+                    let send = {};
+                    let thisid = $(event.currentTarget).parent().attr("id"); //.attr("id");
+                    results.forEach(result => {
+                        if (result.imdbID == thisid) {
+                            result.status = status;
+                            send = {
+                                status: status,
+                                image: result.Poster,
+                                name: result.Title,
+                                director: result.Director,
+                                year: result.Year
+                            };
 
 
-                // });
+                        }
+                    });
+
+
+                    axios.post('send', send)
+                        .then(function (response) {
+                            // handle success
+                            console.log(send);
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+
+
+                });
 
             })
             .catch(function (error) {

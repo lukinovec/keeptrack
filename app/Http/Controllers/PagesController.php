@@ -45,6 +45,11 @@ class PagesController extends Controller
         if ($searchtype == "movies") {
             $omdb = new OMDbAPI('22d5a333');
             $search = $omdb->search($search)->data;
+            $details = [];
+            foreach ($search->Search as $s) {
+                $det = $omdb->fetch("i", $s->imdbID);
+                array_push($details, $det);
+            }
             // Search books
         } elseif ($searchtype == "books") {
             $xmlresp = $this->getBooks($search);
@@ -56,7 +61,7 @@ class PagesController extends Controller
         if (isset($search->Error)) {
             return $search->Error;
         } elseif (isset($search->Search)) {
-            return $search->Search;
+            return $details;
         } elseif (isset($search[0]->id)) {
             return $search;
         } else {
