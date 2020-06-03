@@ -23,4 +23,6 @@ Route::post('send', 'MovieController@index')->middleware('auth');
 
 Route::get('results', 'PagesController@results')->middleware('auth');
 
+Route::get('movielist', 'MovieController@list')->middleware('auth');
+
 Auth::routes();

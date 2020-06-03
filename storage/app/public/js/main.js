@@ -114,11 +114,11 @@ $(document).ready(function () {
             // Dropdown menu and items
             newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton", "id": result.imdbID });
 
-            newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "completed" });
+            newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "completed", });
 
             function forMovies() {
-                newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "status": "ptw" });
-                newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "status": "watching" });
+                newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "status": "ptw", });
+                newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "status": "watching", });
             }
 
             function forBooks() {
