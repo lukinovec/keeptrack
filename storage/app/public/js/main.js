@@ -172,6 +172,7 @@ $(document).ready(function () {
                         if (result.imdbID == thisid) {
                             result.status = status;
                             send = {
+                                id: result.imdbID,
                                 status: status,
                                 image: result.Poster,
                                 name: result.Title,
@@ -187,22 +188,17 @@ $(document).ready(function () {
                     axios.post('send', send)
                         .then(function (response) {
                             // handle success
-                            console.log(send);
+                            console.log("yeet");
                         })
                         .catch(function (error) {
                             // handle error
                             console.log(error);
                         })
-
-
                 });
-
             })
             .catch(function (error) {
                 console.log(error);
             })
-        //.then();
     }
-
     // End
 })
