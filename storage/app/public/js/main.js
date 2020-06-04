@@ -5,6 +5,10 @@ $(document).ready(function () {
     let text = "";
     let results = [];
     let searchtype = document.getElementById("form-select").value;
+    let delayTime = 500;
+    if (searchtype == "books") {
+        delayTime = 800;
+    }
 
     // Delay function, delay count starts when user stops typing
     function delay(callback, ms) {
@@ -17,9 +21,6 @@ $(document).ready(function () {
             }, ms || 0);
         };
     }
-
-
-
 
     // Search function
     $('#searchinput').keyup(delay((e) => {
@@ -45,7 +46,9 @@ $(document).ready(function () {
             checkSearch();
             $('.searches').empty();
         }
-    }, 800));
+
+
+    }, delayTime));
 
     function checkSearch() {
         $('#form-select').on('change', function () {
@@ -83,10 +86,6 @@ $(document).ready(function () {
         classes.forEach(cl => elementNames[el].classList.add(cl));
     }
 
-    // function passRecord() {
-
-    // }
-
     function getResults() {
         function createElements(result) {
             if (searchtype == "books") {
@@ -97,33 +96,30 @@ $(document).ready(function () {
 
             // Row
             newElement("row", ["row", "p-5"], "div", 0);
-
             // Title
             newElement("searchresults", ["col-sm-4", "searchresults"], 0, 0, 0, `<h4> ${result.Title} (${result.Year}) </h4>`);
-
             // Result's image
-            newElement("poster", ["col-sm-4", "poster"], 0, 0, 0, `<img src=${result.Poster} width='40px'></img>`);
-
-            // Misc info, placeholder
-            newElement("details", ["col-sm-4", "details"]);
+            newElement("poster", ["col-sm-1", "poster"], 0, 0, 0, `<img src=${result.Poster} width='40px'></img>`);
 
             // Dropdown button for user operations
-            newElement("addto", ["col-sm-4", "addto", "dropdown"])
+            newElement("addto", ["col-sm-2", "addto", "dropdown"])
             newElement("dropdownbtn", ["btn", "btn-secondary", "dropdown-toggle"], "button", "Add To List", { "type": "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false" });
-
             // Dropdown menu and items
             newElement("dropdownmenu", ["dropdown-menu"], 0, 0, { "aria-labelledby": "dropdownMenuButton", "id": result.imdbID });
-
-            newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "completed", });
+            newElement("completed", ["dropdown-item"], "a", "Completed", { "status": "Completed", });
 
             function forMovies() {
-                newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "status": "ptw", });
-                newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "status": "watching", });
+                // Director
+                newElement("director", ["col-sm-3", "director"], 0, 0, 0, `<h4> ${result.Director} </h4>`);
+                // Average rating
+                newElement("rating", ["col-sm-2", "rating"], 0, 0, 0, `<h4> ${result.imdbRating} </h4>`);
+                newElement("plan", ["dropdown-item"], "a", "Plan To Watch", { "status": "Plan To Watch", });
+                newElement("watching", ["dropdown-item"], "a", "Currently Watching", { "status": "Currently Watching", });
             }
 
             function forBooks() {
-                newElement("plan", ["dropdown-item"], "a", "Plan To Read", { "status": "ptw" });
-                newElement("watching", ["dropdown-item"], "a", "Currently Reading", { "status": "watching" });
+                newElement("plan", ["dropdown-item"], "a", "Plan To Read", { "status": "Plan To Read" });
+                newElement("watching", ["dropdown-item"], "a", "Currently Reading", { "status": "Currently Reading" });
             }
 
             if (searchtype == "movies") {
@@ -141,10 +137,11 @@ $(document).ready(function () {
         function appendElements(result) {
             createElements(result);
             // Append elements to the app
-            elementNames["row"].append(elementNames["searchresults"], elementNames["poster"], elementNames["addto"]);
+            elementNames["row"].append(elementNames["searchresults"], elementNames["poster"], elementNames["director"], elementNames["rating"], elementNames["addto"]);
             document.querySelector('.searches').append(elementNames["row"]);
         }
 
+        // Get results
         axios.post('search', data)
             .then(function (response) {
                 results = response.data;
@@ -162,13 +159,14 @@ $(document).ready(function () {
                         appendElements(result.best_book);
                     });
                 }
-
+                //  Add movie to user's list
                 $(".dropdown-item").click(function (event) {
                     event.preventDefault();
                     let status = this.getAttribute("status");
                     let send = {};
-                    let thisid = $(event.currentTarget).parent().attr("id"); //.attr("id");
+                    let thisid = $(event.currentTarget).parent().attr("id");
                     results.forEach(result => {
+                        // If movie
                         if (result.imdbID == thisid) {
                             result.status = status;
                             send = {
@@ -179,12 +177,8 @@ $(document).ready(function () {
                                 director: result.Director,
                                 year: result.Year
                             };
-
-
                         }
                     });
-
-
                     axios.post('send', send)
                         .then(function (response) {
                             // handle success

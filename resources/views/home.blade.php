@@ -3,8 +3,10 @@
 @section('title', 'Page Title')
 
 @section('content')
+<div class="scrollgif">
+    <img src="{{ asset('storage/gif/scrolldown.gif') }}" class="hidden" alt="">
+</div>
 <div class="row h-100 text-center align-items-center px-5">
-
     <div class="col-sm-6 p-5" id="movies">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" class="icon-film">
             <path class="primary"
@@ -80,8 +82,16 @@
 </div>
 
 <br>
-<h1 id="searchland">Search results: </h1>
-<div class="searches m-5">
+<div class="m-5">
+    <div class="row">
+        <div class="col-sm-4">Title</div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">Directed by</div>
+        <div class="col-sm-2">IMDb Rating</div>
+    </div>
+    <hr>
+    <div class="searches">
 
+    </div>
 </div>
 @endsection
