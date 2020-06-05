@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     var elementNames = {};
 
     // Start
@@ -42,12 +44,18 @@ $(document).ready(function () {
         if (text.length > 2) {
             // $('.searches').empty();
             getResults();
+            $('.scrollgif').removeClass('d-none')
         } else {
             checkSearch();
             $('.searches').empty();
+            $('.scrollgif').addClass('d-none');
         }
 
+        // if (typeof ($('.searches').innerHTML) !== "undefined") {
 
+        // } else {
+
+        // }
     }, delayTime));
 
     function checkSearch() {
@@ -144,6 +152,9 @@ $(document).ready(function () {
         // Get results
         axios.post('search', data)
             .then(function (response) {
+                $(window).scroll(function () {
+                    $(".scrollgif").css("opacity", 1 - $(window).scrollTop() / 250);
+                });
                 results = response.data;
                 results = results.map(item => item.data);
                 $('.searches').empty();

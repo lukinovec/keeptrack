@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('title', 'Page Title')
-
 @section('content')
-<div class="scrollgif">
-    <img src="{{ asset('storage/gif/scrolldown.gif') }}" class="hidden" alt="">
+{{-- <div class="scrollgif text-center position-absolute d-none">
+    <div class="innergif">
+        <img src="{{ asset('storage/gif/scrolldown.gif') }}" width="50" alt="Scroll down for search results">
+<h5>Scroll down for search results</h5>
 </div>
+</div> --}}
 <div class="row h-100 text-center align-items-center px-5">
     <div class="col-sm-6 p-5" id="movies">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" class="icon-film">

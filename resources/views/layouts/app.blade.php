@@ -50,6 +50,16 @@
             user-select: none;
         }
 
+        .scrollgif {
+            position: absolute;
+            left: 50%;
+        }
+
+        .innergif {
+            position: relative;
+            left: -50%;
+        }
+
         a:active,
         a:focus {
             outline: 0;
@@ -124,7 +134,7 @@
             </div>
         </nav>
 
-        <main class="py-4 w-100 h-100 mt-5">
+        <main class="py-4 w-100 h-100 mt-5 maindiv">
             @yield('content')
         </main>
     </div>
