@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use aharen\OMDbAPI;
+use App\Movie;
 use Curl\Curl;
 
 class PagesController extends Controller
@@ -50,6 +51,17 @@ class PagesController extends Controller
                 $det = $omdb->fetch("i", $s->imdbID);
                 array_push($details, $det);
             }
+            $users_movies_id = DB::table('movie_users')->select('movie_id', 'status')->where('user_id', Auth::user()->id)->get();
+            $users_movies = [];
+            foreach ($users_movies_id as $m) {
+                $obj = DB::table('movies')->where('id', $m->movie_id)->first();
+                $obj->status = $m->status;
+                array_push($users_movies, $obj);
+            }
+            $response = [
+                "details" => $details,
+                "usermovies" => $users_movies
+            ];
             // Search books
         } elseif ($searchtype == "books") {
             $xmlresp = $this->getBooks($search);
@@ -61,7 +73,7 @@ class PagesController extends Controller
         if (isset($search->Error)) {
             return $search->Error;
         } elseif (isset($search->Search)) {
-            return $details;
+            return $response;
         } elseif (isset($search[0]->id)) {
             return $search;
         } else {
