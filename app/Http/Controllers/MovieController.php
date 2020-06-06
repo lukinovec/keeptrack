@@ -18,7 +18,7 @@ class MovieController extends Controller
         $getId = DB::table('movies')->select('id')->where('imdbID', $request->id)->first();
         $checkRelation = DB::table('movie_users')->where('user_id', $userid)->where('movie_id', $getId->id)->first();
         if (is_null($checkRelation)) {
-            $add = DB::insert('insert into movie_users (user_id, movie_id) values (?, ?)', [$userid, $getId->id]);
+            $add = DB::insert('insert into movie_users (user_id, movie_id, status) values (?, ?, ?)', [$userid, $getId->id, $request->status]);
         }
     }
 

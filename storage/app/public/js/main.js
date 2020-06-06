@@ -26,7 +26,13 @@ $(document).ready(function () {
     }
 
     function isInList(imdbid) {
-        users_movies.forEach(mov => imdbid == mov.id ? mov.status : "none");
+        let result = "";
+        users_movies.forEach(mov => {
+            if (imdbid == mov.id) {
+                result = mov.status;
+            }
+        });
+        return result;
     }
 
     // Search function
@@ -110,7 +116,6 @@ $(document).ready(function () {
             if (searchtype == "books") {
                 result.Title = result.title;
                 result.Poster = result.image_url;
-                // result.imdbID = result.id["0"];
             }
 
             // Row
@@ -132,18 +137,21 @@ $(document).ready(function () {
                 switch (isInList(result.imdbID)) {
                     case "Plan To Watch":
                         elementNames["dropdownbtn"].innerText = "Plan To Watch";
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-dark');
                         break;
                     case "Completed":
                         elementNames["dropdownbtn"].innerText = "Completed";
-                        elementNames["dropdownbtn"].removeClass('btn-secondary');
-                        elementNames["dropdownbtn"].addClass('btn-success');
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-success');
                         break;
                     case "Currently Watching":
                         elementNames["dropdownbtn"].innerText = "Currently Watching";
-                        elementNames["dropdownbtn"].removeClass('btn-secondary');
-                        elementNames["dropdownbtn"].addClass('btn-primary');
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-primary');
                         break;
                 }
+
                 // Director
                 result.Director != "N/A" ? newElement("director", ["col-sm-3", "director"], 0, 0, 0, `<h4> ${result.Director} </h4>`) : newElement("director", ["col-sm-3", "director"], 0, 0, 0, `<h4> ${result.Writer} </h4>`);
                 // Average rating
@@ -203,6 +211,7 @@ $(document).ready(function () {
                 //  Add movie to user's list
                 $(".dropdown-item").click(function (event) {
                     event.preventDefault();
+                    let parent = this.parentNode.nextSibling;
                     let status = this.getAttribute("status");
                     let send = {};
                     let thisid = $(event.currentTarget).parent().attr("id");
@@ -218,6 +227,23 @@ $(document).ready(function () {
                                 director: result.Director,
                                 year: result.Year
                             };
+                            switch (send.status) {
+                                case "Plan To Watch":
+                                    parent.innerText = "Plan To Watch";
+                                    parent.classList.remove('btn-secondary');
+                                    parent.classList.add('btn-dark');
+                                    break;
+                                case "Completed":
+                                    parent.innerText = "Completed";
+                                    parent.classList.remove('btn-secondary');
+                                    parent.classList.add('btn-success');
+                                    break;
+                                case "Currently Watching":
+                                    parent.innerText = "Currently Watching";
+                                    parent.classList.remove('btn-secondary');
+                                    parent.classList.add('btn-primary');
+                                    break;
+                            }
                         }
                     });
                     axios.post('send', send)
