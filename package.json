@@ -13,7 +13,6 @@
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
-        "websocket-extensions": ">=0.1.4",
         "jquery": "^3.2",
         "jquery-ui": "^1.12.1",
         "laravel-mix": "^5.0.1",
@@ -23,11 +22,11 @@
         "sass": "^1.26.8",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "websocket-extensions": "^0.1.4"
     },
     "dependencies": {
         "@popperjs/core": "^2.4.0",
-        "websocket-extensions": ">=0.1.4",
         "bootstrap": "^4.5.0",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1"
