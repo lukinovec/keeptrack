@@ -23,7 +23,7 @@ class CreateBooksTable extends Migration
             $table->text('description', 200);
             $table->year('year');
             $table->integer('rating');
-            $table->integer('progress_chapters');
+            $table->integer('progress_chapters', 0);
             $table->integer('progress_pages');
             $table->timestamp('completed')->nullable();
             $table->timestamps();

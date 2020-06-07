@@ -44,7 +44,7 @@ $(document).ready(function () {
             searchtype = "movies";
             newElement("row_head", ["row", "p-5"]);
             newElement("title_head", ["col-sm-4"], 0, 0, 0, "Title");
-            newElement("empty_head", ["col-sm-1"]);
+            newElement("empty_head", ["col-sm-1"]), 0, 0, 0, "Poster";
             newElement("director_head", ["col-sm-3"], 0, 0, 0, "Directed by");
             newElement("rating_head", ["col-sm-2"], 0, 0, 0, "IMDb Rating");
             newElement("line_head", ["line"], "hr");
