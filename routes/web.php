@@ -23,6 +23,10 @@ Route::post('send', 'MovieController@index')->middleware('auth');
 
 Route::get('results', 'PagesController@results')->middleware('auth');
 
+Route::get('tbd', 'PagesController@tbd')->middleware('auth');
+
 Route::get('movielist', 'MovieController@list')->middleware('auth');
+
+Route::post('updateprogress/{id}', 'MovieController@updateProgress')->middleware('auth')->name('updateProgress');
 
 Auth::routes();

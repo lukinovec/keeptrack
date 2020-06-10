@@ -18,12 +18,9 @@ class CreateMoviesTable extends Migration
             $table->text('imdbID');
             $table->text('image', 200);
             $table->text('name', 100);
+            $table->text('type')->default('n/a');
             $table->text('director', 100);
             $table->string('year');
-            $table->integer('rating')->nullable();
-            $table->integer('progress_seasons')->nullable();
-            $table->integer('progress_episodes')->nullable();
-            $table->timestamp('completed')->nullable();
             $table->timestamps();
         });
     }

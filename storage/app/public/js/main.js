@@ -40,17 +40,20 @@ $(document).ready(function () {
         e.preventDefault();
         text = $('#searchinput').val();
         checkSearch();
+        newElement("row_head", ["row", "p-5"]);
+        newElement("title_head", ["col-sm-4"], 0, 0, 0, "Title");
+        newElement("empty_head", ["col-sm-1"]), 0, 0, 0, "Poster";
+
+        newElement("line_head", ["line"], "hr");
         if (searchtype == "Movies & Shows") {
             searchtype = "movies";
-            newElement("row_head", ["row", "p-5"]);
-            newElement("title_head", ["col-sm-4"], 0, 0, 0, "Title");
-            newElement("empty_head", ["col-sm-1"]), 0, 0, 0, "Poster";
             newElement("director_head", ["col-sm-3"], 0, 0, 0, "Directed by");
             newElement("rating_head", ["col-sm-2"], 0, 0, 0, "IMDb Rating");
-            newElement("line_head", ["line"], "hr");
         }
         if (searchtype == "Books") {
             searchtype = "books";
+            newElement("director_head", ["col-sm-3"], 0, 0, 0, "Written by");
+            newElement("rating_head", ["col-sm-2"], 0, 0, 0, `<img src="${goodreadsLogo}" width="75">  Rating`);
         }
         data = {
             'userinput': text,
@@ -161,6 +164,8 @@ $(document).ready(function () {
             }
 
             function forBooks() {
+                newElement("director", ["col-sm-3", "director"], 0, 0, 0, `<h4> ${result.Director} </h4>`);
+                newElement("rating", ["col-sm-2", "rating"], 0, 0, 0, `<h4> ${result.imdbRating} / 5 </h4>`);
                 newElement("plan", ["dropdown-item"], "a", "Plan To Read", { "status": "Plan To Read" });
                 newElement("watching", ["dropdown-item"], "a", "Currently Reading", { "status": "Currently Reading" });
             }
@@ -188,23 +193,29 @@ $(document).ready(function () {
         // Get results
         axios.post('search', data)
             .then(function (response) {
-                results = response.data["details"];
-                um = [];
-                response.data["usermovies"].forEach(i => um.push({ id: i.imdbID, status: i.status }));
-                users_movies = um;
-                um = [];
-                results = results.map(item => item.data);
                 $('.searches').empty();
                 setTimeout(() => {
                     $('.scrollgif').addClass("d-none");
                 }, 2500);
                 // Display each result
+                document.querySelector('.searches').append(elementNames["row_head"]);
+                document.querySelector('.searches').append(elementNames["line_head"]);
                 if (searchtype == "movies") {
-                    document.querySelector('.searches').append(elementNames["row_head"]);
-                    document.querySelector('.searches').append(elementNames["line_head"]);
-                    results.forEach(result => result.Type != "game" ? appendElements(result) : console.log('bruh 174'));
+                    results = response.data["details"];
+                    um = [];
+                    response.data["usermovies"].forEach(i => um.push({ id: i.imdbID, status: i.status }));
+                    users_movies = um;
+                    um = [];
+                    results = results.map(item => item.data);
+                    results.forEach(result => result.Type != "game" ? appendElements(result) : "");
                 } else if (searchtype == "books") {
+                    results = response.data;
                     results.forEach(result => {
+                        console.log(result);
+                        result.best_book.imdbRating = result.average_rating;
+                        result.best_book.imdbID = result.id["0"];
+                        result.best_book.Year = result.original_publication_year["0"];
+                        result.best_book.Director = result.best_book.author.name
                         appendElements(result.best_book);
                     });
                 }
@@ -221,12 +232,16 @@ $(document).ready(function () {
                             result.status = status;
                             send = {
                                 id: result.imdbID,
+                                type: result.Type,
                                 status: status,
+                                director: result.Director,
                                 image: result.Poster,
                                 name: result.Title,
-                                director: result.Director,
                                 year: result.Year
                             };
+                            if (result.Director == "N/A") {
+                                send.director = result.Writer
+                            }
                             switch (send.status) {
                                 case "Plan To Watch":
                                     parent.innerText = "Plan To Watch";
@@ -246,15 +261,17 @@ $(document).ready(function () {
                             }
                         }
                     });
-                    axios.post('send', send)
-                        .then(function (response) {
-                            // handle success
-                            console.log("yeet");
-                        })
-                        .catch(function (error) {
-                            // handle error
-                            console.log(error);
-                        })
+                    if (searchtype == "movies") {
+                        axios.post('send', send)
+                            .then(function (response) {
+                                // handle success
+                                console.log("yeet");
+                            })
+                            .catch(function (error) {
+                                // handle error
+                                console.log(error);
+                            })
+                    }
                 });
             })
             .catch(function (error) {

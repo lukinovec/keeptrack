@@ -13,12 +13,14 @@ class MovieController extends Controller
         $userid = Auth::user()->id;
         $checkDupe = DB::table('movies')->where('imdbID', $request->id)->first();
         if (is_null($checkDupe)) {
-            $insert = DB::insert('insert into movies (image, name, director, year, imdbID) values (?, ?, ?, ?, ?)', [$request->image, $request->name, $request->director, $request->year, $request->id]);
+            $insert = DB::insert('insert into movies (image, name, director, year, imdbID, type) values (?, ?, ?, ?, ?, ?)', [$request->image, $request->name, $request->director, $request->year, $request->id, $request->type]);
         }
         $getId = DB::table('movies')->select('id')->where('imdbID', $request->id)->first();
         $checkRelation = DB::table('movie_users')->where('user_id', $userid)->where('movie_id', $getId->id)->first();
         if (is_null($checkRelation)) {
             $add = DB::insert('insert into movie_users (user_id, movie_id, status) values (?, ?, ?)', [$userid, $getId->id, $request->status]);
+        } elseif ($checkRelation->status != $request->status) {
+            $update = DB::table('movie_users')->where('user_id', $userid)->where('movie_id', $getId->id)->update(['status' => $request->status]);
         }
     }
 
@@ -30,8 +32,15 @@ class MovieController extends Controller
         foreach ($find as $item) {
             $selectMovie = DB::table('movies')->where('id', $item->movie_id)->first();
             $selectMovie->status = $item->status;
+            $selectMovie->progress_episodes = $item->progress_episodes;
             array_push($data, $selectMovie);
         }
         return view('movielist')->with('data', $data);
+    }
+
+    public function updateProgress(Request $request, $id)
+    {
+        $updateProgress = DB::table('movie_users')->where('user_id', Auth::user()->id)->where('movie_id', $id)->update(['progress_episodes' => $request->input("progress")]);
+        return redirect('movielist');
     }
 }

@@ -86,4 +86,9 @@ class PagesController extends Controller
     {
         return view('welcome')->with('title', 'Welcome');
     }
+
+    public function tbd()
+    {
+        return view('tbd');
+    }
 }

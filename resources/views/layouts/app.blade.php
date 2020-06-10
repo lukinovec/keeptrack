@@ -143,6 +143,7 @@
     <script>
         var movieUrl = "{{ url('movielist') }}";
         var imdbIcon = "{{ asset('icons/icons-imdb.png') }}";
+        var goodreadsLogo = "{{ asset('storage/images/goodreads-logo.png') }}"
     </script>
     <script src="{{ asset('storage/js/main.js') }}"></script>
 </body>

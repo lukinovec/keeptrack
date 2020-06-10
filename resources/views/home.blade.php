@@ -19,7 +19,7 @@
         <h1 class="mb-4 unselectable">Movies & TV Series</h1>
         <div class="row px-sm-0 px-mega-10">
             <div class="col-sm-6" id="search">
-                <a href="{{url('moviesearch')}}" class="homelink">
+                <a href="{{url('tbd')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                             class="icon-trophy">
@@ -56,7 +56,7 @@
         <h1 class="mb-4 unselectable">Books</h1>
         <div class="row px-sm-0 px-mega-10">
             <div class="col-sm-6" id="search">
-                <a href="{{url('booksearch')}}" class="homelink">
+                <a href="{{url('tbd')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                             class="icon-trophy">
@@ -68,7 +68,7 @@
                 </a>
             </div>
             <div class="col-sm-6">
-                <a href="{{url('booklist')}}" class="homelink">
+                <a href="{{url('tbd')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                             class="icon-menu">
