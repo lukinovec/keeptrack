@@ -27,16 +27,16 @@
             <img src=" {{ $book->image }} " width="50" alt="">
         </div>
         <div class="col-sm-3">
-            {{ $book->director }}
+            {{ $book->author }}
         </div>
 
         <div class="col-sm-2">
             {{ $book->status }}
         </div>
         <div class="col-sm-2">
-            @if ( $book->status == "Currently Watching" & $book->type != "book" )
+            @if ( $book->status == "Currently Reading" )
             <div class="row align-items-center">
-                <form action="{{ route('updateProgress', ['id' => $book->id]) }}" id="progressForm" method="post">
+                <form action="{{ route('updateProgressBooks', ['id' => $book->id]) }}" id="progressForm" method="post">
                     @csrf
                     <input autocomplete="off" name="progress" value="{{ $book->progress_pages }}"
                         class="form-control col-sm-3">

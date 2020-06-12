@@ -34,4 +34,6 @@ Route::get('booklist', 'BookController@list')->middleware('auth');
 
 Route::post('updateprogress/{id}', 'MovieController@updateProgress')->middleware('auth')->name('updateProgress');
 
+Route::post('updateprogressbooks/{id}', 'BookController@updateProgress')->middleware('auth')->name('updateProgressBooks');
+
 Auth::routes();
