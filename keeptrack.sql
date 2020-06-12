@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Stř 10. čen 2020, 20:00
+-- Vytvořeno: Pát 12. čen 2020, 14:37
 -- Verze serveru: 10.4.11-MariaDB
 -- Verze PHP: 7.4.5
 
@@ -33,13 +33,7 @@ CREATE TABLE `books` (
   `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `author` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `czech_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` year(4) NOT NULL,
-  `rating` int(11) NOT NULL,
-  `progress_chapters` int(11) NOT NULL,
-  `progress_pages` int(11) NOT NULL,
-  `completed` timestamp NULL DEFAULT NULL,
+  `year` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -52,7 +46,11 @@ CREATE TABLE `books` (
 
 CREATE TABLE `book_users` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `book_id` bigint(20) UNSIGNED NOT NULL
+  `book_id` bigint(20) UNSIGNED NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `rating` int(11) DEFAULT NULL,
+  `progress_chapters` int(11) NOT NULL DEFAULT 0,
+  `progress_pages` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -125,9 +123,8 @@ CREATE TABLE `movie_users` (
   `movie_id` bigint(20) UNSIGNED NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `rating` int(11) DEFAULT NULL,
-  `progress_seasons` int(11) DEFAULT NULL,
-  `progress_episodes` int(11) NOT NULL DEFAULT 0,
-  `completed` timestamp NULL DEFAULT NULL
+  `progress_seasons` int(11) NOT NULL DEFAULT 0,
+  `progress_episodes` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -263,7 +260,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT pro tabulku `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pro tabulku `profiles`
@@ -275,7 +272,7 @@ ALTER TABLE `profiles`
 -- AUTO_INCREMENT pro tabulku `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Omezení pro exportované tabulky
