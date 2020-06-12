@@ -5,7 +5,7 @@
 <div class="scrollgif text-center position-absolute d-none">
     <div class="innergif">
         <img src="{{ asset('storage/gif/scrolldown.gif') }}" width="50" alt="Scroll down for search results">
-        <h5>Scroll down for search results</h5>
+        <h5>Wait and scroll down for search results</h5>
     </div>
 </div>
 <div class="row h-100 text-center align-items-center px-5">
@@ -68,7 +68,7 @@
                 </a>
             </div>
             <div class="col-sm-6">
-                <a href="{{url('tbd')}}" class="homelink">
+                <a href="{{url('booklist')}}" class="homelink">
                     <div class="innerhomelink">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                             class="icon-menu">

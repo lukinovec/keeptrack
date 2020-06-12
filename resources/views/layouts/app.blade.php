@@ -84,7 +84,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
                     <ul class="navbar-nav mx-auto">
+                        @if(Request::is('/'))
                         <form class="form-inline my-2 my-lg-0" id="navBarSearchForm">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchinput"
                                 aria-label="Search">
@@ -94,6 +96,7 @@
                             </select>
                             {{-- <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button> --}}
                         </form>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -19,13 +19,7 @@ class CreateBooksTable extends Migration
             $table->text('image', 200);
             $table->text('name', 100);
             $table->text('author', 100);
-            $table->text('czech_name', 100);
-            $table->text('description', 200);
             $table->year('year');
-            $table->integer('rating');
-            $table->integer('progress_chapters', 0);
-            $table->integer('progress_pages');
-            $table->timestamp('completed')->nullable();
             $table->timestamps();
         });
     }

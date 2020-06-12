@@ -18,7 +18,7 @@ class CreateMoviesTable extends Migration
             $table->text('imdbID');
             $table->text('image', 200);
             $table->text('name', 100);
-            $table->text('type')->default('n/a');
+            $table->text('type');
             $table->text('director', 100);
             $table->string('year');
             $table->timestamps();

@@ -7,12 +7,19 @@ $(document).ready(function () {
     let text = "";
     let results = [];
     let users_movies = [];
-    let searchtype = document.getElementById("form-select").value;
     let delayTime = 500;
-    if (searchtype == "books") {
-        delayTime = 800;
+    if (document.getElementById("form-select")) {
+        let searchtype = document.getElementById("form-select").value;
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        if (searchtype == "books") {
+            delayTime = 800;
+        }
     }
-
     // Delay function, delay count starts when user stops typing
     function delay(callback, ms) {
         var timer = 0;
@@ -62,7 +69,6 @@ $(document).ready(function () {
 
         // Post search - you have to enter more than 2 characters for search
         if (text.length > 2) {
-            // $('.searches').empty();
             getResults();
             $('.scrollgif').removeClass('d-none')
         } else {
@@ -70,12 +76,6 @@ $(document).ready(function () {
             $('.searches').empty();
             $('.scrollgif').addClass('d-none');
         }
-
-        // if (typeof ($('.searches').innerHTML) !== "undefined") {
-
-        // } else {
-
-        // }
     }, delayTime));
 
     function checkSearch() {
@@ -164,6 +164,24 @@ $(document).ready(function () {
             }
 
             function forBooks() {
+                switch (isInList(result.imdbID)) {
+                    case "Plan To Read":
+                        elementNames["dropdownbtn"].innerText = "Plan To Read";
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-dark');
+                        break;
+                    case "Completed":
+                        elementNames["dropdownbtn"].innerText = "Completed";
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-success');
+                        break;
+                    case "Currently Watching":
+                        elementNames["dropdownbtn"].innerText = "Currently Reading";
+                        elementNames["dropdownbtn"].classList.remove('btn-secondary');
+                        elementNames["dropdownbtn"].classList.add('btn-primary');
+                        break;
+                }
+
                 newElement("director", ["col-sm-3", "director"], 0, 0, 0, `<h4> ${result.Director} </h4>`);
                 newElement("rating", ["col-sm-2", "rating"], 0, 0, 0, `<h4> ${result.imdbRating} / 5 </h4>`);
                 newElement("plan", ["dropdown-item"], "a", "Plan To Read", { "status": "Plan To Read" });
@@ -211,7 +229,6 @@ $(document).ready(function () {
                 } else if (searchtype == "books") {
                     results = response.data;
                     results.forEach(result => {
-                        console.log(result);
                         result.best_book.imdbRating = result.average_rating;
                         result.best_book.imdbID = result.id["0"];
                         result.best_book.Year = result.original_publication_year["0"];
@@ -227,48 +244,79 @@ $(document).ready(function () {
                     let send = {};
                     let thisid = $(event.currentTarget).parent().attr("id");
                     results.forEach(result => {
-                        // If movie
+                        if (searchtype == "books") {
+                            result = result.best_book;
+                        }
                         if (result.imdbID == thisid) {
                             result.status = status;
                             send = {
                                 id: result.imdbID,
-                                type: result.Type,
                                 status: status,
                                 director: result.Director,
                                 image: result.Poster,
                                 name: result.Title,
-                                year: result.Year
+                                year: result.Year,
+                                searchtype: searchtype
                             };
+
                             if (result.Director == "N/A") {
                                 send.director = result.Writer
                             }
-                            switch (send.status) {
-                                case "Plan To Watch":
-                                    parent.innerText = "Plan To Watch";
-                                    parent.classList.remove('btn-secondary');
-                                    parent.classList.add('btn-dark');
-                                    break;
-                                case "Completed":
-                                    parent.innerText = "Completed";
-                                    parent.classList.remove('btn-secondary');
-                                    parent.classList.add('btn-success');
-                                    break;
-                                case "Currently Watching":
-                                    parent.innerText = "Currently Watching";
-                                    parent.classList.remove('btn-secondary');
-                                    parent.classList.add('btn-primary');
-                                    break;
+                            if (searchtype == "movies") {
+                                send.type = result.Type;
+                                switch (send.status) {
+                                    case "Plan To Watch":
+                                        parent.innerText = "Plan To Watch";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-dark');
+                                        break;
+                                    case "Completed":
+                                        parent.innerText = "Completed";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-success');
+                                        break;
+                                    case "Currently Watching":
+                                        parent.innerText = "Currently Watching";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-primary');
+                                        break;
+                                }
+                            } else if (searchtype == "books") {
+                                switch (send.status) {
+                                    case "Plan To Read":
+                                        parent.innerText = "Plan To Read";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-dark');
+                                        break;
+                                    case "Completed":
+                                        parent.innerText = "Completed";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-success');
+                                        break;
+                                    case "Currently Reading":
+                                        parent.innerText = "Currently Reading";
+                                        parent.classList.remove('btn-secondary');
+                                        parent.classList.add('btn-primary');
+                                        break;
+                                }
+                                console.log(send);
                             }
                         }
                     });
                     if (searchtype == "movies") {
-                        axios.post('send', send)
+                        axios.post('sendMovie', send)
                             .then(function (response) {
-                                // handle success
-                                console.log("yeet");
+                                console.log("Success - movie");
                             })
                             .catch(function (error) {
-                                // handle error
+                                console.log(error);
+                            })
+                    } else if (searchtype == "books") {
+                        axios.post('sendBook', send)
+                            .then(function (response) {
+                                console.log("Success - book");
+                            })
+                            .catch(function (error) {
                                 console.log(error);
                             })
                     }

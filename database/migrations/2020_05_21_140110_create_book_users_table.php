@@ -16,6 +16,10 @@ class CreateBookUsersTable extends Migration
         Schema::create('book_users', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            $table->string('status')->default('');
+            $table->integer('rating')->nullable();
+            $table->integer('progress_chapters')->default('0');
+            $table->integer('progress_pages')->default('0');
         });
     }
 
