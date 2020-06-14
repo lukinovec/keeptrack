@@ -29,10 +29,17 @@ class PagesController extends Controller
 
     public function getBooks($search)
     {
+        $str = str_split($search);
+        foreach ($str as $item) {
+            if ($item == " ") {
+                $item = "+";
+            }
+        }
+        $str = implode($str);
         $curl = new Curl();
-        return $curl->get('https://www.goodreads.com/search.xml', array(
+        return $curl->get('https://www.goodreads.com/search/index.xml', array(
             'key' => 'FD5YvIsvRnGRKmSPcZxt6g',
-            'q' => urlencode($search),
+            'q' => $str,
         ));
     }
 
@@ -74,10 +81,10 @@ class PagesController extends Controller
             return $search->Error;
         } elseif (isset($search->Search)) {
             return $response;
-        } elseif (isset($search[0]->id)) {
+        } elseif (isset($search[0]->id) or isset($search->id)) {
             return $search;
         } else {
-            echo "Search object or array doesn't exist";
+            return "Search object or array doesn't exist";
         }
     }
 
