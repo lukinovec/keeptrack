@@ -105,7 +105,6 @@ $(document).ready(function () {
 
         // Set attributes
         if (typeof (attrs) === "object") {
-            //attrs.forEach(attr => elementNames[el].setAttribute(attr, attrs[attr]));
             for (let attr in attrs) {
                 elementNames[el].setAttribute(attr, attrs[attr]);
             }
@@ -216,14 +215,11 @@ $(document).ready(function () {
                     $('.scrollgif').addClass("d-none");
                 }, 2500);
                 // Display each result
-                document.querySelector('.searches').append(elementNames["row_head"]);
-                document.querySelector('.searches').append(elementNames["line_head"]);
+                document.querySelector('.searches').append(elementNames["row_head"], elementNames["line_head"]);
                 if (searchtype == "movies") {
                     results = response.data["details"];
-                    um = [];
-                    response.data["usermovies"].forEach(i => um.push({ id: i.imdbID, status: i.status }));
-                    users_movies = um;
-                    um = [];
+                    users_movies = [];
+                    response.data["usermovies"].forEach(i => users_movies.push({ id: i.imdbID, status: i.status }));
                     results = results.map(item => item.data);
                     results.forEach(result => result.Type != "game" ? appendElements(result) : "");
                 } else if (searchtype == "books") {

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use aharen\OMDbAPI;
-use App\Movie;
 use Curl\Curl;
 
 class PagesController extends Controller

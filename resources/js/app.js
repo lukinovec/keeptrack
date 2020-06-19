@@ -27,6 +27,22 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var store = {
+    debug: true,
+    state: {
+        message: 'Hello!'
+    },
+    setMessageAction(newValue) {
+        if (this.debug) console.log('setMessageAction triggered with', newValue)
+        this.state.message = newValue
+    },
+    clearMessageAction() {
+        if (this.debug) console.log('clearMessageAction triggered')
+        this.state.message = ''
+    }
+}
+
 const app = new Vue({
     el: '#app',
+    data: store.state
 });

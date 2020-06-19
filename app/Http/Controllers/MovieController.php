@@ -23,24 +23,4 @@ class MovieController extends Controller
             $update = DB::table('movie_users')->where('user_id', $userid)->where('movie_id', $getId->id)->update(['status' => $request->status]);
         }
     }
-
-    public function list()
-    {
-        $userid = Auth::user()->id;
-        $find = DB::table('movie_users')->where('user_id', $userid)->get();
-        $data = array();
-        foreach ($find as $item) {
-            $selectMovie = DB::table('movies')->where('id', $item->movie_id)->first();
-            $selectMovie->status = $item->status;
-            $selectMovie->progress_episodes = $item->progress_episodes;
-            array_push($data, $selectMovie);
-        }
-        return view('movielist')->with('data', $data);
-    }
-
-    public function updateProgress(Request $request, $id)
-    {
-        $updateProgress = DB::table('movie_users')->where('user_id', Auth::user()->id)->where('movie_id', $id)->update(['progress_episodes' => $request->input("progress")]);
-        return redirect('movielist');
-    }
 }

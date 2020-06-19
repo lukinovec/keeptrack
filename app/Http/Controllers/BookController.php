@@ -23,24 +23,4 @@ class BookController extends Controller
             $update = DB::table('book_users')->where('user_id', $userid)->where('book_id', $getId->id)->update(['status' => $request->status]);
         }
     }
-
-    public function list()
-    {
-        $userid = Auth::user()->id;
-        $find = DB::table('book_users')->where('user_id', $userid)->get();
-        $data = array();
-        foreach ($find as $item) {
-            $selectBook = DB::table('books')->where('id', $item->book_id)->first();
-            $selectBook->status = $item->status;
-            $selectBook->progress_pages = $item->progress_pages;
-            array_push($data, $selectBook);
-        }
-        return view('booklist')->with('data', $data);
-    }
-
-    public function updateProgress(Request $request, $id)
-    {
-        $updateProgress = DB::table('book_users')->where('user_id', Auth::user()->id)->where('book_id', $id)->update(['progress_pages' => $request->input("progress")]);
-        return redirect('booklist');
-    }
 }

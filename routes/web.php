@@ -24,16 +24,16 @@ Route::post('sendMovie', 'MovieController@index')->middleware('auth');
 
 Route::post('sendBook', 'BookController@index')->middleware('auth');
 
-Route::get('results', 'PagesController@results')->middleware('auth');
+// Route::get('results', 'PagesResultsController@results')->middleware('auth');
 
 Route::get('tbd', 'PagesController@tbd')->middleware('auth');
 
-Route::get('movielist', 'MovieController@list')->middleware('auth');
+Route::get('movielist', 'MovieListController@index')->middleware('auth');
 
-Route::get('booklist', 'BookController@list')->middleware('auth');
+Route::get('booklist', 'BookListController@index')->middleware('auth');
 
-Route::post('updateprogress/{id}', 'MovieController@updateProgress')->middleware('auth')->name('updateProgress');
+Route::post('updateprogress/{id}', 'MovieProgressController@update')->middleware('auth')->name('updateProgress');
 
-Route::post('updateprogressbooks/{id}', 'BookController@updateProgress')->middleware('auth')->name('updateProgressBooks');
+Route::post('updateprogressbooks/{id}', 'BookProgressController@update')->middleware('auth')->name('updateProgressBooks');
 
 Auth::routes();
