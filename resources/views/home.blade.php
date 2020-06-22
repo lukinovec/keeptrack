@@ -86,7 +86,7 @@
 <br>
 <div class="m-5">
     <div class="searches">
-
+        <Search />
     </div>
 </div>
 @endsection
