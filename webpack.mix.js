@@ -18,3 +18,6 @@ mix.js('resources/js/app.js', 'public/js')
         postCss: [tailwindcss('./tailwind.config.js')],
     })
     .browserSync('127.0.0.1:8000');
+node: {
+    fs: "empty"
+}

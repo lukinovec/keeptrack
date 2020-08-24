@@ -1,4 +1,6 @@
 import Dashboard from './components/Dashboard';
+import SearchBar from './components/SearchBar';
+import FoundResults from './components/FoundResults';
 
 export default {
     mode: 'history',
@@ -7,6 +9,16 @@ export default {
             name: 'Dashboard',
             path: '/',
             component: Dashboard,
+        },
+        {
+            name: 'SearchBar',
+            path: '/searchbar',
+            component: SearchBar
+        },
+        {
+            name: 'FoundResults',
+            path: '/results/:type',
+            component: FoundResults
         }
     ]
 }

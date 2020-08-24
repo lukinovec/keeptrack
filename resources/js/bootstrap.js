@@ -20,6 +20,7 @@ try {
  */
 
 window.axios = require('axios');
+// axios.defaults.withCredentials = true;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
