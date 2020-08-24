@@ -24,13 +24,40 @@ let router = new VueRouter(routes);
 const store = new Vuex.Store({
     state: {
         searchResults: {},
+        user: null
     },
     mutations: {
+        // Auth
+        setUserData(state, userData) {
+            state.user = userData
+            localStorage.setItem('user', JSON.stringify(userData))
+            axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`
+        },
+
+        clearUserData() {
+            localStorage.removeItem('user')
+            location.reload()
+        },
+
+        // Search
         gotResults(state, payload) {
             state.searchResults = [...payload]
         },
     },
+
     actions: {
+        // Auth
+        async login({ commit }, credentials) {
+            const { data } = await axios
+                .post('/login', credentials);
+            commit('setUserData', data);
+        },
+
+        logout({ commit }) {
+            commit('clearUserData')
+        },
+
+        // Search
         makeSearch: _.throttle(({ commit }, payload) => {
             // Search for a movie or a show
             if (payload.type === "movie") {
@@ -62,6 +89,10 @@ const store = new Vuex.Store({
                     .catch(err => console.log(err))
             }
         }, 1500)
+    },
+
+    getters: {
+        isLogged: state => !!state.user
     }
 });
 
