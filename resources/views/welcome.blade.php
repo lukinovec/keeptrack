@@ -27,7 +27,7 @@
 
 <body>
     <div id="app" class="flex-center position-ref full-height mx-4">
-        <router-link to="/" class="text-6xl text-blue-400">KeepTrack</router-link>
+        <nav-bar></nav-bar>
         <search-bar></search-bar>
         <router-view></router-view>
     </div>

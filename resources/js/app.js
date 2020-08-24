@@ -10,6 +10,8 @@ import routes from './routes';
 import axios from 'axios';
 import _ from 'lodash';
 import SearchBar from './components/SearchBar.vue';
+import NavBar from './components/NavBar.vue';
+import LoginComponent from './components/auth/LoginComponent.vue';
 import xml2json from './xmlToJSON';
 
 window.Vue = require('vue');
@@ -65,7 +67,8 @@ const store = new Vuex.Store({
 
 const app = new Vue({
     components: {
-        SearchBar
+        SearchBar,
+        NavBar
     },
     el: '#app',
     router,

@@ -1,5 +1,5 @@
 import Dashboard from './components/Dashboard';
-import SearchBar from './components/SearchBar';
+import LoginComponent from './components/auth/LoginComponent';
 import FoundResults from './components/FoundResults';
 
 export default {
@@ -11,14 +11,14 @@ export default {
             component: Dashboard,
         },
         {
-            name: 'SearchBar',
-            path: '/searchbar',
-            component: SearchBar
-        },
-        {
             name: 'FoundResults',
             path: '/results/:type',
             component: FoundResults
+        },
+        {
+            name: 'LoginComponent',
+            path: '/login',
+            component: LoginComponent
         }
     ]
 }
