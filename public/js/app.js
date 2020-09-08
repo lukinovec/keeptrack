@@ -2098,6 +2098,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2105,7 +2112,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["isLogged"])),
+  methods: {
+    logout: function logout() {
+      this.$store.dispatch("logout");
+    }
+  }
+});
 
 /***/ }),
 
@@ -38864,7 +38880,22 @@ var render = function() {
       _vm._v(" "),
       _c("router-link", { staticClass: "m-5", attrs: { to: "/login" } }, [
         _vm._v("Login")
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.isLogged
+        ? _c(
+            "button",
+            {
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.logout()
+                }
+              }
+            },
+            [_vm._v("Logout")]
+          )
+        : _vm._e()
     ],
     1
   )
@@ -55518,6 +55549,18 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.component('search-bar', _components_SearchBar_vue__WEBPACK_IMPORTED_MODULE_6__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"]);
+router.beforeEach(function (to, from, next) {
+  var loggedIn = localStorage.getItem('user');
+
+  if (to.matched.some(function (record) {
+    return record.meta.auth;
+  }) && !loggedIn) {
+    next('/login');
+    return;
+  }
+
+  next();
+});
 var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
     searchResults: {},
@@ -55570,6 +55613,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
       var commit = _ref2.commit;
       commit('clearUserData');
     },
+    // register({ dispatch }, toRegister) {
+    //     const { registered } = await axios
+    //         .post('/register', toRegister);
+    //     dispatch('login', registered.credentials)
+    // },
     // Search
     makeSearch: lodash__WEBPACK_IMPORTED_MODULE_5___default.a.throttle(function (_ref3, payload) {
       var commit = _ref3.commit;
@@ -55619,7 +55667,27 @@ var app = new Vue({
   },
   el: '#app',
   router: router,
-  store: store
+  store: store,
+  created: function created() {
+    var _this = this;
+
+    var userInfo = localStorage.getItem('user');
+
+    if (userInfo) {
+      var userData = JSON.parse(userInfo);
+      this.$store.commit('setUserData', userData);
+    }
+
+    axios__WEBPACK_IMPORTED_MODULE_4___default.a.interceptors.response.use(function (response) {
+      return response;
+    }, function (error) {
+      if (error.response.status === 401) {
+        _this.$store.dispatch('logout');
+      }
+
+      return Promise.reject(error);
+    });
+  }
 });
 
 /***/ }),

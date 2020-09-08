@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
-use Curl\Curl;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +13,14 @@ use Curl\Curl;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->middleware('cors');
+    return view('dashboard');
+})->middleware('cors')->name("home");
 
+Route::get('/login', function () {
+    return view("login");
+})->name("login");
+
+Route::get('/register', function () {
+    return view("register");
+})->name("register");
 // Route::post('/results/goodreads', 'BookController@fetch')->middleware('cors');

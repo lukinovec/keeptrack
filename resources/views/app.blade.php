@@ -23,15 +23,15 @@
             margin: 0;
         }
     </style>
+    @livewireStyles
 </head>
 
 <body>
     <div id="app" class="flex-center position-ref full-height mx-4">
-        <nav-bar></nav-bar>
-        <search-bar></search-bar>
-        <router-view></router-view>
+        @livewire("search-bar")
+        @yield("content")
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @livewireScripts
 </body>
 
 </html>
