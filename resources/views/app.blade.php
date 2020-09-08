@@ -28,6 +28,7 @@
 
 <body>
     <div id="app" class="flex-center position-ref full-height mx-4">
+        @livewire("nav-bar")
         @livewire("search-bar")
         @yield("content")
     </div>
