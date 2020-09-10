@@ -27,9 +27,11 @@
 </head>
 
 <body>
-    <div id="app" class="flex-center position-ref full-height mx-4">
+    <div id="app" class="flex-center position-ref full-height w-100 mx-4">
         @livewire("nav-bar")
+        @if (Auth::check())
         @livewire("search-bar")
+        @endif
         @yield("content")
     </div>
     @livewireScripts

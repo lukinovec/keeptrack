@@ -9,16 +9,17 @@ class SearchBar extends Component
 {
     public String $search = "";
     public String $searchType = "movie";
+    public $movies = [];
     // protected $updatesQueryString = ['search'];
 
-    public function search()
+    public function submitSearch()
     {
         $this->searchType === "movie" ? $this->formatMovieResults() : $this->formatBookResults();
     }
 
     protected function getMovieResults()
     {
-        return Http::post('https://www.omdbapi.com', [
+        return Http::get('https://www.omdbapi.com', [
             'apikey' => '22d5a333',
             's' => $this->search,
         ]);
@@ -47,6 +48,6 @@ class SearchBar extends Component
 
     public function render()
     {
-        return view("livewire.search-bar");
+        return view("livewire.search-bar", ["results" => $this->movies]);
     }
 }

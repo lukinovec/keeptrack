@@ -4,7 +4,7 @@
         <option value="movie">TV / Movie</option>
         <option value="book">Book</option>
     </select>
-    <button wire:click="search">Submit</button>
+    <button wire:click="submitSearch">Submit</button>
     <div class="">
         You're searching a {{ $searchType }} named {{ $search }}
     </div>

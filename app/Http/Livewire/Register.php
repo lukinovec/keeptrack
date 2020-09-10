@@ -17,11 +17,11 @@ class Register extends Component
         if ($this->email !== "") {
             if (User::first("email", $this->email) === null) {
                 if ($this->password === $this->confirm) {
-                    $user = new User;
-                    $user->name = $this->email;
-                    $user->email = $this->email;
-                    $user->password = sha1($this->password);
-                    $user->save();
+                    return User::create([
+                        "name" => $this->email,
+                        "email" => $this->email,
+                        "password" => bcrypt($this->password),
+                    ]);
                     session()->flash("message", "Registered successfuly!");
                 } else {
                     session()->flash("message", "Password and password confirmation are not matching.");
