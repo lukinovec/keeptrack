@@ -20,6 +20,10 @@ Route::middleware(["auth", "cors"])->group(function () {
     Route::get("/home", function () {
         return view("dashboard");
     })->name("home");
+
+    Route::get("/results", function () {
+        return view("found-results");
+    })->name("found-results");
 });
 
 

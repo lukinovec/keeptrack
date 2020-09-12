@@ -10,7 +10,17 @@ class Register extends Component
     public $email = "";
     public $password = "";
     public $confirm = "";
+    public $confirmed;
     public $newUser;
+
+    public function updatedConfirm()
+    {
+        if ($this->password === $this->confirm) {
+            $this->confirmed = "Matching";
+        } else {
+            $this->confirmed = "Not matching";
+        }
+    }
 
     public function register()
     {
@@ -36,6 +46,6 @@ class Register extends Component
 
     public function render()
     {
-        return view("livewire.register");
+        return view("livewire.register", ["confirmed" => $this->confirmed]);
     }
 }
