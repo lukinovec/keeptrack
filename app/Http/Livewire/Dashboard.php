@@ -22,14 +22,17 @@ class Dashboard extends Component
     public function getResults()
     {
         $response = Http::get('https://www.omdbapi.com', [
-            'apikey' => '22d5a333',
+            'apikey' => config('services.omdbapi.key'),
             's' => $this->search,
         ]);
+
         $this->response = $response->json()["Search"];
     }
 
     public function render()
     {
-        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response]);
+        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response])
+            ->extends('app')
+            ->section('content');
     }
 }
