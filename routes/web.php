@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Login;
+use App\Http\Livewire\Register;
+use App\Http\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -12,27 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/", function () {
-    return view("welcome");
-})->name("welcome");
+Route::get("/", Welcome::class)->name("welcome");
 
 Route::middleware(["auth", "cors"])->group(function () {
-    Route::get("/home", function () {
-        return view("dashboard");
-    })->name("home");
+    Route::get("/home", Dashboard::class)->name("home");
 
-    Route::get("/results", function () {
-        return view("found-results");
-    })->name("found-results");
+    // Route::get("/results", )->name("found-results");
 });
 
-
-
-Route::get("/login", function () {
-    return view("login");
-})->name("login");
-
-Route::get("/register", function () {
-    return view("register");
-})->name("register");
+Route::get("/login", Login::class)->name("login");
+Route::get("/register", Register::class)->name("register");
 // Route::post('/results/goodreads', 'BookController@fetch')->middleware('cors');
