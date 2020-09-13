@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
-    <style>
+    {{-- <style>
         html,
         body {
             background-color: #fff;
@@ -22,7 +22,7 @@
             height: 100vh;
             margin: 0;
         }
-    </style>
+    </style> --}}
     @livewireStyles
 </head>
 
@@ -31,7 +31,9 @@
         @livewire("nav-bar")
         @if (Auth::check())
         @endif
-        @yield("content")
+        <div>
+            @yield("content")
+        </div>
     </div>
     @livewireScripts
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
