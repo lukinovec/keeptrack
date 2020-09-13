@@ -28,13 +28,10 @@ class Dashboard extends Component
     public function getMovies()
     {
         $response = Http::get('https://www.omdbapi.com', [
-<<<<<<< HEAD
             'apikey' => '22d5a333',
             's' => $this->formattedSearch,
-=======
             'apikey' => config('services.omdbapi.key'),
             's' => $this->search,
->>>>>>> 099ed2adea5283ca7c562b23b81dcb7ff8560ac1
         ]);
 
         $this->response = $response->json()["Search"];
