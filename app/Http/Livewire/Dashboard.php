@@ -9,21 +9,27 @@ class Dashboard extends Component
 {
     // protected $listeners = ["isSearch"];
     public String $search = "";
+    public String $formattedSearch = "";
     public String $searchtype = "movie";
     public $isSearch = false;
     public $response;
 
-    public function updated()
+    public function updated($name)
     {
-        $this->search !== "" ? $this->isSearch = true : $this->isSearch = false;
-        $this->getResults();
+        if (strlen($this->search) > 2) {
+            $this->isSearch = true;
+            $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
+            $this->searchtype === "movie" ? $this->getMovies() : "";
+        } else {
+            $this->isSearch = false;
+        }
     }
 
-    public function getResults()
+    public function getMovies()
     {
         $response = Http::get('https://www.omdbapi.com', [
             'apikey' => '22d5a333',
-            's' => $this->search,
+            's' => $this->formattedSearch,
         ]);
         $this->response = $response->json()["Search"];
     }

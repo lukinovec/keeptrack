@@ -36,8 +36,10 @@
         </div>
     </div>
     @else
+    @if ($results)
     @foreach ($results as $item)
     {{ $item["Title"] }}
     @endforeach
+    @endif
     @endif
 </div>
