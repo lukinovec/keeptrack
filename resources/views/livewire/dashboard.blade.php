@@ -1,6 +1,13 @@
 <div>
     <div class="text-center">
-        <livewire:search-bar />
+        <div class="w-full">
+            <input wire:model.debounce.300ms="search" type="text" placeholder="Search something"
+                class="p-4 text-2xl border-b-2 w-1/3" />
+            <select wire:model="searchtype" name="searchtype" id="searchtype">
+                <option value="movie">TV / Movie</option>
+                <option value="book">Book</option>
+            </select>
+        </div>
     </div>
     @if ($isSearch === false)
     <div class="flex flex-row h-full w-full justify-center align-middle">
@@ -29,6 +36,8 @@
         </div>
     </div>
     @else
-    <livewire:found-results />
+    @foreach ($results as $item)
+    {{ $item["Title"] }}
+    @endforeach
     @endif
 </div>
