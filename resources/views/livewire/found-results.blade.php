@@ -1,3 +1,5 @@
 <div>
-    {{dd($response)}}
+    {{ $results }}
+
+    <button wire:click="getResults">Get Results</button>
 </div>

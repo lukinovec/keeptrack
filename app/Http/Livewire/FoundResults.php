@@ -13,13 +13,22 @@ class FoundResults extends Component
     public $searchtype = "movie";
     public $response;
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
-        $response = Http::get('https://www.omdbapi.com', [
+        $response = Http::get('https://www.omdbapi.com/?', [
             'apikey' => '22d5a333',
             's' => $this->search,
         ]);
-        $this->response = $response;
+        $this->response = dd($response->json());
+    }
+
+    public function getResults()
+    {
+        $response = Http::get('https://www.omdbapi.com/?', [
+            'apikey' => '22d5a333',
+            's' => $this->search,
+        ]);
+        $this->response = dd($response->json());
     }
 
     public function receiveSearch($query)

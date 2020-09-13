@@ -13,7 +13,6 @@ class SearchBar extends Component
 
     public function updatedSearch()
     {
-        // $this->searchType === "movie" ? $this->getMovieResults() : $this->formatBookResults();
         $this->emit("isSearch");
         $this->emit("receiveSearch", $this->search);
     }
