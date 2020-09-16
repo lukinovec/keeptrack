@@ -730,7 +730,7 @@ module.exports = {
     userSelect: ['responsive'],
     verticalAlign: ['responsive'],
     visibility: ['responsive'],
-    whitespace: ['responsive'],
+    whitespace: ['responsive', 'hover', 'focus'],
     width: ['responsive'],
     wordBreak: ['responsive'],
     zIndex: ['responsive'],

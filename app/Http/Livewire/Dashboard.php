@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Support\Facades\Http;
+use App\Classes\Search;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -19,23 +19,13 @@ class Dashboard extends Component
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
             $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
-            $this->searchtype === "movie" ? $this->getMovies() : "";
+            $search = new Search($this->searchtype, $this->formattedSearch);
+            $this->response = $search->makeSearch();
         } else {
             $this->isSearch = false;
         }
     }
 
-    public function getMovies()
-    {
-        $response = Http::get('https://www.omdbapi.com', [
-            'apikey' => '22d5a333',
-            's' => $this->formattedSearch,
-            'apikey' => config('services.omdbapi.key'),
-            's' => $this->search,
-        ]);
-
-        $this->response = $response->json()["Search"];
-    }
 
     public function render()
     {

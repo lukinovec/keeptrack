@@ -30,8 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'omdbapi' => [
-        'key' => '22d5a333',
+    'apikey' => [
+        'omdb' => '22d5a333',
+        'goodreads' => 'FD5YvIsvRnGRKmSPcZxt6g'
     ],
 
 ];
