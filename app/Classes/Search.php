@@ -2,38 +2,67 @@
 
 namespace App\Classes;
 
-use Illuminate\Support\Facades\Http;
+use App\Classes\Request;
 
 class Search
 {
+    public $response;
     public function __construct($searchtype, $search)
     {
         $this->searchtype = $searchtype;
         $this->search = $search;
-    }
-
-    public function getMovies()
-    {
-        $response = Http::get('https://www.omdbapi.com', [
-            'apikey' => config('services.apikey.omdb'),
-            's' => $this->search,
-        ]);
-
-        return dd($response->json()["Search"]);
-    }
-
-    public function getBooks()
-    {
-        $response = Http::get('https://www.goodreads.com/search/index.xml', [
-            'key' => config('services.apikey.goodreads'),
-            'q' => $this->search,
-        ]);
-        $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
-        return dd(json_decode(json_encode($xml))->search->results->work);
+        $this->request = new Request($this->searchtype);
+        $this->response = $this->request->search($this->search);
     }
 
     public function makeSearch()
     {
-        $this->searchtype === "movie" ? $this->getMovies() : $this->getBooks();
+        if ($this->searchtype === "movie") {
+            return $this->formatMovies($this->response);
+        }
+
+        if ($this->searchtype === "details") {
+            return $this->request->search($this->search, "i");
+        }
+
+        if ($this->searchtype === "book") {
+            // Convert XML to JSON - https://stackoverflow.com/a/19391553
+            $xml = simplexml_load_string($this->response, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $results = json_decode(json_encode($xml))->search->results->work;
+            return $this->formatBooks($results);
+        }
+    }
+
+    public function formatMovies($query)
+    {
+        $query = $query["Search"];
+        $formatted = [];
+        foreach ($query as $item) {
+            array_push($formatted, [
+                "id" => $item["imdbID"],
+                "title" => $item["Title"],
+                "year" => $item["Year"],
+                "type" => $item["Type"],
+                "image" => $item["Poster"],
+            ]);
+        }
+        return $formatted;
+    }
+
+    public function formatBooks($query)
+    {
+        $formatted = [];
+        foreach ($query as $item) {
+            array_push($formatted, [
+                "id" => $item->best_book->id->{'0'},
+                "rating" => $item->average_rating,
+                "title" => $item->best_book->title,
+                "year" => $item->original_publication_year->{"0"},
+                "creator_name" => $item->best_book->author->name,
+                "creator_id" => $item->best_book->author->id->{"0"},
+                "image" => $item->best_book->image_url
+            ]);
+        }
+        return $formatted;
     }
 }

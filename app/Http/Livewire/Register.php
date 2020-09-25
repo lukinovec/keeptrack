@@ -12,6 +12,7 @@ class Register extends Component
     public $confirm = "";
     public $confirmed;
     public $newUser;
+    public $getUserByEmail;
 
     public function updatedConfirm()
     {
@@ -22,10 +23,15 @@ class Register extends Component
         }
     }
 
+    public function mount()
+    {
+        $this->getUserByEmail = User::first("email", $this->email);
+    }
+
     public function register()
     {
         if ($this->email !== "") {
-            if (User::first("email", $this->email) === null) {
+            if ($this->getUserByEmail === null) {
                 if ($this->password === $this->confirm) {
                     return User::create([
                         "name" => $this->email,

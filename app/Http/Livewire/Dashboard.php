@@ -7,14 +7,15 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    // protected $listeners = ["isSearch"];
     public String $search = "";
     public String $formattedSearch = "";
     public String $searchtype = "movie";
+    public $details;
     public $isSearch = false;
     public $response;
+    public $loading = false;
 
-    public function updated($name)
+    public function updated()
     {
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
@@ -26,10 +27,19 @@ class Dashboard extends Component
         }
     }
 
+    public function getDetails($id)
+    {
+        if ($id) {
+            $search = new Search("details", $id);
+            $this->loading = true;
+            $this->details = $search->makeSearch();
+            $this->loading = false;
+        }
+    }
 
     public function render()
     {
-        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response])
+        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response, "details" => $this->details, "loading" => $this->loading])
             ->extends('app')
             ->section('content');
     }
