@@ -14,8 +14,6 @@
         <livewire:menu />
         @else
         <div class="mt-4 flex flex-wrap" :class="{ 'items-center justify-center' : infoid === '' }">
-            <span class="font-bold" x-text="infoid"></span> <br>
-
             @if ($results)
             @foreach ($results as $item)
             <div x-show="infoid === '{{$item['id']}}' || infoid === ''"
@@ -53,11 +51,14 @@
             @else
             No results found
             @endif
+            <div wire:loading>
+                Loading details, please wait
+            </div>
             @if ($details)
             <div x-show="infoid" class="flex-1">
                 <div>
-                    {{-- <span class="font-bold"> {{ $details["Genre"] }} </span> <br> --}}
-                    {{ $details["description"] }}
+                    <span class="font-bold"> {{ $details["Genre"] }} </span> <br>
+                    <span class="font-bold"> {{ $details["Plot"] }} </span> <br>
                 </div>
             </div>
             @endif

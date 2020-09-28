@@ -14,14 +14,16 @@ class Search
 
     public function makeRequest($searchtype)
     {
-        $request = new Request($searchtype);
-        return $request->search($this->search);
+        $request = new Request($searchtype, $this->search);
+        return $request->search();
     }
+
 
     public function makeSearch(String $searchtype)
     {
         // Get movies by name
         if ($searchtype === "movie") {
+
             return $this->formatMovies($this->makeRequest($searchtype));
         }
 

@@ -22,7 +22,7 @@ class Dashboard extends Component
             $this->isSearch = true;
             $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
             $search = new Search($this->formattedSearch);
-            $this->response = $search->makeSearch($this->searchtype);
+            $this->response = dd($search->makeSearch($this->searchtype));
         } else {
             $this->isSearch = false;
         }
