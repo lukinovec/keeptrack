@@ -35,18 +35,22 @@ class Search
 
     public function formatMovies($query)
     {
-        $query = $query["Search"];
-        $formatted = [];
-        foreach ($query as $item) {
-            array_push($formatted, [
-                "id" => $item["imdbID"],
-                "title" => $item["Title"],
-                "year" => $item["Year"],
-                "type" => $item["Type"],
-                "image" => $item["Poster"],
-            ]);
+        if ($query["Response"] === "True") {
+            $query = $query["Search"];
+            $formatted = [];
+            foreach ($query as $item) {
+                array_push($formatted, [
+                    "id" => $item["imdbID"],
+                    "title" => $item["Title"],
+                    "year" => $item["Year"],
+                    "type" => $item["Type"],
+                    "image" => $item["Poster"],
+                ]);
+            }
+            return $formatted;
+        } else {
+            return false;
         }
-        return $formatted;
     }
 
     public function formatBooks($query)

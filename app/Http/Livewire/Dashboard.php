@@ -14,6 +14,7 @@ class Dashboard extends Component
     public $isSearch = false;
     public $response;
     public $loading = false;
+    public $infoid = "";
 
     public function updated()
     {
@@ -27,7 +28,8 @@ class Dashboard extends Component
         }
     }
 
-    public function getDetails($id)
+
+    public function updatedInfoid($id)
     {
         if ($id) {
             $search = new Search("details", $id);
@@ -39,7 +41,7 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response, "details" => $this->details, "loading" => $this->loading])
+        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response, "details" => $this->details, "loading" => $this->loading, "infoid" => $this->infoid])
             ->extends('app')
             ->section('content');
     }
