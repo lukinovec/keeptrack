@@ -7,29 +7,43 @@ use App\Classes\Request;
 class Search
 {
     public $response;
-    public function __construct($searchtype, $search)
+    public function __construct($search)
     {
-        $this->searchtype = $searchtype;
         $this->search = $search;
-        $this->request = new Request($this->searchtype);
-        $this->response = $this->request->search($this->search);
     }
 
-    public function makeSearch()
+    public function makeRequest($searchtype)
     {
-        if ($this->searchtype === "movie") {
-            return $this->formatMovies($this->response);
+        $request = new Request($searchtype);
+        return $request->search($this->search);
+    }
+
+    public function makeSearch(String $searchtype)
+    {
+        // Get movies by name
+        if ($searchtype === "movie") {
+            return $this->formatMovies($this->makeRequest($searchtype));
         }
 
-        if ($this->searchtype === "details") {
-            return $this->request->search($this->search, "i");
+        // Get a movie by ID
+        if ($searchtype === "movie_details") {
+            return $this->makeRequest($searchtype);
         }
 
-        if ($this->searchtype === "book") {
+        // Get a book by name
+        if ($searchtype === "book") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
-            $xml = simplexml_load_string($this->response, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
             $results = json_decode(json_encode($xml))->search->results->work;
             return $this->formatBooks($results);
+        }
+
+        // Get a book by ID
+        if ($searchtype === "book_details") {
+            // Convert XML to JSON - https://stackoverflow.com/a/19391553
+            $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
+            $results = (array) json_decode(json_encode($xml))->book;
+            return $results;
         }
     }
 
@@ -62,6 +76,7 @@ class Search
                 "rating" => $item->average_rating,
                 "title" => $item->best_book->title,
                 "year" => $item->original_publication_year->{"0"},
+                "type" => "book",
                 "creator_name" => $item->best_book->author->name,
                 "creator_id" => $item->best_book->author->id->{"0"},
                 "image" => $item->best_book->image_url

@@ -21,20 +21,20 @@ class Dashboard extends Component
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
             $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
-            $search = new Search($this->searchtype, $this->formattedSearch);
-            $this->response = $search->makeSearch();
+            $search = new Search($this->formattedSearch);
+            $this->response = $search->makeSearch($this->searchtype);
         } else {
             $this->isSearch = false;
         }
     }
 
-
+    // Show details
     public function updatedInfoid($id)
     {
         if ($id) {
-            $search = new Search("details", $id);
+            $search = new Search($id);
             $this->loading = true;
-            $this->details = $search->makeSearch();
+            $this->details = $search->makeSearch($this->searchtype . "_details");
             $this->loading = false;
         }
     }

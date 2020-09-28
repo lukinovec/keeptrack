@@ -56,8 +56,8 @@
             @if ($details)
             <div x-show="infoid" class="flex-1">
                 <div>
-                    <span class="font-bold"> {{ $details["Genre"] }} </span> <br>
-                    {{ $details["Plot"] }}
+                    {{-- <span class="font-bold"> {{ $details["Genre"] }} </span> <br> --}}
+                    {{ $details["description"] }}
                 </div>
             </div>
             @endif

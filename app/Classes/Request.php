@@ -12,12 +12,19 @@ class Request
         $this->searchtype = $searchtype;
     }
 
-    public function search(String $query, String $param = "s")
+    public function search(String $query)
     {
-        if ($this->searchtype === "movie" || $this->searchtype === "details") {
+        if ($this->searchtype === "movie") {
             return Http::get('https://www.omdbapi.com', [
                 'apikey' => config('services.apikey.omdb'),
-                $param => $query,
+                's' => $query,
+            ])->json();
+        }
+
+        if ($this->searchtype === "movie_details") {
+            return Http::get('https://www.omdbapi.com', [
+                'apikey' => config('services.apikey.omdb'),
+                'i' => $query,
             ])->json();
         }
 
@@ -25,6 +32,12 @@ class Request
             return Http::get('https://www.goodreads.com/search/index.xml', [
                 'key' => config('services.apikey.goodreads'),
                 'q' => $query,
+            ]);
+        }
+
+        if ($this->searchtype === "book_details") {
+            return Http::get("https://www.goodreads.com/book/show/$query.xml", [
+                'key' => config('services.apikey.goodreads'),
             ]);
         }
     }
