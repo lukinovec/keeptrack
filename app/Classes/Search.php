@@ -23,7 +23,6 @@ class Search
     {
         // Get movies by name
         if ($searchtype === "movie") {
-
             return $this->formatMovies($this->makeRequest($searchtype));
         }
 

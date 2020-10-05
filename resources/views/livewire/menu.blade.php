@@ -1,5 +1,5 @@
-<div class="flex flex-row h-full w-full justify-center align-middle">
-    <div class="flex-1 mt-64 text-center">
+<div class="flex flex-row h-full w-full justify-center align-middle" x-data="{ clicked: @entangle('clicked') }">
+    <div x-on:click="clicked = 'movies'" class="flex-1 mt-64 text-center">
         <span class="font-extrabold">Movies & TV Shows</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
             class="icon-film m-auto rounded-full h-12 w-12 sm:h-24 sm:w-24 transition duration-150 ease-in-out hover:bg-gray-400 p-2 bg-gray-200">
@@ -10,7 +10,7 @@
         </svg>
     </div>
 
-    <div class="flex-1 mt-64 text-center">
+    <div x-on:click="clicked = 'books'" class="flex-1 mt-64 text-center">
         <span class="font-extrabold">Books</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
             class="icon-book-open m-auto rounded-full h-12 w-12 sm:h-24 sm:w-24 transition duration-150 ease-in-out hover:bg-gray-400 p-2 bg-gray-200">
@@ -22,4 +22,5 @@
             </g>
         </svg>
     </div>
+    {{-- <livewire:library x-show="clicked" /> --}}
 </div>

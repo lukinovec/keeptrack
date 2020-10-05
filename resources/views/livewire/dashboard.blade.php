@@ -11,7 +11,7 @@
     </div>
     <div>
         @if ($isSearch === false)
-        <livewire:menu />
+        <livewire:menu :authUser="$authUser" />
         @else
         <div class="mt-4 flex flex-wrap" :class="{ 'items-center justify-center' : infoid === '' }">
             @if ($results)
@@ -28,20 +28,21 @@
                     {{ $item["title"] }}
                 </span>
                 {{ $item["year"] }}
-                <div class="flex">
+                <div id="{{ $item['id'] }}" class="flex">
                     <img class="my-2" src="{{ $item["image"] }}" alt="image">
                     <div class="btns flex flex-col w-full text-center">
                         <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100">Completed</a>
-                        <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100" href="">Plan
-                            To Watch</a>
-                        @if ($item["type"] === "series")
                         <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100"
+                            wire:click="$emit('changeStatus', '{{ json_encode($item) }}', 'ptw')">Plan
+                            To Watch</a>
+                        @if ($item["type"] === "series" ) <a
+                            class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100"
                             href="">Watching</a>
                         @endif
                     </div>
                 </div>
                 <div class="info flex font-bold">
-                    <div class="flex-1 text-center p-5 text-white font-bold bg-red-700" id="{{ $item['id'] }}"
+                    <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
                         x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'"
                         x-text="infoid ? 'Back to all results' : 'More information'">
                     </div>

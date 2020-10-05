@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Classes\Search;
+use App\Classes\Library;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
 {
@@ -14,18 +16,41 @@ class Dashboard extends Component
     public $isSearch = false;
     public $response;
     public $loading = false;
-    public $infoid = "";
+    public String $infoid = "";
+    public $test;
+    public $authUser;
 
-    public function updated()
+    protected $listeners = ['changeStatus'];
+
+    public function mount()
+    {
+        if (Auth::id()) {
+            $this->authUser = Auth::id();
+        } else {
+            $this->authUser = "Not logged in.";
+        }
+    }
+
+    public function startSearching()
     {
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
             $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
             $search = new Search($this->formattedSearch);
-            $this->response = dd($search->makeSearch($this->searchtype));
+            $this->response = $search->makeSearch($this->searchtype);
         } else {
             $this->isSearch = false;
         }
+    }
+
+    public function updatedSearch()
+    {
+        $this->startSearching();
+    }
+
+    public function updatedSearchtype()
+    {
+        $this->startSearching();
     }
 
     // Show details
@@ -39,9 +64,23 @@ class Dashboard extends Component
         }
     }
 
+    public function changeStatus(String $item, String $status)
+    {
+        $library = new Library($this->authUser);
+        $library->updateMovieStatus(json_decode($item), $status);
+    }
+
     public function render()
     {
-        return view('livewire.dashboard', ["isSearch" => $this->isSearch, "results" => $this->response, "details" => $this->details, "loading" => $this->loading, "infoid" => $this->infoid])
+        return view('livewire.dashboard', [
+            "isSearch" => $this->isSearch,
+            "results" => $this->response,
+            "details" => $this->details,
+            "loading" => $this->loading,
+            "infoid" => $this->infoid,
+            "authUser" => $this->authUser,
+            "test" => $this->test
+        ])
             ->extends('app')
             ->section('content');
     }

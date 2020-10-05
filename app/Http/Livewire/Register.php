@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Register extends Component
@@ -33,12 +34,13 @@ class Register extends Component
         if ($this->email !== "") {
             if ($this->getUserByEmail === null) {
                 if ($this->password === $this->confirm) {
-                    return User::create([
+                    User::create([
                         "name" => $this->email,
                         "email" => $this->email,
-                        "password" => bcrypt($this->password),
+                        "password" => Hash::make($this->password),
                     ]);
                     session()->flash("message", "Registered successfuly!");
+                    return redirect('home');
                 } else {
                     session()->flash("message", "Password and password confirmation are not matching.");
                 }
