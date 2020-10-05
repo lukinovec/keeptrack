@@ -51,18 +51,11 @@ class Library
         $get_movie = Movie::where("imdbID", $movie->id)->first();
         if ($get_movie) {
             $movie_id = $get_movie->id;
-            $record = MovieUser::where("movie_id", $movie_id)->where("user_id", $this->authUser)->first();
-            if ($record) {
-                $record->status = $status;
-                $record->save();
-                $record;
-            } else {
-                MovieUser::create([
-                    "user_id" => $this->authUser,
-                    "movie_id" => $movie_id,
-                    "status" => $status
-                ]);
-            }
+            MovieUser::updateOrCreate([
+                "user_id" => $this->authUser,
+                "movie_id" => $movie_id,
+                "status" => $status
+            ]);
         } else {
             Movie::create([
                 "imdbID" => $movie->id,
