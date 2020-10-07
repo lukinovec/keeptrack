@@ -17,8 +17,13 @@ class Dashboard extends Component
     public $response;
     public $loading = false;
     public String $infoid = "";
-    public $test;
+    public $test; // = "Dashboard.php report - nektere polozky nejdou pridat (prostredni, nekdy vpravo) - missing ) after argument list"
     public $authUser;
+    public $statuses = [
+        "completed" => "completed",
+        "ptw" => "ptw",
+        "watching" => "watching"
+    ];
 
     protected $listeners = ['changeStatus'];
 
@@ -28,6 +33,10 @@ class Dashboard extends Component
             $this->authUser = Auth::id();
         } else {
             $this->authUser = "Not logged in.";
+        }
+
+        if ($this->test) {
+            return dd($this->test);
         }
     }
 
@@ -68,6 +77,7 @@ class Dashboard extends Component
     {
         $library = new Library($this->authUser);
         $library->updateMovieStatus(json_decode($item), $status);
+        $this->startSearching();
     }
 
     public function render()
@@ -79,6 +89,7 @@ class Dashboard extends Component
             "loading" => $this->loading,
             "infoid" => $this->infoid,
             "authUser" => $this->authUser,
+            "statuses" => $this->statuses,
             "test" => $this->test
         ])
             ->extends('app')

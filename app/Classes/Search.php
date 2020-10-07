@@ -3,10 +3,11 @@
 namespace App\Classes;
 
 use App\Classes\Request;
+use App\Classes\Library;
+use Illuminate\Support\Facades\Auth;
 
 class Search
 {
-    public $response;
     public function __construct($search)
     {
         $this->search = $search;
@@ -51,15 +52,29 @@ class Search
     public function formatMovies($query)
     {
         if ($query["Response"] === "True") {
+            $library = new Library(Auth::id());
+            $statuses = $library->movieStatus();
             $query = $query["Search"];
             $formatted = [];
             foreach ($query as $item) {
+                $item_status = "";
+                $id_column = array_column($statuses, "movie_id");
+                if (in_array($item["imdbID"], $id_column)) {
+                    foreach ($statuses as $status) {
+                        if ($status["movie_id"] == $item["imdbID"]) {
+                            $item_status = $status["status"];
+                            break;
+                        }
+                    }
+                }
+
                 array_push($formatted, [
                     "id" => $item["imdbID"],
                     "title" => $item["Title"],
                     "year" => $item["Year"],
                     "type" => $item["Type"],
                     "image" => $item["Poster"],
+                    "status" => $item_status
                 ]);
             }
             return $formatted;

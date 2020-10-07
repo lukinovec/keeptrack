@@ -39,11 +39,11 @@ class User extends Authenticatable
 
     public function books()
     {
-        return $this->belongsToMany('App\Book');
+        return $this->belongsToMany('App\Book', 'book_user');
     }
 
     public function movies()
     {
-        return $this->belongsToMany('App\Movies');
+        return $this->belongsToMany('App\Movies', 'movie_user', 'user_id', 'movie_id');
     }
 }

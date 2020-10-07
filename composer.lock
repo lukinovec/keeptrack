@@ -1385,16 +1385,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.0.4",
+            "version": "v2.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "ba05ed71346b0af3abdf49664e512d54a9f56637"
+                "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/ba05ed71346b0af3abdf49664e512d54a9f56637",
-                "reference": "ba05ed71346b0af3abdf49664e512d54a9f56637",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
+                "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
                 "shasum": ""
             },
             "require": {
@@ -1408,8 +1408,8 @@
                 "calebporzio/sushi": "^2.1",
                 "laravel/framework": "^7.0|^8.0",
                 "mockery/mockery": "^1.3.1",
-                "orchestra/testbench": "^5.0",
-                "orchestra/testbench-dusk": "^5.2",
+                "orchestra/testbench": "^5.0|^6.0",
+                "orchestra/testbench-dusk": "^5.2|^6.0",
                 "phpunit/phpunit": "^8.4|^9.0",
                 "psy/psysh": "@stable"
             },
@@ -1446,7 +1446,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-08T03:27:50+00:00"
+            "time": "2020-09-30T16:19:54+00:00"
         },
         {
             "name": "monolog/monolog",

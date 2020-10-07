@@ -31,13 +31,17 @@
                 <div id="{{ $item['id'] }}" class="flex">
                     <img class="my-2" src="{{ $item["image"] }}" alt="image">
                     <div class="btns flex flex-col w-full text-center">
-                        <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100">Completed</a>
                         <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100"
+                            :class="{ 'border-l-4 border-red-700': '{{ $item['status'] }}' === 'completed' }"
+                            wire:click="$emit('changeStatus', '{{ json_encode($item) }}', 'completed')">Completed</a>
+                        <a class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100"
+                            :class="{ 'border-l-4 border-red-700': '{{ $item['status'] }}' === 'ptw' }"
                             wire:click="$emit('changeStatus', '{{ json_encode($item) }}', 'ptw')">Plan
                             To Watch</a>
                         @if ($item["type"] === "series" ) <a
                             class="flex-1 flex justify-center items-center font-bold m-2 hover:bg-red-100"
-                            href="">Watching</a>
+                            :class="{ 'border-l-4 border-red-700': '{{ $item['status'] }}' === 'completed' }"
+                            wire:click="$emit('changeStatus', '{{ json_encode($item) }}', 'watching')">Watching</a>
                         @endif
                     </div>
                 </div>

@@ -32,7 +32,7 @@ class Library
     {
         $statuses = [];
         foreach (MovieUser::where("user_id", $this->authUser)->get() as $record) {
-            array_push($statuses, ["movie_id" => Movie::find($record->movie_id)->imdbID, "status" => $record->status]);
+            array_push($statuses, ["movie_id" => $record->movie_id, "status" => $record->status]);
         }
         return $statuses;
     }
@@ -50,12 +50,14 @@ class Library
     {
         $get_movie = Movie::where("imdbID", $movie->id)->first();
         if ($get_movie) {
-            $movie_id = $get_movie->id;
-            MovieUser::updateOrCreate([
-                "user_id" => $this->authUser,
-                "movie_id" => $movie_id,
-                "status" => $status
-            ]);
+            $movie_id = $get_movie->imdbID;
+            MovieUser::updateOrCreate(
+                [
+                    "user_id" => $this->authUser,
+                    "movie_id" => $movie_id
+                ],
+                ["status" => $status]
+            );
         } else {
             Movie::create([
                 "imdbID" => $movie->id,

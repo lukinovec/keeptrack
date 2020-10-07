@@ -4,7 +4,6 @@ namespace App\Classes;
 
 use Illuminate\Support\Facades\Http;
 
-
 class Request
 {
     public function __construct(String $searchtype, String $query)
