@@ -1,0 +1,15 @@
+/* npx tailwindcss build ./resources/css/tailwind.css -o public/css/tailwind.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+.btn {
+    @apply font-bold text-white bg-gray-700 p-3 rounded-lg
+}
+
+.form-input {
+    @apply border-b-2 shadow-lg p-8 w-1/3
+}
+}

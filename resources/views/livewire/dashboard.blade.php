@@ -1,0 +1,36 @@
+<div x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch') }">
+    <div class="text-center">
+        <div class="w-full">
+            <input wire:model.debounce.500ms="search" x-on:focus="infoid = ''" type="text"
+                placeholder="Search something" class="p-4 text-2xl border-b-2 w-1/3" />
+            <select wire:model="searchtype" name="searchtype" id="searchtype">
+                <option value="movie">TV / Movie</option>
+                <option value="book">Book</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <div x-show="!isSearch">
+            <livewire:menu id="menu" :authUser="$authUser" />
+        </div>
+        <div x-show="isSearch" class="mt-4 flex flex-wrap" :class="{ 'items-center justify-center' : infoid === '' }">
+            @if ($results)
+            @foreach ($results as $item)
+            @livewire("result", ["item" => $item], key($item["id"]))
+            @endforeach
+            @else
+            No results found
+            @endif
+            @if ($details)
+            <br>
+            <div x-show="infoid" class="flex-1">
+                <div>
+                    <br><br>
+                    <span class="font-bold"> {{ $details["Genre"] }} </span> <br>
+                    <span class="font-bold"> {{ $details["Plot"] }} </span> <br>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
