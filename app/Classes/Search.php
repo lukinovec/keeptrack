@@ -49,14 +49,14 @@ class Search
         }
     }
 
+    // Format response to be displayed as results 
     public function formatMovies($query)
     {
         if ($query["Response"] === "True") {
             $library = new Library(Auth::id());
             $statuses = $library->movieStatus();
-            $query = $query["Search"];
             $formatted = [];
-            foreach ($query as $item) {
+            foreach ($query["Search"] as $item) {
                 $item_status = "";
                 $id_column = array_column($statuses, "movie_id");
                 if (in_array($item["imdbID"], $id_column)) {
@@ -85,8 +85,24 @@ class Search
 
     public function formatBooks($query)
     {
+        $library = new Library(Auth::id());
+        $statuses = $library->bookStatus();
         $formatted = [];
         foreach ($query as $item) {
+            $item_status = "";
+            $id_column = array_column($statuses, "book_id");
+            if (in_array($item->best_book->id->{'0'}, $id_column)) {
+                foreach ($statuses as $status) {
+                    if ($status["book_id"] == $item->best_book->id->{'0'}) {
+                        $item_status = $status["status"];
+                        break;
+                    }
+                }
+            }
+            $year = "";
+            if ($item->original_publication_year->{"0"}) {
+                $year = $item->original_publication_year->{"0"};
+            }
             array_push($formatted, [
                 "id" => $item->best_book->id->{'0'},
                 "rating" => $item->average_rating,
@@ -95,7 +111,8 @@ class Search
                 "type" => "book",
                 "creator_name" => $item->best_book->author->name,
                 "creator_id" => $item->best_book->author->id->{"0"},
-                "image" => $item->best_book->image_url
+                "image" => $item->best_book->image_url,
+                "status" => $item_status
             ]);
         }
         return $formatted;

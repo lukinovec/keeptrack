@@ -5,43 +5,33 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Movie;
 use App\Book;
-use App\MovieUser;
+use App\User;
 use App\BookUser;
 
 class Menu extends Component
 {
     public $clicked = "";
     public $authUser;
+    public $authUserID;
     public $library = [];
-    public $movieUser;
-    public $bookUser;
 
+    // TBD BOOKS
+    // Book methods messed up, refactored Movies to use model methods, need to do the same for books later
     public function mount()
     {
         $this->library = [];
-        $this->movieUser = MovieUser::where("user_id", $this->authUser)->get();
-        $this->bookUser = BookUser::where("user_id", $this->authUser)->get();
+        $this->authUser = User::find($this->authUserID);
     }
 
+    // Get user's movies or books based on where he clicked
     public function getLibrary()
     {
         if ($this->clicked === "movies") {
-            foreach ($this->movieUser as $result) {
-                $movie = Movie::where("imdbID", $result->movie_id)->first();
-                if ($movie) {
-                    $movie->status = $result->status;
-                    array_push($this->library, $movie);
-                }
-            }
+            $this->library = $this->authUser->movieList();
             dd($this->library);
         } elseif ($this->clicked === "books") {
-            foreach ($this->bookUser as $result) {
-                $book = Book::where("goodreadsID", $result->book_id)->first();
-                if ($book) {
-                    $book->status = $result->status;
-                    array_push($this->library, $book);
-                }
-            }
+            $this->library = $this->authUser->bookList();
+            dd($this->library);
         } else {
             $this->library = "";
         }

@@ -23,8 +23,8 @@
             margin: 0;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     @livewireStyles
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 
 <body>
@@ -37,7 +37,6 @@
         </div>
     </div>
     @livewireScripts
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 </body>
 
 </html>

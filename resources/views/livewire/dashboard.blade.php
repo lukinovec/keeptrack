@@ -1,8 +1,8 @@
 <div x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch') }">
     <div class="text-center">
         <div class="w-full">
-            <input wire:model.debounce.500ms="search" x-on:focus="infoid = ''" type="text"
-                placeholder="Search something" class="p-4 text-2xl border-b-2 w-1/3" />
+            <input wire:model.debounce="search" x-on:focus="infoid = ''" type="text" placeholder="Search something"
+                class="p-4 text-2xl border-b-2 w-1/3" />
             <select wire:model="searchtype" name="searchtype" id="searchtype">
                 <option value="movie">TV / Movie</option>
                 <option value="book">Book</option>
@@ -11,7 +11,7 @@
     </div>
     <div>
         <div x-show="!isSearch">
-            <livewire:menu id="menu" :authUser="$authUser" />
+            <livewire:menu id="menu" :authUserID="$authUser" />
         </div>
         <div x-show="isSearch" class="mt-4 flex flex-wrap" :class="{ 'items-center justify-center' : infoid === '' }">
             @if ($results)

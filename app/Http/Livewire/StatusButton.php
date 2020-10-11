@@ -18,6 +18,14 @@ class StatusButton extends Component
     public function mount($item)
     {
         $this->item = $item;
+        if ($item["type"] != "movie" && $item["type"] != "series") {
+            $this->statuses = [
+                "ptw" => "Plan to Read",
+                "completed" => "Completed",
+                "watching" => "Reading",
+                "" => ""
+            ];
+        }
     }
 
     public function render()

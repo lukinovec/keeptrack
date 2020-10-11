@@ -15,7 +15,6 @@ class Dashboard extends Component
     public $details;
     public $isSearch = false;
     public $response;
-    public $loading = false;
     public String $infoid = "";
     public $test; // = "Dashboard.php report - nektere polozky nejdou pridat (prostredni, nekdy vpravo) - missing ) after argument list"
     public $authUser;
@@ -67,17 +66,19 @@ class Dashboard extends Component
     {
         if ($id) {
             $search = new Search($id);
-            $this->loading = true;
             $this->details = $search->makeSearch($this->searchtype . "_details");
-            $this->loading = false;
         }
     }
 
     public function changeStatus(String $item, String $status)
     {
+        $item = json_decode($item);
         $library = new Library($this->authUser);
-        $library->updateMovieStatus(json_decode($item), $status);
-        $this->startSearching();
+        if ($item->type != "book") {
+            $library->updateMovieStatus($item, $status);
+        } else {
+            $library->updateBookStatus($item, $status);
+        }
     }
 
     public function render()
@@ -86,7 +87,6 @@ class Dashboard extends Component
             "isSearch" => $this->isSearch,
             "results" => $this->response,
             "details" => $this->details,
-            "loading" => $this->loading,
             "infoid" => $this->infoid,
             "authUser" => $this->authUser,
             "statuses" => $this->statuses,

@@ -23,8 +23,8 @@
 
     <div class="info flex font-bold">
         <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
-            x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'"
-            x-text="infoid ? 'Back to all results' : 'More information'">
+            x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">
+            Toggle details
         </div>
     </div>
 </div>
