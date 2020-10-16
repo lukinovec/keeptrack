@@ -18,6 +18,9 @@ class CreateBookUser extends Migration
             $table->integer('user_id');
             $table->text('book_id');
             $table->text('status');
+            $table->text('note')->nullable();
+            $table->integer('rating')->nullable();
+            $table->integer('pages_read')->nullable();
             $table->timestamps();
         });
     }

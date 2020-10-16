@@ -14,6 +14,7 @@ class Dashboard extends Component
     public String $searchtype = "movie";
     public $details;
     public $isSearch = false;
+    public $library;
     public $response;
     public String $infoid = "";
     public $test; // = "Dashboard.php report - nektere polozky nejdou pridat (prostredni, nekdy vpravo) - missing ) after argument list"
@@ -24,7 +25,7 @@ class Dashboard extends Component
         "watching" => "watching"
     ];
 
-    protected $listeners = ['changeStatus'];
+    protected $listeners = ["changeStatus", "libraryGot"];
 
     public function mount()
     {
@@ -37,6 +38,11 @@ class Dashboard extends Component
         if ($this->test) {
             return dd($this->test);
         }
+    }
+
+    public function libraryGot($library)
+    {
+        $this->library = $library;
     }
 
     public function startSearching()

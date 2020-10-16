@@ -28,10 +28,8 @@ class Menu extends Component
     {
         if ($this->clicked === "movies") {
             $this->library = $this->authUser->movieList();
-            dd($this->library);
         } elseif ($this->clicked === "books") {
             $this->library = $this->authUser->bookList();
-            dd($this->library);
         } else {
             $this->library = "";
         }

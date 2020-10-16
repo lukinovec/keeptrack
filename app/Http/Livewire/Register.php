@@ -11,16 +11,16 @@ class Register extends Component
     public $email = "";
     public $password = "";
     public $confirm = "";
-    public $confirmed;
+    public $confirmed = "border-blue-600";
     public $newUser;
     public $getUserByEmail;
 
     public function updatedConfirm()
     {
         if ($this->password === $this->confirm) {
-            $this->confirmed = "Matching";
+            $this->confirmed = "border-green-400";
         } else {
-            $this->confirmed = "Not matching";
+            $this->confirmed = "border-red-400";
         }
     }
 

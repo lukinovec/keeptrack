@@ -18,6 +18,10 @@ class CreateMovieUser extends Migration
             $table->integer('user_id');
             $table->text('movie_id');
             $table->text('status');
+            $table->text('note')->nullable();
+            $table->integer('rating')->nullable();
+            $table->integer('season')->nullable();
+            $table->integer('episode')->nullable();
             $table->timestamps();
         });
     }

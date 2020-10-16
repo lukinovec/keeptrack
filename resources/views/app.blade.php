@@ -28,11 +28,11 @@
 </head>
 
 <body>
-    <div id="app" class="flex-center position-ref h-full w-100 mx-4">
+    <div id="app" class="flex-center position-ref h-full mx-4">
         @livewire("nav-bar")
         @if (Auth::check())
         @endif
-        <div>
+        <div class="h-full w-full">
             @yield("content")
         </div>
     </div>

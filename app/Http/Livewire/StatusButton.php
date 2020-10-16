@@ -2,30 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Classes\Library;
 use Livewire\Component;
 
 class StatusButton extends Component
 {
     public $item;
     public $status = "";
-    public $statuses = [
-        "ptw" => "Plan to Watch",
-        "completed" => "Completed",
-        "watching" => "Watching",
-        "" => ""
-    ];
+    public $statuses = [];
 
     public function mount($item)
     {
         $this->item = $item;
-        if ($item["type"] != "movie" && $item["type"] != "series") {
-            $this->statuses = [
-                "ptw" => "Plan to Read",
-                "completed" => "Completed",
-                "watching" => "Reading",
-                "" => ""
-            ];
-        }
+        $this->statuses = (new Library())->statuses($item["type"]);
     }
 
     public function render()

@@ -4,20 +4,20 @@ namespace App\Classes;
 
 use App\Movie;
 use App\MovieUser;
-
 use App\Book;
 use App\BookUser;
-
 use App\User;
+
+use Illuminate\Support\Facades\Auth;
 
 class Library
 {
     /**
      *  @param  number $authUser  ID of current logged in user
      */
-    public function __construct($authUser)
+    public function __construct($authUser = null)
     {
-        $this->authUser = $authUser;
+        $this->authUser = $authUser ?: Auth::id();
     }
 
     public function findUser()
@@ -39,6 +39,25 @@ class Library
     public function books()
     {
         return $this->findUser()->books();
+    }
+
+    public function statuses($type)
+    {
+        if ($type == "book") {
+            return [
+                "ptw" => "Plan to Read",
+                "completed" => "Completed",
+                "watching" => "Reading",
+                "" => ""
+            ];
+        } else {
+            return [
+                "completed" => "Completed",
+                "ptw" => "Plan to Watch",
+                "watching" => "Watching",
+                "" => ""
+            ];
+        }
     }
 
     /**

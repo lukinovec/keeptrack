@@ -1,5 +1,8 @@
 <div class="flex flex-row h-full w-full justify-center align-middle" x-data="{ clicked: @entangle('clicked') }">
-    <div x-on:click="clicked = 'movies'" class="flex-1 mt-64 text-center">
+    <div x-show="!clicked" x-on:click="clicked = 'movies'" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90" class="flex-1 mt-64 text-center">
         <span class="font-extrabold">Movies & TV Shows</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
             class="icon-film m-auto rounded-full h-12 w-12 sm:h-24 sm:w-24 transition duration-150 ease-in-out hover:bg-gray-400 p-2 bg-gray-200">
@@ -10,7 +13,10 @@
         </svg>
     </div>
 
-    <div x-on:click="clicked = 'books'" class="flex-1 mt-64 text-center">
+    <div x-show="!clicked" x-on:click="clicked = 'books'" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90" class="flex-1 mt-64 text-center">
         <span class="font-extrabold">Books</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
             class="icon-book-open m-auto rounded-full h-12 w-12 sm:h-24 sm:w-24 transition duration-150 ease-in-out hover:bg-gray-400 p-2 bg-gray-200">
@@ -22,5 +28,11 @@
             </g>
         </svg>
     </div>
-    {{-- <livewire:library x-show="clicked" /> --}}
+    @if (!empty($library))
+    {{-- <button x-on:click="clicked = ''">Go Back</button> --}}
+    <livewire:library class="flex flex-col" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90" x-show="{{ !empty($library) }}" :library="$library" />
+    @endif
 </div>
