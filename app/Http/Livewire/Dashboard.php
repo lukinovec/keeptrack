@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Classes\Search;
-use App\Classes\Library;
+use App\Classes\LibraryDB;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,7 +79,7 @@ class Dashboard extends Component
     public function changeStatus(String $item, String $status)
     {
         $item = json_decode($item);
-        $library = new Library($this->authUser);
+        $library = new LibraryDB;
         if ($item->type != "book") {
             $library->updateMovieStatus($item, $status);
         } else {

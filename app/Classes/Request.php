@@ -11,7 +11,7 @@ class Request
         $this->searchtype = $searchtype;
         $this->query = $query;
     }
-    // serial - prvni request JENOM pro first season, dalsi az user vybere 
+    // serial - prvni request JENOM pro first season, dalsi az user vybere
     public function search()
     {
         if ($this->searchtype === "movie") {

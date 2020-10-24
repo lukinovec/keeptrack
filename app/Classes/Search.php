@@ -3,7 +3,7 @@
 namespace App\Classes;
 
 use App\Classes\Request;
-use App\Classes\Library;
+use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
 class Search
@@ -49,11 +49,11 @@ class Search
         }
     }
 
-    // Format response to be displayed as results 
+    // Format response to be displayed as results
     public function formatMovies($query)
     {
         if ($query["Response"] === "True") {
-            $library = new Library(Auth::id());
+            $library = new LibraryDB;
             $statuses = $library->movieStatus();
             $formatted = [];
             foreach ($query["Search"] as $item) {
@@ -85,7 +85,7 @@ class Search
 
     public function formatBooks($query)
     {
-        $library = new Library(Auth::id());
+        $library = new LibraryDB;
         $statuses = $library->bookStatus();
         $formatted = [];
         foreach ($query as $item) {

@@ -10,7 +10,7 @@ use App\User;
 
 use Illuminate\Support\Facades\Auth;
 
-class Library
+class LibraryDB
 {
     /**
      *  @param  number $authUser  ID of current logged in user
@@ -26,7 +26,7 @@ class Library
     }
 
     /**
-     *  @return Array All movies where the current logged user has set some status 
+     *  @return Array All movies where the current logged user has set some status
      */
     public function movies()
     {
@@ -34,46 +34,28 @@ class Library
     }
 
     /**
-     *  @return Array All books where the current logged user has set some status 
+     *  @return Array All books where the current logged user has set some status
      */
     public function books()
     {
         return $this->findUser()->books();
     }
 
-    public function statuses($type)
-    {
-        if ($type == "book") {
-            return [
-                "ptw" => "Plan to Read",
-                "completed" => "Completed",
-                "watching" => "Reading",
-                "" => ""
-            ];
-        } else {
-            return [
-                "completed" => "Completed",
-                "ptw" => "Plan to Watch",
-                "watching" => "Watching",
-                "" => ""
-            ];
-        }
-    }
-
     /**
-     *  @return Array All movie statuses where the current logged user has set some status 
+     *  @return Array All movie statuses where the current logged user has set some status
+     * Maybe redundant, might delete this and use user->movieList() instead
      */
     public function movieStatus()
     {
         $statuses = [];
         foreach ($this->findUser()->movies as $record) {
-            array_push($statuses, ["movie_id" => $record->movie_id, "status" => $record->status]);
+            array_push($statuses, ["movie_id" => $record->movie_id, "status" => $record->status, "rating" => $record->rating, "note" => $record->note, "season" => $record->season, "episode" => $record->episode]);
         }
         return $statuses;
     }
 
     /**
-     *  @return Array All book statuses where the current logged user has set some status 
+     *  @return Array All book statuses where the current logged user has set some status
      */
     public function bookStatus()
     {
@@ -102,7 +84,7 @@ class Library
                 "imdbID" => $movie->id,
                 "image" => $movie->image,
                 "name" => $movie->title,
-                "type" => "movie",
+                "type" => $movie->type,
                 "year" => $movie->year
             ]);
             MovieUser::create([
@@ -111,6 +93,29 @@ class Library
                 "status" => $status
             ]);
         }
+    }
+
+    /**
+     * @param $item Array  Item to be updated
+     * Updates details of a submitted item
+     */
+    public function updateDetails($item)
+    {
+        if ($item->type == "series") {
+            MovieUser::where("user_id", $this->authUser)->where("movie_id", $item->id)->update(
+                ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note]
+            );
+        } elseif ($item->type == "movie") {
+            MovieUser::where("user_id", $this->authUser)->where("movie_id", $item->id)->update(
+                ["rating" => $item->rating, "note" => $item->note]
+            );
+        } elseif ($item->type == "book") {
+            BookUser::where("user_id", $this->authUser)->where("book_id", $item->id)->update(
+                ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note]
+            );
+        }
+
+        return $this->movies();
     }
 
     // Update book's status in DB, if the movie doesn't exist in DB, create a new record

@@ -3,7 +3,6 @@
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90">
-
     <span class="text-2xl font-bold">
         {{ $item["title"] }}
     </span>
@@ -26,5 +25,11 @@
             x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">
             Toggle details
         </div>
+        {{-- Doesn't work yet --}}
+        @if ($item["status"])
+        <div class="flex-1 text-center p-5 text-white font-bold bg-red-800">
+            Go to list
+        </div>
+        @endif
     </div>
 </div>

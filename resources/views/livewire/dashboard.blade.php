@@ -21,7 +21,7 @@
             :class="{ 'items-center justify-center' : infoid === '' }">
             @if ($results)
             @foreach ($results as $item)
-            @livewire("result", ["item" => $item], key($item["id"]))
+            <livewire:result :item="$item" :key="$item['id']" />
             @endforeach
             @else
             No results found

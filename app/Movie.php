@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
-    protected $fillable = ['imdbID', 'image', 'name', 'type', 'year'];
+    protected $fillable = ['imdbID', 'image', 'name', 'type', 'year', 'totalSeasons'];
     protected $primaryKey = 'imdbID';
     protected $casts = ['imdbID' => 'string'];
     public $incrementing = false;

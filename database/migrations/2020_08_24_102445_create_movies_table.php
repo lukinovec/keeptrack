@@ -20,6 +20,7 @@ class CreateMoviesTable extends Migration
             $table->text('name', 100);
             $table->text('type');
             $table->string('year');
+            $table->integer('totalSeasons')->nullable();
             $table->timestamps();
         });
     }
