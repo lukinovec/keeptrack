@@ -14,13 +14,13 @@
                         <select class="w-12 bg-black bg-opacity-25" x-model.number="item.season" id="seasons"
                             name="seasons">
                             @foreach ($item["seasons"] as $season)
-                            <option value="{{$season['number']}}" x-text="{{$season['number']}}"></option>
+                            <option value="{{$season['number']}}" x-text="{{ $season['number'] }}"></option>
                             @endforeach
                         </select>
                         <label for="episodes">Episode</label>
                         <input name="episodes" class="w-8 border-b-2 bg-black bg-opacity-25"
                             x-model.number="item.episode" type="text">
-                        / <span x-text="(item.seasons[item.season-1].episodes).length"></span>
+                        / <span x-text="(item.seasons[item.season-1].episodes.Episodes).length"></span>
                         <button x-on:click="item.episode+=1">+</button>
                     </div>
                     <button class="w-full text-base py-1 mt-2 hover:bg-gray-900"

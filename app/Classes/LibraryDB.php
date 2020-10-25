@@ -80,12 +80,26 @@ class LibraryDB
                 ["status" => $status]
             );
         } else {
+            $movie->totalSeasons = 0;
+            $movie->seasons = "";
+            if ($movie->type == "series") {
+                $request_details = new Request("movie_details", $movie->id);
+                $totalSeasons = (int) $request_details->search()["totalSeasons"];
+                $seasons = [];
+                for ($i = 1; $i <= $totalSeasons; $i++) {
+                    array_push($seasons, ["number" => $i, "episodes" => $request_details->getSeason($i)]);
+                }
+                $movie->seasons = serialize($seasons);
+                $movie->totalSeasons = $totalSeasons;
+            }
             Movie::create([
                 "imdbID" => $movie->id,
                 "image" => $movie->image,
                 "name" => $movie->title,
                 "type" => $movie->type,
-                "year" => $movie->year
+                "year" => $movie->year,
+                "totalSeasons" => $movie->totalSeasons,
+                "seasons" => $movie->seasons
             ]);
             MovieUser::create([
                 "user_id" => $this->authUser,

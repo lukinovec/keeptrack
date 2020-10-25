@@ -6,7 +6,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Classes\Request;
-use App\Classes\LibraryDB;
+use Debugbar;
 use App\Movie;
 
 class User extends Authenticatable
@@ -100,19 +100,8 @@ class User extends Authenticatable
             $found_movie->rating = $movie->rating;
             $found_movie->season = $movie->season;
             $found_movie->episode = $movie->episode;
+            $found_movie->seasons = unserialize($found_movie->seasons);
             array_push($movieList, $found_movie);
-        }
-
-        foreach ($movieList as $movie) {
-            if ($movie["type"] == "series") {
-                $request_details = new Request("movie_details", $movie->imdbID);
-                $totalSeasons = $request_details->search()["totalSeasons"];
-                $seasons = [];
-                for ($i = 1; $i <= $totalSeasons; $i++) {
-                    array_push($seasons, ["number" => $i, "episodes" => $request_details->getSeason($i)["Episodes"]]);
-                }
-                $movie["seasons"] = $seasons;
-            }
         }
 
         return $movieList;

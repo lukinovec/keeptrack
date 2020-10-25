@@ -3,8 +3,12 @@
         <input type="email" class="form-input" name="email" placeholder="Email" wire:model="email" /> <br><br>
         <input type="password" class="form-input" name="password" placeholder="Password" wire:model="password" /> <br>
         <button href="#" class="btn mt-6 w-1/3" wire:click="login">Login</button>
+        <br><br>
+        <div wire:loading wire:target='login'>
+            Loading...
+        </div>
         @if ($error)
-        <div class="text-red-700">
+        <div class="{{ $logging }}">
             {!! $error !!}
         </div>
         @endif

@@ -10,22 +10,20 @@ class Login extends Component
 {
     public $email = "";
     public $password = "";
-    public Bool $logging = false;
+    public $logging;
     public $error;
 
     public function login()
     {
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
             // Authentication passed...
-            $this->logging = true;
+            $this->logging = "text-green-700";
+            $this->error = "Success!";
             return redirect()->intended("home");
         } else {
-            $this->logging = false;
+            $this->logging = "text-red-700";
             $this->error = "Invalid credentials. If you don't have an account, <a class='text-blue-600' href='http://localhost:8000/register'>register here.</a>";
         }
-        // else {
-        // return redirect()->intended("register");
-        // }
     }
 
     public function render()
