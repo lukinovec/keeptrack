@@ -3,14 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Classes\Search;
-use App\Classes\LibraryDB;
 use Livewire\Component;
+use App\Movie;
+use App\Book;
 use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
 {
     public String $search = "";
-    public String $formattedSearch = "";
     public String $searchtype = "movie";
     public $details;
     public $isSearch = false;
@@ -49,9 +49,7 @@ class Dashboard extends Component
     {
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
-            $this->formattedSearch = preg_replace('/\s+/', '+', $this->search);
-            $search = new Search($this->formattedSearch);
-            $this->response = $search->makeSearch($this->searchtype);
+            $this->response = Search::start($this->search)->makeSearch($this->searchtype);
         } else {
             $this->isSearch = false;
         }
@@ -71,19 +69,18 @@ class Dashboard extends Component
     public function updatedInfoid($id)
     {
         if ($id) {
-            $search = new Search($id);
-            $this->details = $search->makeSearch($this->searchtype . "_details");
+            $this->details = Search::start($id)->makeSearch($this->searchtype . "_details");
         }
     }
 
     public function changeStatus(String $item, String $status)
     {
         $item = json_decode($item);
-        $library = new LibraryDB;
         if ($item->type != "book") {
-            $library->updateMovieStatus($item, $status);
+            // $library->updateMovieStatus($item, $status);
+            Movie::updateStatus($item, $status);
         } else {
-            $library->updateBookStatus($item, $status);
+            Book::updateStatus($item, $status);
         }
     }
 

@@ -3,16 +3,12 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Movie;
-use App\Book;
-use App\User;
-use App\BookUser;
+use Illuminate\Support\Facades\Auth;
 
 class Menu extends Component
 {
     public $clicked = "";
     public $authUser;
-    public $authUserID;
     public $library = [];
 
     // TBD BOOKS
@@ -20,7 +16,7 @@ class Menu extends Component
     public function mount()
     {
         $this->library = [];
-        $this->authUser = User::find($this->authUserID);
+        $this->authUser = Auth::user();
     }
 
     // Get user's movies or books based on where he clicked

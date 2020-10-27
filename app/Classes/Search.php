@@ -4,19 +4,23 @@ namespace App\Classes;
 
 use App\Classes\Request;
 use App\Classes\LibraryDB;
-use Illuminate\Support\Facades\Auth;
 
 class Search
 {
+
+
     public function __construct($search)
     {
         $this->search = $search;
     }
+    public static function start($search)
+    {
+        return new static($search);
+    }
 
     public function makeRequest($searchtype)
     {
-        $request = new Request($searchtype, $this->search);
-        return $request->search();
+        return (new Request($searchtype, $this->search))->search();
     }
 
 
@@ -99,15 +103,11 @@ class Search
                     }
                 }
             }
-            $year = "";
-            if ($item->original_publication_year->{"0"}) {
-                $year = $item->original_publication_year->{"0"};
-            }
             array_push($formatted, [
                 "id" => $item->best_book->id->{'0'},
                 "rating" => $item->average_rating,
                 "title" => $item->best_book->title,
-                "year" => $item->original_publication_year->{"0"},
+                "year" => $item->original_publication_year->{'0'},
                 "type" => "book",
                 "creator_name" => $item->best_book->author->name,
                 "creator_id" => $item->best_book->author->id->{"0"},

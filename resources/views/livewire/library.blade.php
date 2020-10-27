@@ -2,11 +2,11 @@
     @foreach ($library as $item)
     <div x-data="{ item: {{ json_encode($item) }} }" class="my-10 flex justify-center p-5 w-full sm:w-1/2 lg:w-1/3"
         id="{{ $item['imdbID'] }}">
-        <div class="item relative text-white w-full">
+        <div class="item relative text-white w-5/6">
             <div class="w-full">
                 <img src="{{ $item['image'] }}" class="w-full" alt="">
-                <div class="title text-xl w-full bg-black bg-opacity-75 sm:bg-opacity-100 p-3"
-                    style="position: absolute; bottom: 0px;">
+                <div class="title text-xl w-full bottom-auto bg-black bg-opacity-75 sm:bg-opacity-100 p-3"
+                    style="position: absolute;">
                     {{ $item['name'] }}
                     @if ($item["type"] != "movie")
                     <div class="text-sm">
