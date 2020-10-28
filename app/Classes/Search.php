@@ -24,7 +24,7 @@ class Search
     }
 
 
-    public function makeSearch(String $searchtype)
+    public function type(String $searchtype)
     {
         // Get movies by name
         if ($searchtype === "movie") {
@@ -57,31 +57,19 @@ class Search
     public function formatMovies($query)
     {
         if ($query["Response"] === "True") {
-            $library = new LibraryDB;
-            $statuses = $library->movieStatus();
-            $formatted = [];
-            foreach ($query["Search"] as $item) {
-                $item_status = "";
-                $id_column = array_column($statuses, "movie_id");
-                if (in_array($item["imdbID"], $id_column)) {
-                    foreach ($statuses as $status) {
-                        if ($status["movie_id"] == $item["imdbID"]) {
-                            $item_status = $status["status"];
-                            break;
-                        }
-                    }
-                }
-
-                array_push($formatted, [
+            $statuses = LibraryDB::open()->movieStatus()->map(function ($movie) {
+                return ["imdbID" => $movie->movie_id, "status" => $movie->status];
+            });
+            return collect($query["Search"])->map(function ($item) use ($statuses) {
+                return [
                     "id" => $item["imdbID"],
                     "title" => $item["Title"],
                     "year" => $item["Year"],
                     "type" => $item["Type"],
                     "image" => $item["Poster"],
-                    "status" => $item_status
-                ]);
-            }
-            return $formatted;
+                    "status" => $statuses->firstWhere("imdbID", $item["imdbID"])["status"] ?? ""
+                ];
+            });
         } else {
             return false;
         }
@@ -89,21 +77,11 @@ class Search
 
     public function formatBooks($query)
     {
-        $library = new LibraryDB;
-        $statuses = $library->bookStatus();
-        $formatted = [];
-        foreach ($query as $item) {
-            $item_status = "";
-            $id_column = array_column($statuses, "book_id");
-            if (in_array($item->best_book->id->{'0'}, $id_column)) {
-                foreach ($statuses as $status) {
-                    if ($status["book_id"] == $item->best_book->id->{'0'}) {
-                        $item_status = $status["status"];
-                        break;
-                    }
-                }
-            }
-            array_push($formatted, [
+        $statuses = LibraryDB::open()->bookStatus()->map(function ($book) {
+            return ["goodreadsID" => $book->book_id, "status" => $book->status];
+        });
+        return collect($query)->map(function ($item) use ($statuses) {
+            return [
                 "id" => $item->best_book->id->{'0'},
                 "rating" => $item->average_rating,
                 "title" => $item->best_book->title,
@@ -112,9 +90,8 @@ class Search
                 "creator_name" => $item->best_book->author->name,
                 "creator_id" => $item->best_book->author->id->{"0"},
                 "image" => $item->best_book->image_url,
-                "status" => $item_status
-            ]);
-        }
-        return $formatted;
+                "status" => $statuses->firstWhere("goodreadsID", $item->best_book->id->{'0'})["status"] ?? ""
+            ];
+        });
     }
 }

@@ -2,33 +2,38 @@
 
 namespace App\Classes;
 
-use App\Movie;
 use App\MovieUser;
-use App\Book;
 use App\BookUser;
-use App\User;
 
 class LibraryDB
 {
     /**
      *  @param  number $authUser  ID of current logged in user
      */
-    public function __construct($authUser = null)
+    public function __construct()
     {
-        $this->authUser = $authUser ?: auth()->id();
+        $this->authUser = auth()->user();
     }
 
-    public function findUser()
+    public static function open()
     {
-        return User::find($this->authUser);
+        return new static;
     }
+
+    // /**
+    //  * @return User Returns the currently logged in user
+    //  */
+    // public function findUser()
+    // {
+    //     return User::find($this->authUser);
+    // }
 
     /**
      *  @return Array All movies where the current logged user has set some status
      */
     public function movies()
     {
-        return $this->findUser()->movieList();
+        return $this->authUser->movieList();
     }
 
     /**
@@ -36,32 +41,24 @@ class LibraryDB
      */
     public function books()
     {
-        return $this->findUser()->books();
+        return $this->authUser->books();
     }
 
     /**
-     *  @return Array All movie statuses where the current logged user has set some status
+     *  @return Collection All movie statuses where the current logged user has set some status
      * Maybe redundant, might delete this and use user->movieList() instead
      */
     public function movieStatus()
     {
-        $statuses = [];
-        foreach ($this->findUser()->movies as $record) {
-            array_push($statuses, ["movie_id" => $record->movie_id, "status" => $record->status, "rating" => $record->rating, "note" => $record->note, "season" => $record->season, "episode" => $record->episode]);
-        }
-        return $statuses;
+        return $this->authUser->movies;
     }
 
     /**
-     *  @return Array All book statuses where the current logged user has set some status
+     *  @return Collection All book statuses where the current logged user has set some status
      */
     public function bookStatus()
     {
-        $statuses = [];
-        foreach ($this->findUser()->books as $record) {
-            array_push($statuses, ["book_id" => $record->book_id, "status" => $record->status]);
-        }
-        return $statuses;
+        return $this->authUser->books;
     }
 
     /**
@@ -71,15 +68,15 @@ class LibraryDB
     public function updateDetails($item)
     {
         if ($item->type == "series") {
-            MovieUser::where("user_id", $this->authUser)->where("movie_id", $item->id)->update(
+            MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
                 ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note]
             );
         } elseif ($item->type == "movie") {
-            MovieUser::where("user_id", $this->authUser)->where("movie_id", $item->id)->update(
+            MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
                 ["rating" => $item->rating, "note" => $item->note]
             );
         } elseif ($item->type == "book") {
-            BookUser::where("user_id", $this->authUser)->where("book_id", $item->id)->update(
+            BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
                 ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note]
             );
         }

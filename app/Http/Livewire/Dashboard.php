@@ -6,7 +6,6 @@ use App\Classes\Search;
 use Livewire\Component;
 use App\Movie;
 use App\Book;
-use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
 {
@@ -17,7 +16,7 @@ class Dashboard extends Component
     public $library;
     public $response;
     public String $infoid = "";
-    public $test; // = "Dashboard.php report - nektere polozky nejdou pridat (prostredni, nekdy vpravo) - missing ) after argument list"
+    public $test;
     public $authUser;
     public $statuses = [
         "completed" => "completed",
@@ -29,8 +28,8 @@ class Dashboard extends Component
 
     public function mount()
     {
-        if (Auth::id()) {
-            $this->authUser = Auth::id();
+        if (auth()->id()) {
+            $this->authUser = auth()->id();
         } else {
             $this->authUser = "Not logged in.";
         }
@@ -49,7 +48,7 @@ class Dashboard extends Component
     {
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
-            $this->response = Search::start($this->search)->makeSearch($this->searchtype);
+            $this->response = Search::start($this->search)->type($this->searchtype);
         } else {
             $this->isSearch = false;
         }
@@ -65,22 +64,19 @@ class Dashboard extends Component
         $this->startSearching();
     }
 
-    // Show details
+    // Show details if ID exists
     public function updatedInfoid($id)
     {
-        if ($id) {
-            $this->details = Search::start($id)->makeSearch($this->searchtype . "_details");
-        }
+        $this->details = $id ?? Search::start($id)->type($this->searchtype . "_details");
     }
 
     public function changeStatus(String $item, String $status)
     {
         $item = json_decode($item);
-        if ($item->type != "book") {
-            // $library->updateMovieStatus($item, $status);
-            Movie::updateStatus($item, $status);
-        } else {
+        if ($item->type == "book") {
             Book::updateStatus($item, $status);
+        } else {
+            Movie::updateStatus($item, $status);
         }
     }
 
