@@ -13,8 +13,14 @@ class Login extends Component
     public $logging;
     public $error;
 
+    // protected $rules = [
+    //     "email" => "required|email",
+    //     "password" => "required|password"
+    // ];
+
     public function login()
     {
+        // $this->validate();
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
             // Authentication passed...
             $this->logging = "text-green-700";

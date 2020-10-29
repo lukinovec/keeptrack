@@ -1,8 +1,8 @@
 <div class="h-full w-full" x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch')}">
     <div class="text-center">
         <div class="w-full">
-            <input wire:model.debounce.300ms="search" x-on:focus="infoid = ''" type="text"
-                placeholder="Search something" class="p-4 text-2xl border-b-2 w-1/3" />
+            <input wire:model.debounce.300ms="search" x-on:focus="infoid = ''" placeholder="Search something"
+                type="search" class="p-4 text-2xl border-b-2 w-1/3" />
             <select wire:model="searchtype" name="searchtype" id="searchtype">
                 <option value="movie">TV / Movie</option>
                 <option value="book">Book</option>

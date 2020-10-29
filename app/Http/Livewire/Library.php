@@ -19,9 +19,8 @@ class Library extends Component
 
     public function updatedProgress($item)
     {
-        $item["id"] = $item["imdbID"];
-        $librarydb = new LibraryDB;
-        $this->library = $librarydb->updateDetails((object) $item);
+        $item["id"] = $item["imdbID"] ?: $item["goodreadsID"];
+        $this->library = LibraryDB::open()->updateDetails((object) $item);
     }
 
     public function render()
