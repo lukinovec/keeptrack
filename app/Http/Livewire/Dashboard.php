@@ -54,20 +54,15 @@ class Dashboard extends Component
         }
     }
 
-    public function updatedSearch()
+    public function updated($prop)
     {
-        $this->startSearching();
-    }
-
-    public function updatedSearchtype()
-    {
-        $this->startSearching();
+        $prop == "search" || $prop == "searchtype" ? $this->startSearching() : "";
     }
 
     // Show details if ID exists
     public function updatedInfoid($id)
     {
-        $this->details = $id ?? Search::start($id)->type($this->searchtype . "_details");
+        $this->details = Search::start($id)->type($this->searchtype . "_details") ?: false;
     }
 
     public function changeStatus(String $item, String $status)

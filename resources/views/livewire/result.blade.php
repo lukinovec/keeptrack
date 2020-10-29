@@ -19,7 +19,6 @@
             @endif
         </div>
     </div>
-
     <div class="info flex font-bold">
         <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
             x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">

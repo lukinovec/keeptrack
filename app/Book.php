@@ -21,11 +21,10 @@ class Book extends Model
     {
         $get_book = self::find($book->id);
         if ($get_book) {
-            $book_id = $get_book->imdbID;
             BookUser::updateOrCreate(
                 [
                     "user_id" => auth()->id(),
-                    "book_id" => $book_id
+                    "book_id" => $get_book->goodreadsID
                 ],
                 ["status" => $status]
             );

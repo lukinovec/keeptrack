@@ -14,7 +14,7 @@ class Library extends Component
 
     public function mount($library)
     {
-        $this->library = $library;
+        $this->library = $library->toArray();
     }
 
     public function updatedProgress($item)

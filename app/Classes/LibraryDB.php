@@ -20,13 +20,15 @@ class LibraryDB
         return new static;
     }
 
-    // /**
-    //  * @return User Returns the currently logged in user
-    //  */
-    // public function findUser()
-    // {
-    //     return User::find($this->authUser);
-    // }
+    /**
+     *  @return Collection All statuses where the current logged user has set some status
+     *  @param  $type  String  "movie"/"book"
+     */
+    public static function statuses(String $type)
+    {
+        $type = eval("return '$type' . 's';");
+        return auth()->user()->$type;
+    }
 
     /**
      *  @return Array All movies where the current logged user has set some status
@@ -42,23 +44,6 @@ class LibraryDB
     public function books()
     {
         return $this->authUser->books();
-    }
-
-    /**
-     *  @return Collection All movie statuses where the current logged user has set some status
-     * Maybe redundant, might delete this and use user->movieList() instead
-     */
-    public function movieStatus()
-    {
-        return $this->authUser->movies;
-    }
-
-    /**
-     *  @return Collection All book statuses where the current logged user has set some status
-     */
-    public function bookStatus()
-    {
-        return $this->authUser->books;
     }
 
     /**

@@ -86,40 +86,27 @@ class User extends Authenticatable
 
     // Use with '()'
     /**
-     * @return Array All movies with statuses where the user ID is the current logged users ID
+     * @return Collection All movies with statuses where the user ID is the current logged users ID
      */
     public function movieList()
     {
-        $movies = $this->movies;
-        $movieList = [];
-        // ["movie_id" => $record->movie_id, "status" => $record->status, "rating" => $record->rating, "note" => $record->note, "season" => $record->season, "episode" => $record->episode]
-        foreach ($movies as $movie) {
-            $found_movie = Movie::find($movie->movie_id);
-            $found_movie->status = $movie->status;
-            $found_movie->note = $movie->note;
-            $found_movie->rating = $movie->rating;
-            $found_movie->season = $movie->season;
-            $found_movie->episode = $movie->episode;
-            $found_movie->seasons = unserialize($found_movie->seasons);
-            array_push($movieList, $found_movie);
-        }
-
-        return $movieList;
+        return $this->movies->map(function ($movie) {
+            return collect(
+                Movie::find(collect($movie)
+                    ->forget(["id", "user_id", "created_at", "updated_at"])
+                    ->get("movie_id"))
+            )->merge($movie);
+        });
     }
 
     // Use with '()'
     /**
-     * @return Array All books with statuses where the user ID is the current logged users ID
+     * @return Collection All books with statuses where the user ID is the current logged users ID
      */
     public function bookList()
     {
-        $books = $this->books;
-        $bookList = [];
-        foreach ($books as $book) {
-            $found_book = Book::find($book->book_id);
-            $found_book->status = $book->status;
-            array_push($bookList, $found_book);
-        }
-        return $bookList;
+        return $this->books->map(function ($book) {
+            return collect(Book::find($book->book_id))->replace(["status" => $book->status]);
+        });
     }
 }

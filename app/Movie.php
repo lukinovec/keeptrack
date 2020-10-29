@@ -9,7 +9,7 @@ class Movie extends Model
 {
     protected $fillable = ['imdbID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons'];
     protected $primaryKey = 'imdbID';
-    protected $casts = ['imdbID' => 'string'];
+    protected $casts = ['imdbID' => 'string', 'seasons' => 'array'];
     public $incrementing = false;
 
     public function users()
@@ -22,11 +22,10 @@ class Movie extends Model
     {
         $get_movie = self::find($movie->id);
         if ($get_movie) {
-            $movie_id = $get_movie->imdbID;
             MovieUser::updateOrCreate(
                 [
                     "user_id" => auth()->id(),
-                    "movie_id" => $movie_id
+                    "movie_id" => $get_movie->imdbID
                 ],
                 ["status" => $status]
             );
@@ -38,9 +37,9 @@ class Movie extends Model
                 $totalSeasons = (int) $request_details->search()["totalSeasons"];
                 $seasons = [];
                 for ($i = 1; $i <= $totalSeasons; $i++) {
-                    array_push($seasons, ["number" => $i, "episodes" => $request_details->getSeason($i)]);
+                    $seasons[] = ["number" => $i, "episodes" => $request_details->getSeason($i)];
                 }
-                $movie->seasons = serialize($seasons);
+                $movie->seasons = $seasons;
                 $movie->totalSeasons = $totalSeasons;
             }
             self::create([

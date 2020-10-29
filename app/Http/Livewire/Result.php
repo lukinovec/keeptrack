@@ -7,6 +7,7 @@ use Livewire\Component;
 class Result extends Component
 {
     public $item;
+    public $infoid;
     protected $listeners = ['changeStatus'];
 
     public function mount($item)

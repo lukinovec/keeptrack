@@ -1,4 +1,4 @@
-<div class="h-full w-full" x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch') }">
+<div class="h-full w-full" x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch')}">
     <div class="text-center">
         <div class="w-full">
             <input wire:model.debounce.300ms="search" x-on:focus="infoid = ''" type="text"
@@ -37,8 +37,8 @@
             <div x-show="infoid" class="flex-1">
                 <div>
                     <br><br>
-                    <span class="font-bold"> {{ $details["Genre"] }} </span> <br>
-                    <span class="font-bold"> {{ $details["Plot"] }} </span> <br>
+                    <span class="font-bold"> {{ var_dump($details) }} </span> <br>
+                    {{-- <span class="font-bold"> {{ $details["Plot"] }} </span> <br> --}}
                 </div>
             </div>
             @endif

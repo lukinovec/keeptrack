@@ -15,13 +15,13 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->text('imdbID');
+            $table->string('imdbID')->unique;
             $table->text('image', 200);
             $table->text('name', 100);
-            $table->text('type');
+            $table->string('type');
             $table->string('year');
             $table->integer('totalSeasons')->nullable();
-            $table->text('seasons')->nullable();
+            $table->json('seasons')->nullable();
             $table->timestamps();
         });
     }
