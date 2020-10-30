@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
+        "dev": "npm run development | npm run build",
         "build": "npx tailwindcss build ./resources/css/tailwind.css -o public/css/tailwind.css",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "alpinejs": "^2.7.3",
         "autoprefixer": "^9.8.6",
         "browsersync": "0.0.1-security",
         "dotenv": "^8.2.0",

@@ -1,14 +1,20 @@
-<div class="h-full w-full" x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch')}">
+<div class="h-full w-full"
+    x-data="{ infoid: @entangle('infoid'), isSearch: @entangle('isSearch'), libraryType: @entangle('libraryType') }">
     <div class="text-center">
-        <div class="w-full">
+        <div x-show="libraryType" class="w-full text-center">
+            <input wire:model.debounce.300ms="librarysearch" placeholder="Search in your library" type="search"
+                class="p-4 text-2xl border-b-2" />
+        </div>
+        <div x-show="!libraryType" class="w-full">
             <input wire:model.debounce.300ms="search" x-on:focus="infoid = ''" placeholder="Search something"
-                type="search" class="p-4 text-2xl border-b-2 w-1/3" />
+                type="search" class="p-4 text-2xl border-b-2" />
             <select wire:model="searchtype" name="searchtype" id="searchtype">
                 <option value="movie">TV / Movie</option>
                 <option value="book">Book</option>
             </select>
         </div>
     </div>
+
     <div class="h-full w-full">
         <div x-show="!isSearch" class="h-full w-full" x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"

@@ -31,9 +31,10 @@ class Menu extends Component
         }
     }
 
-    public function updatedClicked()
+    public function updatedClicked($clicked)
     {
         $this->getLibrary();
+        $this->emit("emitLibraryType", $clicked);
     }
 
     public function render()

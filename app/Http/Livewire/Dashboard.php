@@ -14,6 +14,8 @@ class Dashboard extends Component
     public $details;
     public $isSearch = false;
     public $library;
+    public $libraryType;
+    public $librarysearch = "";
     public $response;
     public String $infoid = "";
     public $test;
@@ -24,7 +26,7 @@ class Dashboard extends Component
         "watching" => "watching"
     ];
 
-    protected $listeners = ["changeStatus", "libraryGot"];
+    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType"];
 
     public function mount()
     {
@@ -39,10 +41,11 @@ class Dashboard extends Component
         }
     }
 
-    public function libraryGot($library)
+    public function getLibraryType($type)
     {
-        $this->library = $library;
+        $this->libraryType = $type;
     }
+
 
     public function startSearching()
     {
@@ -54,9 +57,16 @@ class Dashboard extends Component
         }
     }
 
-    public function updated($prop)
+    public function updated($updated_property)
     {
-        $prop == "search" || $prop == "searchtype" ? $this->startSearching() : "";
+        if ($updated_property == "search" || $updated_property == "searchtype") {
+            $this->startSearching();
+        }
+    }
+
+    public function updatedLibrarysearch($search)
+    {
+        $this->emit("librarySearch", $search);
     }
 
     // Show details if ID exists
@@ -84,7 +94,8 @@ class Dashboard extends Component
             "infoid" => $this->infoid,
             "authUser" => $this->authUser,
             "statuses" => $this->statuses,
-            "test" => $this->test
+            "test" => $this->test,
+            "librarysearch" => $this->librarysearch
         ])
             ->extends('app')
             ->section('content');

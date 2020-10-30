@@ -8,14 +8,47 @@ use App\Classes\LibraryDB;
 class Library extends Component
 {
     public $library;
+    public $library_original;
+    public $librarySearch;
+    public $type;
     public $season;
     public $episodes;
     public $progress;
 
+    protected $listeners = ["emitLibraryType" => "getLibraryType", "librarySearch" => "getLibrarySearch"];
+
     public function mount($library)
     {
-        $this->library = $library->toArray();
+        $this->library = $library;
+        $this->library_original = $library;
     }
+
+    public function getLibraryType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getLibrarySearch($search)
+    {
+        if ($this->library->count() > 0 && $search !== "") {
+            $this->library = $this->library->filter(function ($item) use ($search) {
+                return stripos($item['name'], $search) !== false;
+            });
+        } else {
+            $this->library = $this->library_original;
+        }
+    }
+
+    // public function updatedLibrarySearch($search)
+    // {
+    //     if ($this->library->count() > 0 && $search !== "") {
+    //         $this->library = $this->library->filter(function ($item) use ($search) {
+    //             return stripos($item['name'], $search) !== false;
+    //         });
+    //     } else {
+    //         $this->library = $this->library_original;
+    //     }
+    // }
 
     public function updatedProgress($item)
     {
@@ -25,7 +58,7 @@ class Library extends Component
 
     public function render()
     {
-        return view('livewire.library', ["library" => $this->library])
+        return view('livewire.library', ["library" => $this->library, "type" => $this->type])
             ->extends('app')
             ->section('content');
     }
