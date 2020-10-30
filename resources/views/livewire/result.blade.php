@@ -24,10 +24,11 @@
             x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">
             Toggle details
         </div>
-        {{-- Doesn't work yet --}}
+
         @if ($item["status"])
-        <div class="flex-1 text-center p-5 text-white font-bold bg-red-800">
-            Go to list
+        <div wire:click="$emit('goToLibrary', '{{$item['type']}}')"
+            class="flex-1 text-center p-5 text-white font-bold bg-red-800">
+            Go to Library
         </div>
         @endif
     </div>

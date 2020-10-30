@@ -26,7 +26,7 @@ class Dashboard extends Component
         "watching" => "watching"
     ];
 
-    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType"];
+    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType", "goToLibrary"];
 
     public function mount()
     {
@@ -46,6 +46,12 @@ class Dashboard extends Component
         $this->libraryType = $type;
     }
 
+    public function goToLibrary(String $type)
+    {
+        $this->libraryType = $type;
+        $this->isSearch = false;
+    }
+
 
     public function startSearching()
     {
@@ -59,9 +65,7 @@ class Dashboard extends Component
 
     public function updated($updated_property)
     {
-        if ($updated_property == "search" || $updated_property == "searchtype") {
-            $this->startSearching();
-        }
+        $updated_property == "search" || $updated_property == "searchtype" ? $this->startSearching() : "";
     }
 
     public function updatedLibrarysearch($search)

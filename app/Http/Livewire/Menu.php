@@ -11,6 +11,8 @@ class Menu extends Component
     public $authUser;
     public $library = [];
 
+    protected $listeners = ["goToLibrary"];
+
     // TBD BOOKS
     // Book methods messed up, refactored Movies to use model methods, need to do the same for books later
     public function mount()
@@ -22,12 +24,10 @@ class Menu extends Component
     // Get user's movies or books based on where he clicked
     public function getLibrary()
     {
-        if ($this->clicked === "movies") {
-            $this->library = $this->authUser->movieList();
-        } elseif ($this->clicked === "books") {
+        if ($this->clicked === "books") {
             $this->library = $this->authUser->bookList();
         } else {
-            $this->library = "";
+            $this->library = $this->authUser->movieList();
         }
     }
 
@@ -35,6 +35,12 @@ class Menu extends Component
     {
         $this->getLibrary();
         $this->emit("emitLibraryType", $clicked);
+    }
+
+    public function goToLibrary(String $type)
+    {
+        $this->clicked = $type;
+        $this->getLibrary();
     }
 
     public function render()
