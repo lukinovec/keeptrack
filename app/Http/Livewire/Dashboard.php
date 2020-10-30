@@ -46,9 +46,9 @@ class Dashboard extends Component
         $this->libraryType = $type;
     }
 
-    public function goToLibrary(String $type)
+    public function goToLibrary($item)
     {
-        $this->libraryType = $type;
+        $this->libraryType = json_decode($item)->type;
         $this->isSearch = false;
     }
 

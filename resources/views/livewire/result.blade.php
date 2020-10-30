@@ -26,7 +26,7 @@
         </div>
 
         @if ($item["status"])
-        <div wire:click="$emit('goToLibrary', '{{$item['type']}}')"
+        <div wire:click="$emit('goToLibrary', '{{json_encode($item)}}')"
             class="flex-1 text-center p-5 text-white font-bold bg-red-800">
             Go to Library
         </div>

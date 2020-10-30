@@ -22,12 +22,18 @@ class Menu extends Component
     }
 
     // Get user's movies or books based on where he clicked
-    public function getLibrary()
+    public function getLibrary($firstItem = "")
     {
         if ($this->clicked === "books") {
             $this->library = $this->authUser->bookList();
         } else {
             $this->library = $this->authUser->movieList();
+            if ($firstItem) {
+                $foundItem = $this->library->firstWhere("imdbID", json_decode($firstItem)->id);
+                $this->library = $this->library->filter(function ($item) use ($firstItem) {
+                    return $item["imdbID"] != json_decode($firstItem)->id;
+                })->prepend($foundItem);
+            }
         }
     }
 
@@ -37,10 +43,10 @@ class Menu extends Component
         $this->emit("emitLibraryType", $clicked);
     }
 
-    public function goToLibrary(String $type)
+    public function goToLibrary($item)
     {
-        $this->clicked = $type;
-        $this->getLibrary();
+        $this->clicked = json_decode($item)->type;
+        $this->getLibrary($item);
     }
 
     public function render()
