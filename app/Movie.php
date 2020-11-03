@@ -7,9 +7,9 @@ use App\Classes\Request;
 
 class Movie extends Model
 {
-    protected $fillable = ['imdbID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons'];
-    protected $primaryKey = 'imdbID';
-    protected $casts = ['imdbID' => 'string', 'seasons' => 'array'];
+    protected $fillable = ['apiID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons'];
+    protected $primaryKey = 'apiID';
+    protected $casts = ['apiID' => 'string', 'seasons' => 'array'];
     public $incrementing = false;
 
     public function users()
@@ -25,7 +25,7 @@ class Movie extends Model
             MovieUser::updateOrCreate(
                 [
                     "user_id" => auth()->id(),
-                    "movie_id" => $get_movie->imdbID
+                    "movie_id" => $get_movie->apiID
                 ],
                 ["status" => $status]
             );
@@ -43,7 +43,7 @@ class Movie extends Model
                 $movie->totalSeasons = $totalSeasons;
             }
             self::create([
-                "imdbID" => $movie->id,
+                "apiID" => $movie->id,
                 "image" => $movie->image,
                 "name" => $movie->title,
                 "type" => $movie->type,

@@ -15,6 +15,8 @@ class Dashboard extends Component
     public $isSearch = false;
     public $library;
     public $libraryType;
+    public $isLibrarySearch;
+    public $showSearch = false;
     public $librarysearch = "";
     public $response;
     public String $infoid = "";
@@ -44,14 +46,20 @@ class Dashboard extends Component
     public function getLibraryType($type)
     {
         $this->libraryType = $type;
+        $this->isLibrarySearch = true;
     }
 
-    public function goToLibrary($item)
+    public function goToLibrary($item = null)
     {
-        $this->libraryType = json_decode($item)->type;
+        $this->libraryType = json_decode($item)->type ?? $this->searchtype;
         $this->isSearch = false;
     }
 
+    public function switchSearch()
+    {
+        $this->showSearch = !$this->showSearch;
+        $this->showSearch == false ? $this->goToLibrary() : "";
+    }
 
     public function startSearching()
     {

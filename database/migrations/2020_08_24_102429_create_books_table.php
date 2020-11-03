@@ -15,7 +15,7 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->text('goodreadsID');
+            $table->text('apiID');
             $table->text('type');
             $table->text('image', 200);
             $table->text('name', 100);

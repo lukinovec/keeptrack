@@ -16,7 +16,7 @@ class CreateMovieUser extends Migration
         Schema::create('movie_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('movie_id')->references('imdbID')->on('movies')->onDelete('cascade');
+            $table->string('movie_id')->references('apiID')->on('movies')->onDelete('cascade');
             $table->text('status');
             $table->text('note')->nullable();
             $table->integer('rating')->nullable();
