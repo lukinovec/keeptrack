@@ -14,7 +14,7 @@ class Notes extends Component
     public function mount($item)
     {
 
-        $note = User::find(Auth::id())->findItem($item['type'], $item['imdbID'])->first();
+        $note = User::find(Auth::id())->findItem($item['type'], $item['apiID'])->first();
         $this->note = $note->note;
         // ->findItem($item['type'], $item['id'])->note);
     }

@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $fillable = ['goodreadsID', 'image', 'name', 'author', 'type', 'year'];
-    protected $primaryKey = 'goodreadsID';
-    protected $casts = ['goodreadsID' => 'string'];
+    protected $fillable = ['apiID', 'image', 'name', 'author', 'type', 'year'];
+    protected $primaryKey = 'apiID';
+    protected $casts = ['apiID' => 'string'];
     public $incrementing = false;
 
     public function users()
@@ -24,13 +24,13 @@ class Book extends Model
             BookUser::updateOrCreate(
                 [
                     "user_id" => auth()->id(),
-                    "book_id" => $get_book->goodreadsID
+                    "book_id" => $get_book->apiID
                 ],
                 ["status" => $status]
             );
         } else {
             self::create([
-                "goodreadsID" => $book->id,
+                "apiID" => $book->id,
                 "image" => $book->image,
                 "author" => $book->creator_name,
                 "name" => $book->title,

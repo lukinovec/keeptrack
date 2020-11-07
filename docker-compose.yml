@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8009:8000"
+    volumes:
+      - .:/app
+    env_file: .env
+    working_dir: /app
+    command: bash -c 'php artisan migrate && php artisan serve --host 0.0.0.0'
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: "mysql:latest"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=keeptrack
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - ./data/:/var/lib/mysql
+    ports:
+      - "3306:3306"

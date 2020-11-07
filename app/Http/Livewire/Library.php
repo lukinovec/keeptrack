@@ -28,12 +28,6 @@ class Library extends Component
         $this->type = $type;
     }
 
-    // public function goToLibrary($item)
-    // {
-    //     dd($this->library->firstWhere("imdbID", json_decode($item)->id)->forget());
-    //     $this->library = $this->library->prepend();
-    // }
-
     public function getLibrarySearch($search)
     {
         if ($this->library->count() > 0 && $search !== "") {
@@ -47,7 +41,7 @@ class Library extends Component
 
     public function updatedProgress($item)
     {
-        $item["id"] = $item["imdbID"] ?: $item["goodreadsID"];
+        $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->library = LibraryDB::open()->updateDetails((object) $item);
     }
 

@@ -15,6 +15,9 @@ class Dashboard extends Component
     public $isSearch = false;
     public $library;
     public $libraryType;
+    public $isLibrarySearch;
+    public $showSearch = false;
+    public $toggleSearch = true;
     public $librarysearch = "";
     public $response;
     public String $infoid = "";
@@ -26,7 +29,7 @@ class Dashboard extends Component
         "watching" => "watching"
     ];
 
-    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType", "goToLibrary"];
+    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType", "goToLibrary", "toggleSearch"];
 
     public function mount()
     {
@@ -41,17 +44,29 @@ class Dashboard extends Component
         }
     }
 
+    public function toggleSearch($toggle)
+    {
+        $this->toggleSearch = $toggle;
+    }
+
     public function getLibraryType($type)
     {
         $this->libraryType = $type;
+        $this->isLibrarySearch = true;
     }
 
-    public function goToLibrary($item)
+    public function goToLibrary($item = null)
     {
-        $this->libraryType = json_decode($item)->type;
+        $this->libraryType = json_decode($item)->type ?? $this->searchtype;
         $this->isSearch = false;
     }
 
+    public function switchSearch()
+    {
+        $this->showSearch = !$this->showSearch;
+        $this->searchtype = rtrim($this->libraryType, "s") ?? $this->searchtype;
+        $this->showSearch == false ? $this->goToLibrary() : "";
+    }
 
     public function startSearching()
     {
@@ -71,6 +86,11 @@ class Dashboard extends Component
     public function updatedLibrarysearch($search)
     {
         $this->emit("librarySearch", $search);
+    }
+
+    public function updatedLibraryType($type)
+    {
+        $this->searchtype = $type;
     }
 
     // Show details if ID exists

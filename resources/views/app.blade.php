@@ -32,7 +32,7 @@
 
 <body>
     <div id="app" class="flex-center position-ref h-full mx-4">
-        @livewire("nav-bar")
+        <livewire:nav-bar />
         @if (Auth::check())
         @endif
         <div class="h-full w-full">

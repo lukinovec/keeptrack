@@ -1,4 +1,4 @@
-<div class="flex flex-row h-full w-full justify-center align-middle" x-data="{ clicked: @entangle('clicked') }">
+<div class="flex flex-row  w-full justify-center align-middle" x-data="{ clicked: @entangle('clicked') }">
     <div x-show="!clicked" x-on:click="clicked = 'movies'" x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
         x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100"

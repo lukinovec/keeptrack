@@ -5,8 +5,6 @@ namespace App;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Classes\Request;
-use Debugbar;
 use App\Movie;
 
 class User extends Authenticatable
