@@ -1,2 +1,2 @@
-// require('./bootstrap');
-require('alpinejs');
+import './store.js';
+import 'alpinejs';

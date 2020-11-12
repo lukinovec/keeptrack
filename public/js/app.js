@@ -86,6 +86,22 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@ryangjchandler/spruce/dist/spruce.module.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@ryangjchandler/spruce/dist/spruce.module.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self&&self;var e,t=(function(e,t){e.exports=function(){var e=/^v?(?:\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+))?(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?)?$/i;function t(e){var t,r=e.replace(/^v/,"").replace(/\+.*$/,""),n=-1===(t=r).indexOf("-")?t.length:t.indexOf("-"),i=r.substring(0,n).split(".");return i.push(r.substring(n+1)),i}function r(e){return isNaN(Number(e))?e:Number(e)}function n(t){if("string"!=typeof t)throw new TypeError("Invalid argument expected string");if(!e.test(t))throw new Error("Invalid argument not valid semver ('"+t+"' received)")}function i(e,i){[e,i].forEach(n);for(var o=t(e),s=t(i),u=0;u<Math.max(o.length-1,s.length-1);u++){var a=parseInt(o[u]||0,10),c=parseInt(s[u]||0,10);if(a>c)return 1;if(c>a)return-1}var f=o[o.length-1],d=s[s.length-1];if(f&&d){var p=f.split(".").map(r),h=d.split(".").map(r);for(u=0;u<Math.max(p.length,h.length);u++){if(void 0===p[u]||"string"==typeof h[u]&&"number"==typeof p[u])return-1;if(void 0===h[u]||"string"==typeof p[u]&&"number"==typeof h[u])return 1;if(p[u]>h[u])return 1;if(h[u]>p[u])return-1}}else if(f||d)return f?-1:1;return 0}var o=[">",">=","=","<","<="],s={">":[1],">=":[0,1],"=":[0],"<=":[-1,0],"<":[-1]};return i.validate=function(t){return"string"==typeof t&&e.test(t)},i.compare=function(e,t,r){!function(e){if("string"!=typeof e)throw new TypeError("Invalid operator type, expected string but got "+typeof e);if(-1===o.indexOf(e))throw new TypeError("Invalid operator, expected one of "+o.join("|"))}(r);var n=i(e,t);return s[r].indexOf(n)>-1},i}()}(e={exports:{}}),e.exports),r=function(e){return null==e},n=function(e){return Object.getPrototypeOf(e)===Object.prototype},i=function(e,t){return Object.entries(e).forEach(function(o){var s=o[0],u=o[1];r(u)||!n(u)&&!Array.isArray(u)||(e[s]=i(u,t))}),new Proxy(e,{set:function(e,o,s){return!r(s)&&n(s)&&(s=i(s,t)),t.set(e,o,e[o]=s),!0}})},o={stores:{},persisted:[],subscribers:[],watchers:{},disableReactivity:!1,start:function(){try{var e=this;return Promise.resolve(new Promise(function(e){"loading"==document.readyState?document.addEventListener("DOMContentLoaded",e):e()})).then(function(){e.attach(),e.stores=i(e.stores,{set:function(t,r,n){if(!e.disableReactivity){e.updateSubscribers(),e.runWatchers(e.stores,t,r,n),e.disableReactivity=!0;try{e.persisted.forEach(e.updateLocalStorage.bind(e))}catch(e){}e.disableReactivity=!1}}})})}catch(e){return Promise.reject(e)}},attach:function(){if(!(navigator.userAgent.includes("Node.js")||navigator.userAgent.includes("jsdom")||window.Alpine&&t.compare(window.Alpine.version,"2.7.0",">=")))throw new Error("[Spruce] You must be using Alpine >= 2.5.0 to use Spruce.");var e=this;window.Alpine.addMagicProperty("store",function(t){return e.subscribe(t),e.stores})},store:function(e,t,r){if(void 0===r&&(r=!1),r)try{this.stores[e]=this.retrieveFromLocalStorage(e,(n={},Object.entries(t).filter(function(e){return"function"==typeof e[1]}).forEach(function(e){return n[e[0]]=e[1]}),n)),this.persisted.includes(e)||this.persisted.push(e)}catch(e){}var n;return this.stores[e]||(this.stores[e]=t),this.stores[e]},reset:function(e,t){this.stores[e]=t},subscribe:function(e){return this.subscribers.includes(e)||this.subscribers.push(e),this.stores},updateSubscribers:function(){this.subscribers.filter(function(e){return!!e.__x}).forEach(function(e){e.__x.updateElements(e)})},retrieveFromLocalStorage:function(e,t){void 0===t&&(t={});var r=JSON.parse(window.localStorage.getItem("__spruce:"+e));return r?Object.assign(t,r):null},updateLocalStorage:function(e){window.localStorage.setItem("__spruce:"+e,JSON.stringify(this.store(e)))},watch:function(e,t){this.watchers[e]||(this.watchers[e]=[]),this.watchers[e].push(t)},runWatchers:function(e,t,r,n){var i=this;if(i.watchers[r])return i.watchers[r].forEach(function(e){return e(n)});Object.keys(i.watchers).filter(function(e){return e.includes(".")}).forEach(function(o){var s=o.split(".");r===s[s.length-1]&&s.reduce(function(e,s){return(e[r]===t[r]||Object.is(t,e))&&i.watchers[o].forEach(function(e){return e(n)}),e[s]},e)})}},s=window.deferLoadingAlpine||function(e){e()};window.deferLoadingAlpine=function(e){window.Spruce=o,window.Spruce.start(),s(e)};/* harmony default export */ __webpack_exports__["default"] = (o);
+//# sourceMappingURL=spruce.module.js.map
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/alpinejs/dist/alpine.js":
 /*!**********************************************!*\
   !*** ./node_modules/alpinejs/dist/alpine.js ***!
@@ -2004,14 +2020,34 @@
 
 /***/ }),
 
-/***/ "./resources/css/tailwind.css":
-/*!************************************!*\
-  !*** ./resources/css/tailwind.css ***!
-  \************************************/
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 
@@ -2019,23 +2055,48 @@
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// require('./bootstrap');
-__webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store.js */ "./resources/js/store.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpinejs__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/store.js":
+/*!*******************************!*\
+  !*** ./resources/js/store.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ryangjchandler_spruce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ryangjchandler/spruce */ "./node_modules/@ryangjchandler/spruce/dist/spruce.module.js");
+
+_ryangjchandler_spruce__WEBPACK_IMPORTED_MODULE_0__["default"].store('state', {
+  edit: false
+});
+_ryangjchandler_spruce__WEBPACK_IMPORTED_MODULE_0__["default"].store('test', {
+  test: 'test'
+});
+/* harmony default export */ __webpack_exports__["default"] = (_ryangjchandler_spruce__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/css/tailwind.css ***!
-  \****************************************************************/
+/*!***********************************!*\
+  !*** multi ./resources/js/app.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\xampp\htdocs\keeptrack\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\xampp\htdocs\keeptrack\resources\css\tailwind.css */"./resources/css/tailwind.css");
+module.exports = __webpack_require__(/*! E:\xampp\htdocs\keeptrack\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

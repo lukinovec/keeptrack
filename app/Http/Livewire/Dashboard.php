@@ -55,9 +55,10 @@ class Dashboard extends Component
         $this->isLibrarySearch = true;
     }
 
-    public function goToLibrary($item = null)
+    public function goToLibrary($searchtype)
     {
-        $this->libraryType = json_decode($item)->type ?? $this->searchtype;
+        $this->emit('emitLibraryType', $searchtype . 's');
+        $this->libraryType = $searchtype;
         $this->isSearch = false;
     }
 
@@ -65,7 +66,7 @@ class Dashboard extends Component
     {
         $this->showSearch = !$this->showSearch;
         $this->searchtype = rtrim($this->libraryType, "s") ?? $this->searchtype;
-        $this->showSearch == false ? $this->goToLibrary() : "";
+        $this->showSearch == false ? $this->goToLibrary($this->searchtype) : "";
     }
 
     public function startSearching()

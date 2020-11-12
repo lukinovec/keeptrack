@@ -31,6 +31,29 @@ class LibraryDB
     }
 
     /**
+     *  @return Collection  Collection of all statuses ("ptw" => "Plan to Watch")
+     *  @param  $type   String  type of item
+     */
+    public function getStatuses($type)
+    {
+        if ($type == "book" || $type == "books") {
+            return collect([
+                "ptw" => "Plan to Read",
+                "completed" => "Completed",
+                "watching" => "Reading",
+                "" => ""
+            ]);
+        } else {
+            return collect([
+                "completed" => "Completed",
+                "ptw" => "Plan to Watch",
+                "watching" => "Watching",
+                "" => ""
+            ]);
+        }
+    }
+
+    /**
      *  @return Array All movies where the current logged user has set some status
      */
     public function movies()
@@ -52,20 +75,24 @@ class LibraryDB
      */
     public function updateDetails($item)
     {
-        if ($item->type == "series") {
-            MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
-                ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note]
-            );
-        } elseif ($item->type == "movie") {
-            MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
-                ["rating" => $item->rating, "note" => $item->note]
-            );
-        } elseif ($item->type == "book") {
-            BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
-                ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note]
-            );
-        }
+        try {
+            if ($item->type == "series") {
+                MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
+                    ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                );
+            } elseif ($item->type == "movie") {
+                MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
+                    ["rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                );
+            } elseif ($item->type == "book") {
+                BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
+                    ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                );
+            }
 
-        return $this->movies();
+            return $this->movies();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

@@ -14,26 +14,7 @@ class StatusButton extends Component
     public function mount($item)
     {
         $this->item = $item;
-        $this->statuses = $this->getStatuses($item["type"]);
-    }
-
-    public function getStatuses($type)
-    {
-        if ($type == "book") {
-            return [
-                "ptw" => "Plan to Read",
-                "completed" => "Completed",
-                "watching" => "Reading",
-                "" => ""
-            ];
-        } else {
-            return [
-                "completed" => "Completed",
-                "ptw" => "Plan to Watch",
-                "watching" => "Watching",
-                "" => ""
-            ];
-        }
+        $this->statuses = LibraryDB::open()->getStatuses($item["type"]);
     }
 
     public function render()

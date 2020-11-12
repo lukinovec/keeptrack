@@ -13,7 +13,21 @@ class Library extends Component
     public $type;
     public $season;
     public $episodes;
-    public $progress;
+    public $toUpdate;
+    public $test;
+    public $statuses = [];
+
+    protected $rules = [
+        'toUpdate.rating' => 'integer|max:10|min:1',
+        'toUpdate.episode' => 'integer'
+    ];
+
+    protected $messages = [
+        'toUpdate.rating.integer' => "Rating must be a number (1-10)",
+        'toUpdate.rating.max' => "Rating must be a number from 1 to 10",
+        'toUpdate.rating.min' => "Rating must be a number from 1 to 10",
+        'toUpdate.episode.integer' => "Episode must be a number"
+    ];
 
     protected $listeners = ["emitLibraryType" => "getLibraryType", "librarySearch" => "getLibrarySearch"];
 
@@ -21,6 +35,7 @@ class Library extends Component
     {
         $this->library = $library;
         $this->library_original = $library;
+        $this->statuses = LibraryDB::open()->getStatuses($this->type)->forget('')->values();
     }
 
     public function getLibraryType($type)
@@ -39,16 +54,20 @@ class Library extends Component
         }
     }
 
-    public function updatedProgress($item)
+    public function updateItem($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
+        $this->toUpdate = $item;
+        $this->validate();
         $this->library = LibraryDB::open()->updateDetails((object) $item);
     }
 
     public function render()
     {
-        return view('livewire.library', ["library" => $this->library, "type" => $this->type])
-            ->extends('app')
+        return view('livewire.library', [
+            'library' => $this->library->sortByDesc('updated_at'),
+            'type' => $this->type
+        ])->extends('app')
             ->section('content');
     }
 }

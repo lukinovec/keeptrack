@@ -10,7 +10,7 @@
     {{ $item["year"] }}
 
     <div id="{{ $item['id'] }}" class="flex">
-        <img class="my-2" src="{{ $item["image"] }}" alt="image">
+        <img class="my-2" src="{{ $item['image'] }}" alt="image">
         <div class="btns flex flex-col w-full text-center">
             @livewire("status-button", ["item" => $item, "status" => "completed"], key(rand()))
             @livewire("status-button", ["item" => $item, "status" => "ptw"], key(rand()+1))
@@ -26,7 +26,7 @@
         </div>
 
         @if ($item["status"])
-        <div wire:click="$emit('goToLibrary', '{{json_encode($item)}}')"
+        <div wire:click="$emit('goToLibrary', '{{ $item['type'] }}')"
             class="flex-1 text-center p-5 text-white font-bold bg-red-800">
             Go to Library
         </div>

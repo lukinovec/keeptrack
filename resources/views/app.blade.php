@@ -24,10 +24,13 @@
             height: 100vh;
             margin: 0;
         }
+
+        .edit {
+            color: black;
+        }
     </style>
     @livewireStyles
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    {{-- Spruce package:  https://github.com/ryangjchandler/spruce --}}
 </head>
 
 <body>
@@ -40,6 +43,7 @@
         </div>
     </div>
     @livewireScripts
+    <script defer src="{!! mix('js/app.js') !!}"></script>
 </body>
 
 </html>

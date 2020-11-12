@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@ryangjchandler/spruce": "^2.0.1",
         "alpinejs": "^2.7.3",
         "autoprefixer": "^9.8.6",
         "browsersync": "0.0.1-security",

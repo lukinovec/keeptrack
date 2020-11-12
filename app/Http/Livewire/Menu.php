@@ -35,9 +35,9 @@ class Menu extends Component
         $this->emit("emitLibraryType", $clicked);
     }
 
-    public function goToLibrary($item)
+    public function goToLibrary($searchtype)
     {
-        $this->clicked = json_decode($item)->type;
+        $this->clicked = $searchtype;
         $this->getLibrary();
     }
 
