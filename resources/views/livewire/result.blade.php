@@ -8,15 +8,16 @@
     </span>
 
     {{ $item["year"] }}
-    <div id="{{ $item['id'] }}" class="flex">
+    <div id="'{{ $item['id'] }}'" class="flex">
         <img class="my-2" src="{{ $item['image'] }}" alt="image">
-        <div class="btns flex flex-col w-full text-center">
-            @livewire("status-button", ["item" => $item, "status" => "completed"], key(rand()))
-            @livewire("status-button", ["item" => $item, "status" => "ptw"], key(rand()+1))
-            @if ($item["type"] === "series" || $item["type"] === "tv")
-            @livewire("status-button", ["item" => $item, "status" => "watching"], key(rand()+2))
+        <select x-data='{ statuses: @json($statuses) }' class="text-center h-16" wire:model="item.status">
+            <option value="none" x-text="statuses.none"></option>
+            <option value="completed" x-text="statuses.completed"></option>
+            <option value="ptw" x-text="statuses.ptw"></option>
+            @if ($item["type"] !== "movie")
+            <option value="watching" x-text="statuses.watching"></option>
             @endif
-        </div>
+        </select>
     </div>
     <div class="info flex font-bold">
         <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
@@ -24,11 +25,11 @@
             Toggle details
         </div>
 
-        @if ($item["status"])
+        {{-- @if ($item["status"] && $item["status"] !== "none")
         <div wire:click="$emit('goToLibrary', '{{ $item['type'] }}')"
-            class="flex-1 text-center p-5 text-white font-bold bg-red-800">
-            Go to Library
-        </div>
-        @endif
+        class="flex-1 text-center p-5 text-white font-bold bg-red-800">
+        Go to Library
     </div>
+    @endif --}}
+</div>
 </div>

@@ -35,7 +35,7 @@ class Library extends Component
     {
         $this->library = $library;
         $this->library_original = $library;
-        $this->statuses = LibraryDB::open()->getStatuses($this->type)->forget('')->values();
+        $this->statuses = LibraryDB::open()->getStatuses($this->type);
     }
 
     public function getLibraryType($type)

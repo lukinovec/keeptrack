@@ -47,9 +47,10 @@
                         <br>
                         <span class="flex-1 mx-3">
                             Status: <select class="edit w-32" x-model="item.status" name="status">
-                                <template x-for="status in statuses">
-                                    <option :value="status" x-text="status"></option>
-                                </template>
+                                <option value="completed" x-text="statuses['completed']"></option>
+                                <option value="ptw" x-text="statuses['ptw']"></option>
+                                <option x-show="item.type != 'movie'" value="watching" x-text="statuses['watching']">
+                                </option>
                             </select>
                         </span>
                         <span class="flex-1">

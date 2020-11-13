@@ -100,15 +100,15 @@ class Dashboard extends Component
         $this->details = Search::start($id)->type($this->searchtype . "_details") ?: false;
     }
 
-    public function changeStatus(String $item, String $status)
-    {
-        $item = json_decode($item);
-        if ($item->type == "book") {
-            Book::updateStatus($item, $status);
-        } else {
-            Movie::updateStatus($item, $status);
-        }
-    }
+    // public function changeStatus(String $item, String $status)
+    // {
+    //     $item = json_decode($item);
+    //     if ($item->type == "book") {
+    //         Book::updateStatus($item, $status);
+    //     } else {
+    //         Movie::updateStatus($item, $status);
+    //     }
+    // }
 
     public function render()
     {

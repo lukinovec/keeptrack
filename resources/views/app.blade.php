@@ -30,7 +30,6 @@
         }
     </style>
     @livewireStyles
-    {{-- Spruce package:  https://github.com/ryangjchandler/spruce --}}
 </head>
 
 <body>

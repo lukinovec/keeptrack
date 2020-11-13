@@ -20,6 +20,7 @@ class Movie extends Model
     // Update movie's status in DB, if the movie doesn't exist in DB, create a new record
     public static function updateStatus($movie, $status)
     {
+        $movie = (object) $movie;
         $get_movie = self::find($movie->id);
         if ($get_movie) {
             MovieUser::updateOrCreate(

@@ -41,14 +41,14 @@ class LibraryDB
                 "ptw" => "Plan to Read",
                 "completed" => "Completed",
                 "watching" => "Reading",
-                "" => ""
+                "none" => "None"
             ]);
         } else {
             return collect([
-                "completed" => "Completed",
                 "ptw" => "Plan to Watch",
+                "completed" => "Completed",
                 "watching" => "Watching",
-                "" => ""
+                "none" => "None"
             ]);
         }
     }
@@ -76,21 +76,23 @@ class LibraryDB
     public function updateDetails($item)
     {
         try {
-            if ($item->type == "series" || $item->type == "tv") {
-                MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
-                    ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
-                );
-            } elseif ($item->type == "movie") {
-                MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
-                    ["rating" => $item->rating, "note" => $item->note, "status" => $item->status]
-                );
-            } elseif ($item->type == "book") {
-                BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
+            if ($item->type == "book") {
+                $item->status !== "none" ? BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
                     ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
-                );
+                ) : BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->delete();
+            } else {
+                $movie_user = MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id);
+                if ($item->type == "series" || $item->type == "tv") {
+                    $item->status !== "none" ? $movie_user->update(
+                        ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                    ) : $movie_user->delete();
+                } elseif ($item->type == "movie") {
+                    $item->status !== "none" ? $movie_user->update(
+                        ["rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                    ) : $movie_user->delete();;
+                    return $this->movies();
+                }
             }
-
-            return $this->movies();
         } catch (\Throwable $th) {
             throw $th;
         }
