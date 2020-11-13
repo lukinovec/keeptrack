@@ -7,7 +7,7 @@ use App\Classes\Request;
 
 class Movie extends Model
 {
-    protected $fillable = ['apiID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons'];
+    protected $fillable = ['apiID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons', 'episodes'];
     protected $primaryKey = 'apiID';
     protected $casts = ['apiID' => 'string', 'seasons' => 'array'];
     public $incrementing = false;
@@ -49,7 +49,8 @@ class Movie extends Model
                 "type" => $movie->type,
                 "year" => $movie->year,
                 "totalSeasons" => $movie->totalSeasons,
-                "seasons" => $movie->seasons
+                "seasons" => $movie->seasons,
+                "episodes" => $movie->episodes ?? null
             ]);
             MovieUser::create([
                 "user_id" => auth()->id(),

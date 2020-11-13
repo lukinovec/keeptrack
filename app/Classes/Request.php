@@ -28,6 +28,12 @@ class Request
             ])->json();
         }
 
+        if ($this->searchtype === "anime") {
+            return Http::get('https://api.jikan.moe/v3/search/anime', [
+                'q' => $this->query
+            ])->json()["results"];
+        }
+
         if ($this->searchtype === "book") {
             return Http::get('https://www.goodreads.com/search/index.xml', [
                 'key' => config('services.apikey.goodreads'),

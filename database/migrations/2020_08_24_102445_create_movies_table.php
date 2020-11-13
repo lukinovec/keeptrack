@@ -22,6 +22,7 @@ class CreateMoviesTable extends Migration
             $table->string('year');
             $table->integer('totalSeasons')->nullable();
             $table->json('seasons')->nullable();
+            $table->integer('episodes')->nullable();
             $table->timestamps();
         });
     }

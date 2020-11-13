@@ -8,13 +8,12 @@
     </span>
 
     {{ $item["year"] }}
-
     <div id="{{ $item['id'] }}" class="flex">
         <img class="my-2" src="{{ $item['image'] }}" alt="image">
         <div class="btns flex flex-col w-full text-center">
             @livewire("status-button", ["item" => $item, "status" => "completed"], key(rand()))
             @livewire("status-button", ["item" => $item, "status" => "ptw"], key(rand()+1))
-            @if ($item["type"] === "series")
+            @if ($item["type"] === "series" || $item["type"] === "tv")
             @livewire("status-button", ["item" => $item, "status" => "watching"], key(rand()+2))
             @endif
         </div>

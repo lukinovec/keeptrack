@@ -30,12 +30,14 @@ class Search
         }
 
         // Get a movie by ID
-        if ($searchtype === "movie_details") {
+        elseif ($searchtype === "movie_details") {
             return $this->makeRequest($searchtype);
+        } elseif ($searchtype === "anime") {
+            return $this->formatAnime($this->makeRequest($searchtype));
         }
 
         // Get a book by name
-        if ($searchtype === "book") {
+        elseif ($searchtype === "book") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
             $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
             $results = json_decode(json_encode($xml))->search->results->work;
@@ -43,7 +45,7 @@ class Search
         }
 
         // Get a book by ID
-        if ($searchtype === "book_details") {
+        elseif ($searchtype === "book_details") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
             $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
             $results = collect((array) json_decode(json_encode($xml))->book)->only(["id", "description", "authors"])->all();
@@ -67,10 +69,31 @@ class Search
                     "image" => $item["Poster"],
                     "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                 ];
+            })->reject(function ($item) {
+                return $item["type"] == "game";
             });
         } else {
             return false;
         }
+    }
+
+    public function formatAnime($query)
+    {
+        $statuses = LibraryDB::statuses("movie")->map(function ($anime) {
+            return ["apiID" => $anime["mal_id"], "status" => $anime->status];
+        });
+        return collect($query)->map(function ($item) use ($statuses) {
+            return [
+                "id" => $item["mal_id"],
+                "title" => $item["title"],
+                "year" => substr($item["start_date"], 0, 4),
+                "type" => strtolower($item["type"]),
+                "episodes" => $item["episodes"],
+                "isAnime" => true,
+                "image" => $item["image_url"],
+                "status" => $statuses->firstWhere("apiID", $item["mal_id"])["status"] ?? ""
+            ];
+        });
     }
 
     public function formatBooks($query)

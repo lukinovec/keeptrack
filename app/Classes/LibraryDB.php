@@ -76,7 +76,7 @@ class LibraryDB
     public function updateDetails($item)
     {
         try {
-            if ($item->type == "series") {
+            if ($item->type == "series" || $item->type == "tv") {
                 MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id)->update(
                     ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
                 );

@@ -12,6 +12,7 @@
 
         <select x-show="!libraryType" wire:model="searchtype" name="searchtype" id="searchtype">
             <option value="movie">TV / Movie</option>
+            <option value="anime">Anime</option>
             <option value="book">Book</option>
         </select>
         <x-search-switch />
@@ -52,7 +53,6 @@
             <div>
                 <br><br>
                 <span class="font-bold"> {{ var_dump($details) }} </span> <br>
-                {{-- <span class="font-bold"> {{ $details["Plot"] }} </span> <br> --}}
             </div>
         </div>
         @endif
