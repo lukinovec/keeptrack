@@ -1,11 +1,15 @@
 <div class="flex flex-row w-full justify-evenly">
-    <div x-data="{ destination: '/', toggleSearch: @entangle('toggleSearch') }"
-        x-init="'{{ Auth::check() }}' ? destination = '/home' : ''" class="p-12 sm:px-64 text-xl space-x-16">
-        <a :href="destination" class="flex-1 border-b-2 float-left hover:border-black hover:text-black">Home</a>
-        <a x-show="'{{ Auth::check() }}'" class="border-b-2 hover:border-black hover:text-black" href="#"
-            x-on:click="toggleSearch = !toggleSearch" x-text="toggleSearch ? 'Hide Search' : 'Show Search'"></a>
-        <a href="#" x-show="'{{ Auth::check() }}'" wire:click="logout"
-            class="border-b-2 float-right hover:border-black hover:text-black">Log
+    <div x-data="{ destination: '/' }" x-init="'{{ Auth::check() }}' ? destination = '/home' : '/'"
+        class="p-12 text-xl space-x-1 sm:space-x-4 sm:space-x-16">
+        <a :href="destination" class="btn p-2">Home</a>
+        <a href="javascript:;" x-show="'{{ Auth::check() }}'" wire:click="logout" class="btn p-2">Log
             out</a>
+        {{-- @if (Route::is('login'))
+        <a class="btn p-2" x-show="!'{{ Auth::check() }}'" href="/register">Register</a>
+        @elseif(Route::is('register'))
+        <a class="btn p-2" x-show="!'{{ Auth::check() }}'" href="/login">Login</a>
+        @endif --}}
     </div>
+    <div wire:loading.delay wire:target='login' class="loader" style="position: fixed; left: 50%; top: 7%">
+        </div>
 </div>

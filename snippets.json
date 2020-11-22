@@ -1,0 +1,7 @@
+{
+    "html": {
+        "snippets": {
+            "yourSnippet": ".container>h1.title"
+        }
+    }
+}

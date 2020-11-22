@@ -95,10 +95,8 @@ class User extends Authenticatable
     {
         return $this->movies->map(function ($movie) {
             return collect(
-                Movie::find(collect($movie)
-                    ->forget(["id", "user_id", "created_at", "updated_at"])
-                    ->get("movie_id"))
-            )->merge($movie);
+                Movie::find($movie->movie_id)
+            )->merge(collect($movie)->forget(["id", "user_id"]));
         });
     }
 
@@ -109,7 +107,7 @@ class User extends Authenticatable
     public function bookList()
     {
         return $this->books->map(function ($book) {
-            return collect(Book::find($book->book_id))->replace(["status" => $book->status]);
+            return collect(Book::find($book->book_id))->merge(collect($book)->forget(["id", "user_id"]));
         });
     }
 }

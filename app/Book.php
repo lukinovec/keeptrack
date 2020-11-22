@@ -19,7 +19,7 @@ class Book extends Model
     // Update book's status in DB, if the movie doesn't exist in DB, create a new record
     public static function updateStatus($book, $status)
     {
-        $get_book = self::find($book->id);
+        $get_book = self::find($book["id"]);
         if ($get_book) {
             BookUser::updateOrCreate(
                 [
@@ -30,17 +30,17 @@ class Book extends Model
             );
         } else {
             self::create([
-                "apiID" => $book->id,
-                "image" => $book->image,
-                "author" => $book->creator_name,
-                "name" => $book->title,
+                "apiID" => $book["id"],
+                "image" => $book["image"],
+                "author" => $book["creator_name"],
+                "name" => $book["title"],
                 "type" => "book",
-                "year" => $book->year
+                "year" => $book["year"]
             ]);
             BookUser::create([
                 "user_id" => auth()->id(),
-                "book_id" => $book->id,
-                "status" => $status
+                "book_id" => $book["id"],
+                "status" => $status,
             ]);
         }
     }

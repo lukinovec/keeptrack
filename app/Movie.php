@@ -20,8 +20,7 @@ class Movie extends Model
     // Update movie's status in DB, if the movie doesn't exist in DB, create a new record
     public static function updateStatus($movie, $status)
     {
-        $movie = (object) $movie;
-        $get_movie = self::find($movie->id);
+        $get_movie = self::find($movie["id"]);
         if ($get_movie) {
             MovieUser::updateOrCreate(
                 [
@@ -31,31 +30,31 @@ class Movie extends Model
                 ["status" => $status]
             );
         } else {
-            $movie->totalSeasons = 0;
-            $movie->seasons = "";
-            if ($movie->type == "series") {
-                $request_details = new Request("movie_details", $movie->id);
+            $movie["totalSeasons"] = 0;
+            $movie["seasons"] = "";
+            if ($movie["type"] == "series") {
+                $request_details = new Request("movie_details", $movie["id"]);
                 $totalSeasons = (int) $request_details->search()["totalSeasons"];
                 $seasons = [];
                 for ($i = 1; $i <= $totalSeasons; $i++) {
                     $seasons[] = ["number" => $i, "episodes" => $request_details->getSeason($i)];
                 }
-                $movie->seasons = $seasons;
-                $movie->totalSeasons = $totalSeasons;
+                $movie["seasons"] = $seasons;
+                $movie["totalSeasons"] = $totalSeasons;
             }
             self::create([
-                "apiID" => $movie->id,
-                "image" => $movie->image,
-                "name" => $movie->title,
-                "type" => $movie->type,
-                "year" => $movie->year,
-                "totalSeasons" => $movie->totalSeasons,
-                "seasons" => $movie->seasons,
-                "episodes" => $movie->episodes ?? null
+                "apiID" => $movie["id"],
+                "image" => $movie["image"],
+                "name" => $movie["title"],
+                "type" => $movie["type"],
+                "year" => $movie["year"],
+                "totalSeasons" => $movie["totalSeasons"],
+                "seasons" => $movie["seasons"],
+                "episodes" => $movie["episodes"] ?? null
             ]);
             MovieUser::create([
                 "user_id" => auth()->id(),
-                "movie_id" => $movie->id,
+                "movie_id" => $movie["id"],
                 "status" => $status
             ]);
         }

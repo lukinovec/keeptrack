@@ -11,7 +11,7 @@ class Register extends Component
     public $email = "";
     public $password = "";
     public $password_confirmation = "";
-    public $confirmed = "border-blue-600";
+    public $confirmed;
     public $newUser;
     public $getUserByEmail;
 
@@ -40,6 +40,11 @@ class Register extends Component
         ]);
         Auth::login($newUser);
         return redirect("home");
+    }
+
+    public function login()
+    {
+        return redirect("login");
     }
 
     public function render()

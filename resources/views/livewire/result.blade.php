@@ -1,5 +1,5 @@
 <div x-show="infoid === '{{$item['id']}}' || infoid === ''"
-    class="mx-10 my-4 p-5 w-full sm:w-1/4 item shadow-xl border-t-2 border-red-700"
+    class="text-white mx-10 my-4 p-5 w-5/6 md:w-1/3 item shadow-xl border-t-2 border-red-700"
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90">
@@ -8,9 +8,16 @@
     </span>
 
     {{ $item["year"] }}
-    <div id="'{{ $item['id'] }}'" class="flex">
+    <div id="'{{ $item['id'] }}'" class="flex justify-center align-center">
         <img class="my-2" src="{{ $item['image'] }}" alt="image">
-        <select x-data='{ statuses: @json($statuses) }' class="text-center h-16" wire:model="item.status">
+    </div>
+    <div class="info flex font-bold">
+        <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
+            x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">
+            Toggle details
+        </div>
+        <select x-data='{ statuses: @json($statuses) }' class="text-center h-16 overflow-hidden flex-1"
+            wire:model="item.status">
             <option value="none" x-text="statuses.none"></option>
             <option value="completed" x-text="statuses.completed"></option>
             <option value="ptw" x-text="statuses.ptw"></option>
@@ -19,17 +26,4 @@
             @endif
         </select>
     </div>
-    <div class="info flex font-bold">
-        <div class="flex-1 text-center p-5 text-white font-bold bg-red-700"
-            x-on:click="infoid ? infoid = '' : infoid = '{{ $item['id'] }}'">
-            Toggle details
-        </div>
-
-        {{-- @if ($item["status"] && $item["status"] !== "none")
-        <div wire:click="$emit('goToLibrary', '{{ $item['type'] }}')"
-        class="flex-1 text-center p-5 text-white font-bold bg-red-800">
-        Go to Library
-    </div>
-    @endif --}}
-</div>
 </div>

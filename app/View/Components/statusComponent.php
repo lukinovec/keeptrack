@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class LibraryMoviesComponent extends Component
+class statusComponent extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class LibraryMoviesComponent extends Component
      */
     public function render()
     {
-        return view('components.library-movies-component');
+        return view('components.status-component');
     }
 }

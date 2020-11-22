@@ -4,8 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Classes\Search;
 use Livewire\Component;
-use App\Movie;
-use App\Book;
 
 class Dashboard extends Component
 {
@@ -17,7 +15,6 @@ class Dashboard extends Component
     public $libraryType;
     public $isLibrarySearch;
     public $showSearch = false;
-    public $toggleSearch = true;
     public $librarysearch = "";
     public $response;
     public String $infoid = "";
@@ -29,7 +26,7 @@ class Dashboard extends Component
         "watching" => "watching"
     ];
 
-    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType", "goToLibrary", "toggleSearch"];
+    protected $listeners = ["changeStatus", "emitLibraryType" => "getLibraryType", "goToLibrary"];
 
     public function mount()
     {
@@ -44,11 +41,6 @@ class Dashboard extends Component
         }
     }
 
-    public function toggleSearch($toggle)
-    {
-        $this->toggleSearch = $toggle;
-    }
-
     public function getLibraryType($type)
     {
         $this->libraryType = $type;
@@ -60,13 +52,6 @@ class Dashboard extends Component
         $this->emit('emitLibraryType', $searchtype . 's');
         $this->libraryType = $searchtype;
         $this->isSearch = false;
-    }
-
-    public function switchSearch()
-    {
-        $this->showSearch = !$this->showSearch;
-        $this->searchtype = rtrim($this->libraryType, "s") ?? $this->searchtype;
-        $this->showSearch == false ? $this->goToLibrary($this->searchtype) : "";
     }
 
     public function startSearching()

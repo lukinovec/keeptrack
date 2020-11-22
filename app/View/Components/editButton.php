@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class LibraryBooksComponent extends Component
+class editButton extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class LibraryBooksComponent extends Component
      */
     public function render()
     {
-        return view('components.library-books-component');
+        return view('components.edit-button');
     }
 }

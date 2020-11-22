@@ -54,7 +54,7 @@ class LibraryDB
     }
 
     /**
-     *  @return Array All movies where the current logged user has set some status
+     *  @return Collection All movies where the current logged user has set some status
      */
     public function movies()
     {
@@ -62,7 +62,7 @@ class LibraryDB
     }
 
     /**
-     *  @return Array All books where the current logged user has set some status
+     *  @return Collection All books where the current logged user has set some status
      */
     public function books()
     {
@@ -70,7 +70,7 @@ class LibraryDB
     }
 
     /**
-     * @param $item Array  Item to be updated
+     * @param $item Collection  Item to be updated
      * Updates details of a submitted item
      */
     public function updateDetails($item)
@@ -78,8 +78,9 @@ class LibraryDB
         try {
             if ($item->type == "book") {
                 $item->status !== "none" ? BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
-                    ["pages_read" => $item->pages, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
+                    ["pages_read" => $item->pages_read, "rating" => $item->rating, "note" => $item->note, "status" => $item->status]
                 ) : BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->delete();
+                return $this->books();
             } else {
                 $movie_user = MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id);
                 if ($item->type == "series" || $item->type == "tv") {
@@ -89,9 +90,9 @@ class LibraryDB
                 } elseif ($item->type == "movie") {
                     $item->status !== "none" ? $movie_user->update(
                         ["rating" => $item->rating, "note" => $item->note, "status" => $item->status]
-                    ) : $movie_user->delete();;
-                    return $this->movies();
+                    ) : $movie_user->delete();
                 }
+                return $this->movies();
             }
         } catch (\Throwable $th) {
             throw $th;
