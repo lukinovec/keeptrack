@@ -599,7 +599,7 @@ video {
   color: rgba(203, 213, 225, var(--tw-text-opacity))
 }
 
-.select-option {
+.select > * {
   background-color: transparent
 }
 

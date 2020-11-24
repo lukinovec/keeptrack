@@ -18,7 +18,7 @@
     @apply rounded-xxl bg-transparent text-blueGray-300
 }
 
-.select-option {
+.select > * {
     @apply bg-transparent
 }
 

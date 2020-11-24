@@ -110,7 +110,7 @@ class Search
                 "type" => "book",
                 "creator_name" => $item->best_book->author->name,
                 "creator_id" => $item->best_book->author->id->{"0"} ?? "",
-                "image" => $item->best_book->image_url,
+                "image" => preg_replace('/._.*_/', '._SY385_', $item->best_book->image_url),
                 "status" => $statuses->firstWhere("apiID", $item->best_book->id->{'0'})["status"] ?? ""
             ]);
         })->whereNotNull("year");

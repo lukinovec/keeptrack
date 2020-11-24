@@ -28,12 +28,10 @@ class Library extends Component
         'toUpdate.pages_read.integer' => "Page must be a number",
     ];
 
-    // protected $listeners = ['itemUpdated'];
-
     public function mount()
     {
-        $this->statuses = LibraryDB::open()->getStatuses($this->type);
         $this->type = request()->segment(2);
+        $this->statuses = LibraryDB::open()->getStatuses($this->type);
         if ($this->type == "movie") {
             $this->library = auth()->user()->movieList();
         } else {
@@ -60,9 +58,4 @@ class Library extends Component
         $this->validate();
         $this->library = LibraryDB::open()->updateDetails((object) $item);
     }
-
-    // public function itemUpdated($item)
-    // {
-    //     $this->library = LibraryDB::open()->updateDetails((object) $item);
-    // }
 }

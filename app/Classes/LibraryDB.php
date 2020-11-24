@@ -66,7 +66,7 @@ class LibraryDB
      */
     public function books()
     {
-        return $this->authUser->books();
+        return $this->authUser->bookList();
     }
 
     /**
