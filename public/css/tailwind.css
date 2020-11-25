@@ -593,7 +593,6 @@ video {
 }
 
 .select {
-  background-color: transparent;
   border-radius: 1rem;
   --tw-text-opacity: 1;
   color: rgba(203, 213, 225, var(--tw-text-opacity))
@@ -671,6 +670,7 @@ video {
   border-color: rgba(203, 213, 225, var(--tw-border-opacity));
   border-radius: 0.75rem;
   border-width: 2px;
+  cursor: pointer;
   font-weight: 700;
   margin: 0.25rem;
   outline: 2px solid transparent;

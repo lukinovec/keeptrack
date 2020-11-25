@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class BookUser extends Model
 {
     protected $table = 'book_user';
-    protected $fillable = ['user_id', 'book_id', 'status', 'pages_read'];
-    protected $attributes = ['pages_read' => 0];
+    protected $guarded = ['id'];
+    protected $attributes = ['pages_read' => 0, 'is_favorite' => false];
 
     public function users()
     {

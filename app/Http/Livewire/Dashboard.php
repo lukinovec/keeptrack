@@ -58,7 +58,7 @@ class Dashboard extends Component
     {
         if (strlen($this->search) > 2) {
             $this->isSearch = true;
-            $this->response = Search::start($this->search)->type($this->searchtype);
+            $this->response = Search::start(trim($this->search))->type($this->searchtype);
         } else {
             $this->isSearch = false;
         }

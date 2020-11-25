@@ -20,6 +20,7 @@ class CreateBookUser extends Migration
             $table->text('status');
             $table->text('note')->nullable();
             $table->integer('rating')->nullable();
+            $table->boolean('is_favorite');
             $table->integer('pages_read')->nullable();
             $table->timestamps();
         });

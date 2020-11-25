@@ -31,7 +31,10 @@
         }
 
         a:active,
-        a:focus {
+        a:focus,
+        button,
+        button:active,
+        button:focus {
             outline: 0;
             -moz-outline-style: none;
         }

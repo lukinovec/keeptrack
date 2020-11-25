@@ -14,6 +14,12 @@ class Library extends Component
     public $toUpdate;
     public $statuses = [];
 
+    // Filtering
+    public $filter = "none";
+    public $onlyFavorites = false;
+    public $onlyAnime = false;
+
+
     protected $rules = [
         'toUpdate.rating' => 'nullable|integer|max:10|min:1',
         'toUpdate.episode' => 'nullable|integer',
@@ -51,11 +57,33 @@ class Library extends Component
         }
     }
 
+    public function updatedFilter($filter)
+    {
+        if ($filter == "none") {
+            $this->library = $this->library_original;
+        } elseif ($filter != "favorite") {
+            $this->library = $this->library_original->filter(function ($item) use ($filter) {
+                return $item["status"] == $filter;
+            });
+        } else {
+            $this->library = $this->library->filter(function ($item) {
+                return $item["is_favorite"];
+            });
+        }
+    }
+
+
     public function updateItem($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
         $this->library = LibraryDB::open()->updateDetails((object) $item);
+    }
+
+    public function favoriteItem($item)
+    {
+        $item["id"] = $item["apiID"] ?: $item["apiID"];
+        LibraryDB::open()->updateDetails((object) $item);
     }
 }

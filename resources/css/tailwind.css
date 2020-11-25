@@ -15,7 +15,7 @@
 }
 
 .select {
-    @apply rounded-xxl bg-transparent text-blueGray-300
+    @apply rounded-xxl text-blueGray-300
 }
 
 .select > * {
@@ -43,7 +43,7 @@
 }
 
 .btn {
-    @apply outline-none focus:outline-none text-blueGray-300 m-1 from-transparent to-transparent font-bold border-2 bg-gradient-to-r hover:from-blueGray-700 hover:to-blueGray-800 border-blueGray-300 rounded-xl
+    @apply outline-none cursor-pointer focus:outline-none text-blueGray-300 m-1 from-transparent to-transparent font-bold border-2 bg-gradient-to-r hover:from-blueGray-700 hover:to-blueGray-800 border-blueGray-300 rounded-xl
 
 }
 .auth-btn-primary {

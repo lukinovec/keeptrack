@@ -12,12 +12,38 @@
     </div>
     @endif
 
-    @if ($library->count() > 0)
     {{-- Library Searchbar --}}
-    <div class="flex-1 text-center">
+    <div class="flex flex-col flex-1 items-center">
         <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
-            class="input" />
+            class="input w-56" />
+        <div class="flex filter mt-4 space-x-2">
+            <span>
+                <select wire:model="filter"
+                    class="text-center select bg-transparent border-2 border-r-0 text-blueGray-500 text-lg border-blueGray-500 w-32"
+                    name="filter" id="filter">
+                    <option class="bg-blueGray-900" value="none">
+                        All
+                    </option>
+                    <option class="bg-blueGray-900" value="completed">
+                        {{ $statuses['completed'] }}
+                    </option>
+                    <option class="bg-blueGray-900" value="ptw">
+                        {{ $statuses['ptw'] }}
+                    </option>
+                    <option class="bg-blueGray-900" value="watching">
+                        {{ $statuses['watching'] }}
+                    </option>
+                    <option class="bg-blueGray-900" value="favorite">
+                        Only favorites
+                    </option>
+                </select>
+                <button x-show="{{ $filter }} != 'none'" for="filter" wire:click='updatedFilter("none")' class="mx-2 btn p-1 text-blueGray-500
+border-blueGray-500 text-sm">Remove
+                    Filter</button>
+            </span>
+        </div>
     </div>
+    @if ($library->count() > 0)
     <div class="flex flex-row flex-wrap text-center justify-center md:mx-24">
         @foreach ($library as $item)
         <div x-data='{
@@ -44,52 +70,61 @@
                         x-text="item.name">
                     </div>
                     {{-- Edit --}}
-                    <div class="absolute w-full h-full pb-32 sm:pb-56 flex flex-col text-left"
-                        x-show="edit.apiID == item.apiID" style="z-index: 999; top: 25%">
+                    <div class="absolute w-full h-full top-0 flex flex-col justify-evenly text-left"
+                        x-show="edit.apiID == item.apiID">
                         <br>
-                        <span class="flex flex-1 mx-3">
-                            <span class="flex-1">
-                                <span class="text-sm">
-                                    Rating
-                                </span> <br>
-                                <input maxlength="2" class="w-12 input text-lg" x-model.number="item.rating" type="text"
-                                    name="rating"> /
-                                10
-                            </span>
-                            <span class="flex-1 mx-3">
-                                <x-status-component><span class="text-sm">
-                                        Status</span><br> </x-status-component>
-                            </span>
+                        <span class="justify-center mx-8">
+                            <span class="text-sm">
+                                Rating
+                            </span> <br>
+                            <input maxlength="2" class="w-8 border-b-2 bg-black bg-opacity-25 text-l"
+                                x-model.number="item.rating" type="text" name="rating"> /
+                            10
                         </span>
-                        <span class="flex-1 mx-3">
-                            <span class="text-sm">Note</span> <br>
-                            <input class="input w-5/6" x-model="item.note" type="text">
+                        <span class="mx-8">
+                            <x-status-component><span class="text-sm">
+                                    Status</span><br> </x-status-component>
                         </span>
+
                         <br>
-                        <span class="flex-1">
-                            <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
-                                <div class="text-sm">
-                                    <label for="pages_read">Pages Read</label>
-                                    <input name="pages_read" class="w-8 border-b-2 bg-black bg-opacity-25"
+                        <span class="mx-8">
+                            <div x-show="item.apiID == edit.apiID" style="z-index: 999">
+                                <div>
+                                    <label for="pages_read">Pages Read</label><br>
+                                    <input name="pages_read" class="w-8 text-lg border-b-2 bg-black bg-opacity-25"
                                         x-model.number="item.pages_read" type="text">
-                                    <button x-on:click="item.pages_read++">+</button>
+                                    <button class="text-lg" x-on:click="item.pages_read++">+</button>
                                 </div>
                             </div>
                         </span>
+
+                        <span class="mx-8">
+                            <span class="text-sm">Note</span> <br>
+                            <input class="input w-full" x-model="item.note" type="text">
+                        </span>
+
                         <button class="btn w-1/4 mx-auto" x-show="edit.apiID == item.apiID"
                             x-on:click="$wire.updateItem(item)">
                             Submit
                         </button>
                     </div>
                     {{-- Edit button --}}
-                    <x-edit-button />
+                    <button x-on:click="editButton(item)"
+                        class="absolute right-0 m-2 p-2 bg-black rounded-xxxl sm:w-8 w-12 transform duration-300 sm:hover:scale-125 z-50"
+                        :class="{ 'sm:scale-125 bg-blueGray-100': edit.apiID == item.apiID }"
+                        style="top: 2.5rem; right: 1rem">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-edit w-full">
+                            <path class="primary" fill="#718096"
+                                d="M4 14a1 1 0 0 1 .3-.7l11-11a1 1 0 0 1 1.4 0l3 3a1 1 0 0 1 0 1.4l-11 11a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-3z" />
+                            <rect fill="#718096" width="20" height="2" x="2" y="20" class="secondary" rx="1" /></svg>
+                    </button>
                 </div>
             </div>
         </div>
         @endforeach
     </div>
     @else
-    <div wire:loading.remove class="mt-40 text-2xl w-full text-center">
+    <div wire:loading.remove class="mt-40 text-blueGray-300 text-2xl w-full text-center">
         <span class="font-bold">
             No items in your library
         </span><br>

@@ -10,7 +10,7 @@ class MovieLibrary extends Library
     {
         return view('livewire.movie-library', [
             "library" => $this->library,
-            "type" => $this->type
+            "type" => $this->type,
         ])->extends('app')
             ->section('content');
     }

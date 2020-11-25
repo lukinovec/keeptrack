@@ -6,7 +6,8 @@
                 :placeholder="searchtype == 'anime' ? 'Search an ' + searchtype : 'Search a ' + searchtype"
                 type="search" class="input" />
 
-            <select class="select" x-show="!libraryType" wire:model="searchtype" name="searchtype" id="searchtype">
+            <select class="select bg-blueGray-900 p-2" x-show="!libraryType" wire:model="searchtype" name="searchtype"
+                id="searchtype">
                 <option class="select-option" value="movie">TV / Movie</option>
                 <option class="select-option" value="anime">Anime</option>
                 <option class="select-option" value="book">Book</option>
