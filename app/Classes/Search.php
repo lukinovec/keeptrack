@@ -48,8 +48,8 @@ class Search
         elseif ($searchtype === "book_details") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
             $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
-            $results = collect((array) json_decode(json_encode($xml))->book)->only(["id", "description", "authors"])->all();
-            return dd($results);
+            $results = collect(json_decode(json_encode($xml))->book)->all();
+            return $results;
         }
     }
 
@@ -63,6 +63,7 @@ class Search
             return collect($query["Search"])->map(function ($item) use ($statuses) {
                 return [
                     "id" => $item["imdbID"],
+                    "formattedId" => (int) preg_replace("/[^0-9]/", "", $item["imdbID"]),
                     "title" => $item["Title"],
                     "year" => $item["Year"],
                     "type" => $item["Type"],

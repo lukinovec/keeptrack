@@ -19,7 +19,7 @@
         <div class="flex filter mt-4 space-x-2">
             <span>
                 <select wire:model="filter"
-                    class="text-center select bg-transparent border-2 border-r-0 text-blueGray-500 text-lg border-blueGray-500 w-32"
+                    class="text-center select bg-transparent border-2 border-r-0 text-blueGray-500 text-lg border-blueGray-500 w-40"
                     name="filter" id="filter">
                     <option class="bg-blueGray-900" value="none">
                         All
@@ -56,6 +56,10 @@ border-blueGray-500 text-sm">Remove
                         } else {
                             this.edit = item;
                         }
+                    },
+                    favoriteButton: function(item) {
+                        item.is_favorite = !item.is_favorite;
+                        $wire.updateItem(item);
                     },
                     submit: function(item) {
                         $wire.updateItem(item);
@@ -111,12 +115,23 @@ border-blueGray-500 text-sm">Remove
                     {{-- Edit button --}}
                     <button x-on:click="editButton(item)"
                         class="absolute right-0 m-2 p-2 bg-black rounded-xxxl sm:w-8 w-12 transform duration-300 sm:hover:scale-125 z-50"
-                        :class="{ 'sm:scale-125 bg-blueGray-100': edit.apiID == item.apiID }"
+                        :class="{ 'sm:scale-125 bg-blueGray-400': edit.apiID == item.apiID }"
                         style="top: 2.5rem; right: 1rem">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-edit w-full">
-                            <path class="primary" fill="#718096"
+                            <path class="primary" fill="rgba(226, 232, 240)"
                                 d="M4 14a1 1 0 0 1 .3-.7l11-11a1 1 0 0 1 1.4 0l3 3a1 1 0 0 1 0 1.4l-11 11a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-3z" />
-                            <rect fill="#718096" width="20" height="2" x="2" y="20" class="secondary" rx="1" /></svg>
+                            <rect fill="rgba(226, 232, 240)" width="20" height="2" x="2" y="20" class="secondary"
+                                rx="1" /></svg>
+                    </button>
+
+                    {{-- Favorite button --}}
+                    <button x-on:click="favoriteButton(item)"
+                        class="absolute right-0 m-2 p-2 bg-black rounded-xxxl w-8 transform duration-300 sm:hover:scale-125 z-50"
+                        :class="{ 'bg-yellow-600': item.is_favorite }" style="top: 6rem; right: 1rem">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-star w-full">
+                            <path class="secondary" fill="rgba(226, 232, 240)"
+                                d="M9.53 16.93a1 1 0 0 1-1.45-1.05l.47-2.76-2-1.95a1 1 0 0 1 .55-1.7l2.77-.4 1.23-2.51a1 1 0 0 1 1.8 0l1.23 2.5 2.77.4a1 1 0 0 1 .55 1.71l-2 1.95.47 2.76a1 1 0 0 1-1.45 1.05L12 15.63l-2.47 1.3z" />
+                        </svg>
                     </button>
                 </div>
             </div>

@@ -10,21 +10,16 @@ use Livewire\Component;
 class Result extends Component
 {
     public $item;
-    public $infoid;
+    public $searchtype;
     public $statuses = [];
     protected $listeners = ['changeStatus'];
 
-    public function mount($item, $infoid)
+    public function mount($item, $searchtype)
     {
         $this->item = $item;
-        $this->infoid = $infoid;
+        $this->searchtype = $searchtype;
         $this->statuses = LibraryDB::open()->getStatuses($item["type"]);
     }
-
-    // public function changeStatus($item, $status)
-    // {
-    //     $this->item["status"] = $status;
-    // }
 
     public function updatedItemStatus($status)
     {
@@ -37,6 +32,6 @@ class Result extends Component
 
     public function render()
     {
-        return view('livewire.result', ["item" => $this->item, "infoid" => $this->infoid]);
+        return view('livewire.result', ["item" => $this->item]);
     }
 }

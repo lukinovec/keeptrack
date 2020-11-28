@@ -60,13 +60,14 @@ class Library extends Component
     public function updatedFilter($filter)
     {
         if ($filter == "none") {
+            $this->filter = $filter;
             $this->library = $this->library_original;
         } elseif ($filter != "favorite") {
             $this->library = $this->library_original->filter(function ($item) use ($filter) {
                 return $item["status"] == $filter;
             });
         } else {
-            $this->library = $this->library->filter(function ($item) {
+            $this->library = $this->library_original->filter(function ($item) {
                 return $item["is_favorite"];
             });
         }
@@ -78,12 +79,13 @@ class Library extends Component
         $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
-        $this->library = LibraryDB::open()->updateDetails((object) $item);
+        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
     }
 
     public function favoriteItem($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
-        LibraryDB::open()->updateDetails((object) $item);
+        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
+        $this->library = $this->library_original;
     }
 }
