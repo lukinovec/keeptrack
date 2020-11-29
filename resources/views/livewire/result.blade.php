@@ -12,7 +12,7 @@
     </div>
     <div class="info flex font-bold">
         @if ($searchtype == "movie")
-        <a class="btn h-12 border-none text-center" href="https://www.imdb.com/title/{{ $item["id"] }}/"
+        <a class="btn h-10 border-none text-center" href="https://www.imdb.com/title/{{ $item["id"] }}/"
             target="_blank">
             <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb">
         </a>
@@ -21,13 +21,14 @@
             See on Goodreads
         </a>
         @endif
-        <select x-data='{ statuses: @json($statuses) }'
-            class="text-center bg-blueGray-800 select overflow-hidden flex-1" wire:model="item.status">
-            <option value="none" x-text="statuses.none"></option>
-            <option value="completed" x-text="statuses.completed"></option>
-            <option value="ptw" x-text="statuses.ptw"></option>
+        <select x-data='{ statuses: @json($statuses), item_status: @json($item).status }'
+            class="text-center select overflow-hidden bg-blueGray-800 flex-1"
+            :class="{ 'bg-green-900': item_status !== '' && item_status !== 'none' }" wire:model="item.status">
+            <option class="bg-blueGray-800" value="none" x-text="statuses.none"></option>
+            <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
+            <option class="bg-blueGray-800" value="ptw" x-text="statuses.ptw"></option>
             @if ($item["type"] !== "movie")
-            <option value="watching" x-text="statuses.watching"></option>
+            <option class="bg-blueGray-800" value="watching" x-text="statuses.watching"></option>
             @endif
         </select>
     </div>

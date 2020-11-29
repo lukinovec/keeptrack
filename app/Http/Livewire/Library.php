@@ -80,6 +80,7 @@ class Library extends Component
         $this->toUpdate = $item;
         $this->validate();
         $this->library_original = LibraryDB::open()->updateDetails((object) $item);
+        $this->library = $this->library_original;
     }
 
     public function favoriteItem($item)

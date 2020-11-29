@@ -98,7 +98,8 @@ border-blueGray-500 p-1 text-sm">Remove
                                 <select class="w-12 bg-black select bg-opacity-25" x-model.number="item.season"
                                     id="seasons" name="seasons">
                                     <template x-for="season in item.seasons">
-                                        <option x-model="season.number" value="season.number" x-text="season.number">
+                                        <option class="bg-blueGray-700 text-blueGray-300" x-model="season.number"
+                                            value="season.number" x-text="season.number">
                                         </option>
                                     </template>
                                 </select>

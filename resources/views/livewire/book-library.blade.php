@@ -45,7 +45,7 @@ border-blueGray-500 text-sm">Remove
     </div>
     @if ($library->count() > 0)
     <div class="flex flex-row flex-wrap text-center justify-center md:mx-24">
-        @foreach ($library as $item)
+        @foreach ($library->sortByDesc('updated_at')->sortByDesc('is_favorite') as $item)
         <div x-data='{
                     item: @json($item),
                     statuses: @json($statuses),
@@ -58,8 +58,8 @@ border-blueGray-500 text-sm">Remove
                         }
                     },
                     favoriteButton: function(item) {
-                        item.is_favorite = !item.is_favorite;
-                        $wire.updateItem(item);
+                        this.item.is_favorite = !this.item.is_favorite;
+                        $wire.favoriteItem(this.item);
                     },
                     submit: function(item) {
                         $wire.updateItem(item);

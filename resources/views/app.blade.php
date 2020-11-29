@@ -14,6 +14,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
+
     <style>
         html,
         body {
@@ -110,12 +111,33 @@
                 height: 5em;
             }
         }
+
+        /* https://stackoverflow.com/questions/22747193/statically-rotate-font-awesome-icons */
+        .fa-rotate-45 {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .fa-rotate-45-negative {
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
     </style>
     @livewireStyles
 </head>
 
 <body class="bg-gradient-secondary">
     <div id="app" class="flex-center position-ref h-full mx-4">
+        <span class="text-4xl opacity-25">
+            <i class="fas fa-tv fa-10x fixed bottom-0 fa-rotate-45 "></i>
+            <i class="fas fa-book fa-10x fixed bottom-0 right-0 fa-rotate-45-negative "></i>
+        </span>
         @if (!Route::is("welcome"))
         <livewire:nav-bar />
         @endif
@@ -130,6 +152,7 @@
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false"></script>
     <script defer src="{!! mix('js/app.js') !!}"></script>
+    <script src="https://kit.fontawesome.com/1d34d35411.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
