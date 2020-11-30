@@ -130,13 +130,18 @@
         }
     </style>
     @livewireStyles
+    <script defer src="{!! mix('js/app.js') !!}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" defer></script>
 </head>
 
 <body class="bg-gradient-secondary">
     <div id="app" class="flex-center position-ref h-full mx-4">
         <span class="text-4xl opacity-25">
-            <i class="fas fa-tv fa-10x fixed bottom-0 fa-rotate-45 "></i>
-            <i class="fas fa-book fa-10x fixed bottom-0 right-0 fa-rotate-45-negative "></i>
+            <i
+                class="fas fa-tv fa-10x fixed left-0 {{ Route::is("library-book") || Route::is("library-movie") ? "top-0 fa-rotate-45-negative" : "bottom-0 fa-rotate-45" }}"></i>
+            <i
+                class="fas fa-book fa-10x fixed right-0 {{ Route::is("library-book") || Route::is("library-movie") ? "top-0 fa-rotate-45" : "bottom-0 fa-rotate-45-negative" }}"></i>
         </span>
         @if (!Route::is("welcome"))
         <livewire:nav-bar />
@@ -149,9 +154,7 @@
         </div>
     </div>
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false"></script>
-    <script defer src="{!! mix('js/app.js') !!}"></script>
+
     <script src="https://kit.fontawesome.com/1d34d35411.js" crossorigin="anonymous"></script>
 </body>
 
