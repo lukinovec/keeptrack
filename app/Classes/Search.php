@@ -104,15 +104,15 @@ class Search
         });
         return collect($query)->map(function ($item) use ($statuses) {
             return collect([
-                "id" => $item->best_book->id->{'0'},
+                "id" => $item->best_book->id,
                 "rating" => $item->average_rating,
                 "title" => $item->best_book->title,
-                "year" => $item->original_publication_year->{'0'} ?? null,
+                "year" => $item->original_publication_year ?? null,
                 "type" => "book",
                 "creator_name" => $item->best_book->author->name,
-                "creator_id" => $item->best_book->author->id->{"0"} ?? "",
+                "creator_id" => $item->best_book->author->id ?? "",
                 "image" => preg_replace('/._.*_/', '._SY385_', $item->best_book->image_url),
-                "status" => $statuses->firstWhere("apiID", $item->best_book->id->{'0'})["status"] ?? ""
+                "status" => $statuses->firstWhere("apiID", $item->best_book->id)["status"] ?? ""
             ]);
         })->whereNotNull("year");
     }

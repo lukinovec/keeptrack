@@ -137,21 +137,19 @@
 
 <body class="bg-gradient-secondary">
     <div id="app" class="flex-center position-ref h-full mx-4">
-        <span class="text-4xl opacity-25">
+        {{-- <span class="text-4xl opacity-25">
             <i class="fas fa-tv fa-10x fixed left-0"></i>
             <i class="fas fa-book fa-10x fixed right-0"></i>
-        </span>
-        <span class="z-50">
-            @if (!Route::is("welcome"))
-            <livewire:nav-bar />
-            @endif
+        </span> --}}
+        @if (!Route::is("welcome"))
+        <livewire:nav-bar />
+        @endif
 
-            @if (Auth::check())
-            @endif
-            <div class="flex justify-center">
-                @yield("content")
-            </div>
-        </span>
+        @if (Auth::check())
+        @endif
+        <div class="flex justify-center">
+            @yield("content")
+        </div>
     </div>
     @livewireScripts
 
