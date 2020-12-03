@@ -1,5 +1,5 @@
 <div class="text-center p-4 mt-64 md:p-8 text-blueGray-300">
-    <div class="text-3xl md:text-6xl font-bold">Welcome to KeepTrack!</div>
+    <div class="text-3xl md:text-6xl font-bold">Welcome to KeepTrack! TESTING</div>
     @guest
     <div class="login mt-8">
         <a href="/login" class="btn p-2">Log
