@@ -3,7 +3,7 @@
         <div :class="{ 'visible lg:flex-1': !isSearch }">
             <input wire:model.debounce.300ms="search"
                 :placeholder="searchtype == 'anime' ? 'Search an ' + searchtype : 'Search a ' + searchtype"
-                type="search" class="input border-blueGray-500" />
+                type="search" class="input" />
 
             <select class="select bg-blueGray-900 p-2" wire:model="searchtype" name="searchtype" id="searchtype">
                 <option class="select-option" value="movie">TV / Movie</option>
@@ -14,10 +14,10 @@
     </div>
 
     <div class="h-full w-full">
-        <div x-show="!isSearch" class="h-auto w-full" x-transition:enter="transition ease-out duration-100"
+        <div x-show="!isSearch" class="h-full w-full" x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
             x-transition:enter-end="opacity-100 transform scale-100">
-            <livewire:menu class="h-auto w-full" id="menu" />
+            <livewire:menu class="flex content-center h-auto w-full" id="menu" />
         </div>
         <br>
 

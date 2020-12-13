@@ -136,18 +136,18 @@
 </head>
 
 <body class="bg-gradient-secondary">
+    {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 opacity-25 w-64 fa-rotate-45 left-0" />
+    <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 opacity-50 w-64 fa-rotate-45-negative right-0" />
+    --}}
     <div id="app" class="flex-center position-ref h-full mx-4">
-        {{-- <span class="text-4xl opacity-25">
-            <i class="fas fa-tv fa-10x fixed left-0"></i>
-            <i class="fas fa-book fa-10x fixed right-0"></i>
-        </span> --}}
+
         @if (!Route::is("welcome"))
         <livewire:nav-bar />
         @endif
 
         @if (Auth::check())
         @endif
-        <div class="flex justify-center">
+        <div class="h-full flex justify-center items-center">
             @yield("content")
         </div>
     </div>

@@ -1,4 +1,4 @@
-<div class="auth-wrapper" x-data="{ confirmed: @entangle('confirmed') }">
+<div class="auth-wrapper absolute" style="top: 20%" x-data="{ confirmed: @entangle('confirmed') }">
     <div class="auth">
         <input class="input w-full" placeholder="Email" type="email" wire:model.defer="email" name="email" />
         <br><br>

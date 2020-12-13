@@ -1,4 +1,4 @@
-<div class="text-center p-4 mt-64 md:p-8 text-blueGray-300">
+<div class="text-center p-4 md:p-8 text-blueGray-300 absolute" style="top: 20%">
     <div class="text-3xl md:text-6xl font-bold">Welcome to KeepTrack!</div>
     @guest
     <div class="login mt-8">
