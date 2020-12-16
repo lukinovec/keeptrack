@@ -24,6 +24,8 @@
             height: 100%;
             margin: 0;
             background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
         }
 
         .edit {
