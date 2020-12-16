@@ -1,4 +1,4 @@
-<div class="h-full w-full">
+<div class="h-full w-full bg-transparent">
 
     <div wire:loading wire:target='updateItem' class="loader" style="position: fixed; left: 50%; top: 7%"></div>
 
