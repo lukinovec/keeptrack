@@ -23,9 +23,9 @@
             font-weight: 200;
             height: 100%;
             margin: 0;
+            background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            overflow: hidden;
         }
 
         .edit {
