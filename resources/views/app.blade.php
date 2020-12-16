@@ -23,9 +23,14 @@
             font-weight: 200;
             height: 100%;
             margin: 0;
-            background-size: cover;
+            background-image: linear-gradient(to top, var(--tw-gradient-stops));
+            --tw-gradient-from: #1e293b;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(30, 41, 59, 0));
+            --tw-gradient-to: #0f172a;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: fixed !important;
+            background-size: 100% !important;
+            background-position: center top !important;
         }
 
         .edit {
