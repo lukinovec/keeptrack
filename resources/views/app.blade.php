@@ -23,14 +23,9 @@
             font-weight: 200;
             height: 100%;
             margin: 0;
-            background-image: linear-gradient(to top, var(--tw-gradient-stops));
-            --tw-gradient-from: #1e293b;
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(30, 41, 59, 0));
-            --tw-gradient-to: #0f172a;
+            background: linear-gradient(to top, #1e293b 0%, #0f172a 100%);
             background-repeat: no-repeat;
-            background-attachment: fixed !important;
-            background-size: 100% !important;
-            background-position: center top !important;
+            background-attachment: fixed;
         }
 
         .edit {
@@ -141,7 +136,7 @@
         data-turbolinks-eval="false" defer></script>
 </head>
 
-<body class="bg-gradient-secondary">
+<body class="">
     {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 opacity-25 w-64 fa-rotate-45 left-0" />
     <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 opacity-50 w-64 fa-rotate-45-negative right-0" />
     --}}
