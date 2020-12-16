@@ -21,6 +21,8 @@
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
+            min-height: 100%;
+            height: 100%;
             padding-top: 0;
             margin: 0;
             background: linear-gradient(to top, #1e293b 0%, #0f172a 100%);
@@ -136,7 +138,7 @@
         data-turbolinks-eval="false" defer></script>
 </head>
 
-<body class="h-full">
+<body class="">
     {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 opacity-25 w-64 fa-rotate-45 left-0" />
     <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 opacity-50 w-64 fa-rotate-45-negative right-0" />
     --}}
