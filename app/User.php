@@ -90,24 +90,35 @@ class User extends Authenticatable
     // Use with '()'
     /**
      * @return Collection All movies with statuses where the user ID is the current logged users ID
+     * @param Integer $count  How many results do you want
      */
-    public function movieList()
+    public function movieList($count = 0)
     {
-        return $this->movies->map(function ($movie) {
+        $result = $this->movies->map(function ($movie) {
             return collect(
                 Movie::find($movie->movie_id)
             )->merge(collect($movie)->forget(["id", "user_id"]));
         });
+
+        if ($count != 0) {
+            return $result->sortByDesc('updated_at')->slice(0, $count);
+        }
+        return $result;
     }
 
     // Use with '()'
     /**
      * @return Collection All books with statuses where the user ID is the current logged users ID
      */
-    public function bookList()
+    public function bookList($count = 0)
     {
-        return $this->books->map(function ($book) {
+        $result = $this->books->map(function ($book) {
             return collect(Book::find($book->book_id))->merge(collect($book)->forget(["id", "user_id"]));
         });
+
+        if ($count != 0) {
+            return $result->slice(0, $count);
+        }
+        return $result;
     }
 }

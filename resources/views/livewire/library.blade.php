@@ -19,7 +19,7 @@
             class="input" />
     </div>
     <div class="flex flex-row flex-wrap text-center justify-center md:mx-24">
-        @foreach ($library->sortByDesc('updated_at') as $item)
+        @foreach ($library as $item)
         <div x-data='{
                     item: @json($item),
                     statuses: @json($statuses),
