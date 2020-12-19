@@ -24,6 +24,8 @@
                 </div>
             </a>
         </div>
+        @if ($latestMovie)
+
         <h1 class="text-white font-bold">Recently updated</h1>
         <div x-data='{ item: @json($latestMovie) }' class="flex-1 w-64 m-2 wrapper p-3 text-center">
             <h1 class="text-white font-bold" x-text="item.name"></h1>
@@ -46,6 +48,7 @@
             <br>
             <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
         </div>
+        @endif
     </div>
 
     <div class="flex flex-1 flex-col justify-center items-center">
@@ -68,6 +71,7 @@
                 </svg>
             </div>
         </a>
+        @if ($latestBook)
         <h1 class="text-white font-bold">Recently updated</h1>
         <div x-data='{ item: @json($latestBook) }' class="flex-1 m-2 wrapper w-64 p-3 text-center">
             <h1 class="text-white font-bold" x-text="item.name"></h1>
@@ -78,5 +82,6 @@
             <br>
             <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
         </div>
+        @endif
     </div>
 </div>
