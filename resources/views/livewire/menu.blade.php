@@ -48,6 +48,10 @@
             <br>
             <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
         </div>
+        @else
+        <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
+            <h1 class="text-white font-bold">No movies in your list.</h1>
+        </div>
         @endif
     </div>
 
@@ -71,8 +75,8 @@
                 </svg>
             </div>
         </a>
-        @if ($latestBook)
         <h1 class="text-white font-bold">Recently updated</h1>
+        @if ($latestBook)
         <div x-data='{ item: @json($latestBook) }' class="flex-1 m-2 wrapper w-64 p-3 text-center">
             <h1 class="text-white font-bold" x-text="item.name"></h1>
             <label for="pages_read">Pages Read</label>
@@ -81,6 +85,10 @@
             <button x-on:click="item.pages_read++">+</button>
             <br>
             <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
+        </div>
+        @else
+        <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
+            <h1 class="text-white font-bold">No books in your list.</h1>
         </div>
         @endif
     </div>
