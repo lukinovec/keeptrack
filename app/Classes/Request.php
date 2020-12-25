@@ -11,6 +11,11 @@ class Request
         $this->searchtype = $searchtype;
         $this->query = $query;
     }
+
+    public static function create(String $searchtype, String $query)
+    {
+        return new static($searchtype, $query);
+    }
     // serial - prvni request JENOM pro first season, dalsi az user vybere
     public function search()
     {

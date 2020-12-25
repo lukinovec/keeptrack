@@ -18,7 +18,7 @@ class Search
 
     public function makeRequest($searchtype)
     {
-        return (new Request($searchtype, $this->search))->search();
+        return Request::create($searchtype, $this->search)->search();
     }
 
 
@@ -68,10 +68,11 @@ class Search
                     "year" => $item["Year"],
                     "type" => $item["Type"],
                     "image" => $item["Poster"],
+                    "image_valid" => getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1] ? true : false,
                     "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                 ];
             })->reject(function ($item) {
-                return $item["type"] == "game";
+                return $item["type"] == "game" || !$item["image_valid"];
             });
         } else {
             return false;

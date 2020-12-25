@@ -1,4 +1,4 @@
-<div class="h-full w-full" x-data="{ searchtype: @entangle('searchtype'), isSearch: @entangle('isSearch') }">
+<div class="h-full w-full" x-data="{ searchtype: @entangle('searchtype'), isSearch: @entangle('isSearch'),  }">
     <div class="text-center justify-center flex">
         <div :class="{ 'visible lg:flex-1': !isSearch }">
             <input wire:model.debounce.300ms="search"

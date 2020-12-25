@@ -30,6 +30,10 @@
             background-attachment: fixed;
         }
 
+        *:focus {
+            outline: none;
+        }
+
         .edit {
             color: rgba(203, 213, 225);
         }

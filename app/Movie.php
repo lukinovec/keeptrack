@@ -33,7 +33,7 @@ class Movie extends Model
             $movie["totalSeasons"] = 0;
             $movie["seasons"] = "";
             if ($movie["type"] == "series") {
-                $request_details = new Request("movie_details", $movie["id"]);
+                $request_details = Request::create("movie_details", $movie["id"]);
                 $totalSeasons = (int) $request_details->search()["totalSeasons"];
                 $seasons = [];
                 for ($i = 1; $i <= $totalSeasons; $i++) {

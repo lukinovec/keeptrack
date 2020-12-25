@@ -3,7 +3,7 @@
         https://codepen.io/simeonunder2/pen/povGyVJ
         - TBD --}}
 
-    <div class="flex-1">
+    <div class="flex-1 h-full">
 
         <div class="flex flex-1 flex-col justify-center items-center">
             <div class="flex-1 p-10 text-center">
@@ -55,94 +55,105 @@
             </a>
         </div>
     </div>
-    <div class="flex flex-col flex-1 justify-center items-center">
-        <div class="flex flex-col justify-center items-center">
-            <div class="max-w-4xl mx-auto relative" x-data="{ activeSlide: 1, slides: [1, 2] }">
-                <!-- Slides -->
-                <template x-for="slide in slides" :key="slide">
-                    <div x-show="activeSlide === slide" class="p-24 h-64 flex bg-transparent items-center">
-                        <div x-show="activeSlide === 1">
-                            @if ($latestMovie)
-                            <div x-data='{ item: @json($latestMovie) }'
-                                class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
-                                <h1 class="text-white font-bold" x-text="item.name"></h1>
-                                @if($latestMovie['type'] == 'series')
-                                <label for="seasons">Season</label>
-                                <select class="w-12 bg-black bg-opacity-25" x-model.number="item.season" id="seasons"
-                                    name="seasons">
-                                    <template x-for="season in item.seasons">
-                                        <option x-model="season.number" value="season.number" x-text="season.number">
-                                        </option>
-                                    </template>
-                                </select>
-                                <br class="my-2">
-                                @endif
-                                <label for="episodes">Episode</label>
-                                <input name="episodes" class="w-8 border-b-2 bg-black bg-opacity-25"
-                                    x-model.number="item.episode" type="text">
-                                /
-                                <span
-                                    x-text="item.seasons ? (item.seasons[item.season-1].episodes.Episodes).length : item.episodes"></span>
 
-                                <button x-on:click="item.episode++">+</button>
-                                <br>
-                                <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
-                            </div>
-                            @else
-                            <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
-                                <h1 class="text-white font-bold">No movies in your list.</h1>
-                            </div>
-                            @endif
-                        </div>
-                        <div x-show="activeSlide === 2">
-                            @if ($latestBook)
-                            <div x-data='{ item: @json($latestBook) }'
-                                class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
-                                <h1 class="text-white font-bold" x-text="item.name"></h1>
-                                <label for="pages_read">Pages Read</label>
-                                <input name="pages_read" class="w-8 border-b-2 bg-black bg-opacity-25"
-                                    x-model.number="item.pages_read" type="text">
-                                <button x-on:click="item.pages_read++">+</button>
-                                <br>
-                                <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
-                            </div>
-                            @else
-                            <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
-                                <h1 class="text-white font-bold">No books in your list.</h1>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </template>
-
-                <!-- Prev/Next Arrows -->
-                <div class="absolute inset-0 flex">
-                    <div class="flex items-center justify-start w-1/2">
-                        <button
-                            class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow-lg rounded-full w-12 h-12 ml-10"
-                            x-on:click="activeSlide = activeSlide === 1 ? slides.length : activeSlide - 1">
-                            &#8592;
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-end w-1/2">
-                        <button
-                            class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow rounded-full w-12 h-12 mr-10"
-                            x-on:click="activeSlide = activeSlide === slides.length ? 1 : activeSlide + 1">
-                            &#8594;
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Buttons -->
-                <div class="absolute w-full flex items-center justify-center px-4">
+    <!-- Recently updated -->
+    <div class="flex flex-col flex-1 mt-16 sm:mt-0 text-center justify-center items-center">
+        <div class="flex flex-col text-center w-11/12 justify-center items-center">
+            <h1 class="font-bold text-white">Recently updated</h1>
+            <div class="flex flex-col justify-center items-center">
+                <div class="max-w-4xl mx-auto relative" x-data="{ activeSlide: 1, slides: [1, 2] }">
+                    <!-- Slides -->
                     <template x-for="slide in slides" :key="slide">
-                        <button
-                            class="flex-1 w-4 h-2 mt-4 mx-2 mb-0 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-warmGray-800 hover:shadow-lg"
-                            :class="{
-                          'bg-blueGray-300': activeSlide === slide,
-                          'bg-warmGray-900': activeSlide !== slide
-                      }" x-on:click="activeSlide = slide"></button>
+                        <div x-show="activeSlide === slide" class="p-24 h-64 flex bg-transparent items-center">
+                            <div x-show="activeSlide === 1">
+                                @if ($latestMovie)
+                                <div x-data='{ item: @json($latestMovie) }'
+                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
+                                    <h1 class="text-white font-bold" x-text="item.name"></h1>
+                                    @if($latestMovie['type'] == 'series')
+                                    <label for="seasons">Season</label>
+                                    <select class="w-12 bg-black bg-opacity-25" x-model.number="item.season"
+                                        id="seasons" name="seasons">
+                                        <template x-for="season in item.seasons">
+                                            <option x-model="season.number" value="season.number"
+                                                x-text="season.number">
+                                            </option>
+                                        </template>
+                                    </select>
+                                    <br class="my-2">
+                                    @endif
+                                    <label for="episodes">Episode</label>
+                                    <input name="episodes" class="w-8 border-b-2 bg-black bg-opacity-25"
+                                        x-model.number="item.episode" type="text">
+                                    /
+                                    <span
+                                        x-text="item.seasons ? (item.seasons[item.season-1].episodes.Episodes).length : item.episodes"></span>
+
+                                    <button x-on:click="item.episode++">+</button>
+                                    <br>
+                                    <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
+                                </div>
+                                @else
+                                <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
+                                    <h1 class="text-white font-bold">No movies in your list.</h1>
+                                </div>
+                                @endif
+                            </div>
+                            <div x-show="activeSlide === 2">
+                                @if ($latestBook)
+                                <div x-data='{ item: @json($latestBook) }'
+                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
+                                    <div>
+                                        <h1 class="text-white font-bold" x-text="item.name"></h1>
+                                        <label for="pages_read">Pages Read</label>
+                                        <input name="pages_read" class="w-8 border-b-2 bg-black bg-opacity-25"
+                                            x-model.number="item.pages_read" type="text">
+                                        <button x-on:click="item.pages_read++">+</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn p-1 mt-3"
+                                            x-on:click="$wire.submitChanges(item)">Update</button>
+                                    </div>
+                                </div>
+                                @else
+                                <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
+                                    <h1 class="text-white font-bold">No books in your list.</h1>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
                     </template>
+
+                    <!-- Prev/Next Arrows -->
+                    <div class="absolute inset-0 flex">
+                        <div class="flex items-center justify-start w-1/2">
+                            <button
+                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow-lg rounded-full w-12 h-12 ml-10"
+                                x-on:click="activeSlide = activeSlide === 1 ? slides.length : activeSlide - 1">
+                                &#8592;
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-end w-1/2">
+                            <button
+                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow rounded-full w-12 h-12 mr-10"
+                                x-on:click="activeSlide = activeSlide === slides.length ? 1 : activeSlide + 1">
+                                &#8594;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="absolute  w-full flex items-center justify-center px-4">
+                        <template x-for="slide in slides" :key="slide">
+                            <button x-text="slide == 1 ? 'Recent movie' : 'Recent book'"
+                                class="flex-1 w-4 mt-4 mx-2 mb-0 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-blueGray-400 hover:shadow-lg"
+                                :class="{
+            'bg-blueGray-300 text-blueGray-800': activeSlide === slide,
+            'bg-warmGray-900 text-blueGray-300': activeSlide !== slide
+        }" x-on:click="activeSlide = slide">
+                            </button>
+                        </template>
+                    </div>
                 </div>
             </div>
 

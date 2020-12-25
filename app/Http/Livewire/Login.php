@@ -12,11 +12,6 @@ class Login extends Component
     public $logging;
     public $error;
 
-    // protected $rules = [
-    //     "email" => "required|email",
-    //     "password" => "required|password"
-    // ];
-
     public function login()
     {
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
