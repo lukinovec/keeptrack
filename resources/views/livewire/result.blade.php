@@ -1,9 +1,9 @@
-<div class="text-blueGray-300 mx-10 my-4 p-5 w-5/6 md:w-1/4 lg:w-1/5 overflow-hidden rounded-xxxl item shadow-xl flex flex-col border-t-2 border-b-2 border-blueGray-300"
+<div class="text-blueGray-300 mx-10 my-4 p-5 w-5/6 md:w-1/4 lg:w-1/5 overflow-hidden rounded-xxxl relative item shadow-xl flex flex-col border-t-2 border-b-2 border-blueGray-300"
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
     style="height: 40rem;">
-    <div style="flex-basis: 5">
+    <div>
         <span class="text-2xl font-bold">
             {{ $item["title"] }}
         </span>
@@ -12,7 +12,7 @@
             <img class="my-2 rounded-xxxl" src="{{ $item['image'] }}" alt="image">
         </div>
     </div>
-    <div class="info flex flex-1 font-bold">
+    <div class="info absolute bottom-0 flex font-bold">
         @if ($searchtype == "movie")
         <a class="btn h-8 border-none text-center" href="https://www.imdb.com/title/{{ $item["id"] }}/" target="_blank">
             <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb">
