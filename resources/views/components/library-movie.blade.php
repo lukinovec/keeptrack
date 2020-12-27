@@ -43,7 +43,7 @@
                         <span
                             x-text="item.seasons ? (item.seasons[item.season-1].episodes.Episodes).length : item.episodes"></span>
 
-                        <button x-on:click="item.episode++">+</button>
+                        <button class="p-1 bg-blueGray-700 rounded-full" x-on:click="item.episode++">+1</button>
                     </div>
                 </div>
                 @endif
