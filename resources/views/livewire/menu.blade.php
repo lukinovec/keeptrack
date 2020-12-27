@@ -57,18 +57,36 @@
     </div>
 
     <!-- Recently updated -->
-    <div class="flex flex-col flex-1 mt-16 sm:mt-0 text-center justify-center items-center">
+    <div class="flex flex-col flex-1 mt-16 sm:mt-0 text-center justify-center items-center z-50">
         <div class="flex flex-col text-center w-11/12 justify-center items-center">
             <h1 class="font-bold text-white">Recently updated</h1>
             <div class="flex flex-col justify-center items-center">
-                <div class="max-w-4xl mx-auto relative" x-data="{ activeSlide: 1, slides: [1, 2] }">
+                <div class="mx-auto relative" x-data="{ activeSlide: 1, slides: [1, 2] }">
+                    <!-- Prev/Next Arrows -->
+                    <div class="absolute z-0 inset-0 flex">
+                        <div class="flex items-center justify-start w-1/2">
+                            <button
+                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow-lg rounded-full w-12 h-12 ml-10"
+                                x-on:click="activeSlide = activeSlide === 1 ? slides.length : activeSlide - 1">
+                                &#8592;
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-end w-1/2">
+                            <button
+                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow rounded-full w-12 h-12 mr-10"
+                                x-on:click="activeSlide = activeSlide === slides.length ? 1 : activeSlide + 1">
+                                &#8594;
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Slides -->
-                    <template x-for="slide in slides" :key="slide">
+                    <template class="z-10" x-for="slide in slides" :key="slide">
                         <div x-show="activeSlide === slide" class="p-24 h-64 flex bg-transparent items-center">
                             <div x-show="activeSlide === 1">
                                 @if ($latestMovie)
                                 <div x-data='{ item: @json($latestMovie) }'
-                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
+                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center relative">
                                     <h1 class="text-white font-bold" x-text="item.name"></h1>
                                     @if($latestMovie['type'] == 'series')
                                     <label for="seasons">Season</label>
@@ -91,7 +109,8 @@
 
                                     <button x-on:click="item.episode++">+</button>
                                     <br>
-                                    <button class="btn p-1 mt-3" x-on:click="$wire.submitChanges(item)">Update</button>
+                                    <button class="btn p-1 absolute mx-auto bottom-0 right-0 left-0"
+                                        x-on:click="$wire.submitChanges(item)">Update</button>
                                 </div>
                                 @else
                                 <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
@@ -102,18 +121,14 @@
                             <div x-show="activeSlide === 2">
                                 @if ($latestBook)
                                 <div x-data='{ item: @json($latestBook) }'
-                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center">
-                                    <div>
-                                        <h1 class="text-white font-bold" x-text="item.name"></h1>
-                                        <label for="pages_read">Pages Read</label>
-                                        <input name="pages_read" class="w-8 border-b-2 bg-black bg-opacity-25"
-                                            x-model.number="item.pages_read" type="text">
-                                        <button x-on:click="item.pages_read++">+</button>
-                                    </div>
-                                    <div>
-                                        <button class="btn p-1 mt-3"
-                                            x-on:click="$wire.submitChanges(item)">Update</button>
-                                    </div>
+                                    class="flex-1 w-64 h-48 m-2 wrapper p-3 text-center relative">
+                                    <h1 class="text-white font-bold" x-text="item.name"></h1>
+                                    <label for="pages_read">Pages Read</label>
+                                    <input name="pages_read" class="w-8 border-b-2 bg-black bg-opacity-25"
+                                        x-model.number="item.pages_read" type="text">
+                                    <button x-on:click="item.pages_read++">+</button>
+                                    <button class="btn p-1 absolute bottom-0 mx-auto right-0 left-0"
+                                        x-on:click="$wire.submitChanges(item)">Update</button>
                                 </div>
                                 @else
                                 <div class="flex-1 m-2 wrapper w-64 p-3 text-center">
@@ -124,26 +139,10 @@
                         </div>
                     </template>
 
-                    <!-- Prev/Next Arrows -->
-                    <div class="absolute inset-0 flex">
-                        <div class="flex items-center justify-start w-1/2">
-                            <button
-                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow-lg rounded-full w-12 h-12 ml-10"
-                                x-on:click="activeSlide = activeSlide === 1 ? slides.length : activeSlide - 1">
-                                &#8592;
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-end w-1/2">
-                            <button
-                                class="bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 font-bold hover:shadow rounded-full w-12 h-12 mr-10"
-                                x-on:click="activeSlide = activeSlide === slides.length ? 1 : activeSlide + 1">
-                                &#8594;
-                            </button>
-                        </div>
-                    </div>
+
 
                     <!-- Buttons -->
-                    <div class="absolute  w-full flex items-center justify-center px-4">
+                    <div class="absolute w-full flex items-center justify-center px-4">
                         <template x-for="slide in slides" :key="slide">
                             <button x-text="slide == 1 ? 'Recent movie' : 'Recent book'"
                                 class="flex-1 w-4 mt-4 mx-2 mb-0 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-blueGray-400 hover:shadow-lg"

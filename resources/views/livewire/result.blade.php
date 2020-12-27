@@ -12,7 +12,7 @@
             <img class="my-2 rounded-xxxl" src="{{ $item['image'] }}" alt="image">
         </div>
     </div>
-    <div class="info absolute bottom-0 flex font-bold">
+    <div class="info absolute bottom-0 left-0 right-0 p-2 flex font-bold">
         @if ($searchtype == "movie")
         <a class="btn h-8 border-none text-center" href="https://www.imdb.com/title/{{ $item["id"] }}/" target="_blank">
             <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb">
