@@ -1,8 +1,8 @@
-<div class="auth-wrapper absolute" style="top: 20%" x-data="{ logging: @entangle('logging') }">
+<div class="absolute auth-wrapper" style="top: 20%" x-data="{}">
     <div class="auth">
-        <input type="email" class="input w-full" name="email" placeholder="Email" wire:model.defer="email" />
+        <input type="email" x-on:keydown.enter="$wire.login()" class="w-full input" name="email" placeholder="Email" wire:model.defer="email" />
         <br><br>
-        <input type="password" class="input w-full" name="password" placeholder="Password"
+        <input type="password" x-on:keydown.enter="$wire.login()" class="w-full input" name="password" placeholder="Password"
             wire:model.defer="password" />
         <br>
         <span class="flex">

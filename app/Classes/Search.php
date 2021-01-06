@@ -16,7 +16,7 @@ class Search
         return new static($search);
     }
 
-    public function makeRequest($searchtype)
+    public function makeRequest(String $searchtype)
     {
         return Request::create($searchtype, $this->search)->search();
     }

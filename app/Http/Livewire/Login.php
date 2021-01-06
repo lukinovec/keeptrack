@@ -9,7 +9,6 @@ class Login extends Component
 {
     public $email = "";
     public $password = "";
-    public $logging;
     public $error;
 
     public function login()
@@ -17,9 +16,8 @@ class Login extends Component
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
             // Authentication passed...
             return redirect()->intended("home");
-        } else {
-            $this->error = "Invalid credentials. If you don't have an account, click the register button.";
         }
+        $this->error = "Invalid credentials. If you don't have an account, click the register button.";
     }
 
     public function register()
@@ -29,7 +27,7 @@ class Login extends Component
 
     public function render()
     {
-        return view("livewire.login", ["logging" => $this->logging, "error" => $this->error])
+        return view("livewire.login", ["error" => $this->error])
             ->extends('app')
             ->section('content');
     }
