@@ -61,6 +61,12 @@ class Search
                 return ["apiID" => $movie->movie_id, "status" => $movie->status];
             });
             return collect($query["Search"])->map(function ($item) use ($statuses) {
+                $image_valid = false;
+
+                if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1] && $item["Poster"] != "N/A") {
+                    $image_valid = true;
+                }
+
                 return [
                     "id" => $item["imdbID"],
                     "formattedId" => (int) preg_replace("/[^0-9]/", "", $item["imdbID"]),
@@ -68,7 +74,7 @@ class Search
                     "year" => $item["Year"],
                     "type" => $item["Type"],
                     "image" => $item["Poster"],
-                    "image_valid" => getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1] ? true : false,
+                    "image_valid" => $image_valid,
                     "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                 ];
             })->reject(function ($item) {

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
 class Menu extends Component
@@ -19,6 +18,7 @@ class Menu extends Component
     {
         $this->library = [];
         $this->latestMovie = Auth::user()->movieList(1)->first();
+        $this->latestBook = Auth::user()->bookList(1)->first();
         $this->authUser = Auth::user();
     }
 
@@ -44,18 +44,12 @@ class Menu extends Component
         $this->getLibrary();
     }
 
-    public function submitChanges($item)
-    {
-        $item["id"] = $item["apiID"] ?: $item["apiID"];
-        LibraryDB::open()->updateDetails((object) $item);
-    }
-
     public function render()
     {
         return view('livewire.menu', [
             'library' => $this->library,
             'latestMovie' => $this->latestMovie,
-            'latestBook' => Auth::user()->bookList(1)->first()
+            'latestBook' => $this->latestBook
         ]);
     }
 }

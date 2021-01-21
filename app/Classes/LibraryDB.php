@@ -37,19 +37,19 @@ class LibraryDB
     public function getStatuses($type)
     {
         if ($type == "book" || $type == "books") {
-            return collect([
+            return [
                 "ptw" => "Plan to Read",
                 "completed" => "Completed",
                 "watching" => "Reading",
                 "none" => "None"
-            ]);
+            ];
         } else {
-            return collect([
+            return [
                 "ptw" => "Plan to Watch",
                 "completed" => "Completed",
                 "watching" => "Watching",
                 "none" => "None"
-            ]);
+            ];
         }
     }
 

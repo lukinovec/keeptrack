@@ -49,7 +49,7 @@ class Register extends Component
 
     public function render()
     {
-        return view("livewire.register", ["confirmed" => $this->confirmed])
+        return view("livewire.auth.register", ["confirmed" => $this->confirmed])
             ->extends('app')
             ->section('content');
     }

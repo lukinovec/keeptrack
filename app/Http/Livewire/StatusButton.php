@@ -19,7 +19,7 @@ class StatusButton extends Component
 
     public function render()
     {
-        return view('livewire.status-button', [
+        return view('livewire.search.status-button', [
             "status" => $this->status,
             "statuses" => $this->statuses,
             "item" => $this->item

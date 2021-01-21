@@ -89,4 +89,13 @@ class Library extends Component
         $this->library_original = LibraryDB::open()->updateDetails((object) $item);
         $this->library = $this->library_original;
     }
+
+    public function render()
+    {
+        return view('livewire.library', [
+            "library" => $this->library,
+            "type" => $this->type,
+        ])->extends('app')
+            ->section('content');
+    }
 }

@@ -27,7 +27,7 @@ class Login extends Component
 
     public function render()
     {
-        return view("livewire.login", ["error" => $this->error])
+        return view("livewire.auth.login", ["error" => $this->error])
             ->extends('app')
             ->section('content');
     }
