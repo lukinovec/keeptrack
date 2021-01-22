@@ -9,12 +9,12 @@ class Dashboard extends Component
 {
     public String $search = "";
     public String $searchtype = "movie";
-    public $isSearch = false;
-    public $showSearch = false;
-    public $response;
-    public $test;
+    public $searchResponse = false;
     public $authUser;
 
+    /**
+     *
+     */
     public function mount()
     {
         if (auth()->id()) {
@@ -22,26 +22,27 @@ class Dashboard extends Component
         } else {
             $this->authUser = "Not logged in.";
         }
-
-        if ($this->test) {
-            return dd($this->test);
-        }
     }
 
+    /**
+     *
+     */
     public function startSearching()
     {
         if (strlen($this->search) > 2) {
-            $this->response = Search::start(trim($this->search))->type($this->searchtype);
-            $this->isSearch = true;
+            $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
         } else {
-            $this->isSearch = false;
+            $this->searchResponse = [];
         }
     }
 
+    /**
+     *
+     */
     public function updated($updated_property)
     {
         if ($updated_property == "search" || $updated_property == "searchtype") {
-            $this->reset('response');
+            $this->reset('searchResponse');
             $this->startSearching();
         }
     }
@@ -49,8 +50,7 @@ class Dashboard extends Component
     public function render()
     {
         return view('livewire.dashboard', [
-            "isSearch" => $this->isSearch,
-            "results" => $this->response,
+            "searchResponse" => $this->searchResponse,
             "authUser" => $this->authUser,
         ])
             ->extends('app')

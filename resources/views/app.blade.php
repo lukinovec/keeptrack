@@ -143,11 +143,11 @@
 </head>
 
 <body class="">
-    {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 opacity-25 w-64 fa-rotate-45 left-0" />
-    <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 opacity-50 w-64 fa-rotate-45-negative right-0" />
+    {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 left-0 w-64 opacity-25 fa-rotate-45" />
+    <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 right-0 w-64 opacity-50 fa-rotate-45-negative" />
     --}}
     <div id="app"
-        class="flex-center position-ref h-full mx-4 {{ !str_contains(Request::fullUrl(), '/library') && !str_contains(Request::fullUrl(), '/home') ? 'overflow-hidden' : '' }}">
+        class="h-screen flex flex-col mx-4 {{ !str_contains(Request::fullUrl(), '/library') && !str_contains(Request::fullUrl(), '/home') ? 'overflow-hidden' : '' }}">
 
         @if (!Route::is("welcome"))
         <livewire:nav-bar />
@@ -155,7 +155,7 @@
 
         @if (Auth::check())
         @endif
-        <div class="h-full flex justify-center items-center">
+        <div class="flex items-center justify-center flex-1 h-full">
             @yield("content")
         </div>
     </div>

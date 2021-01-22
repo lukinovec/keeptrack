@@ -54,19 +54,19 @@ class LibraryDB
     }
 
     /**
-     *  @return Collection All movies where the current logged user has set some status
+     *  @return Collection Všechny filmy, které má uživatel v knihovně
      */
     public function movies()
     {
-        return $this->authUser->movieList();
+        return $this->authUser->usersMovies();
     }
 
     /**
-     *  @return Collection All books where the current logged user has set some status
+     *  @return Collection Všechny knihy, které má uživatel v knihovně
      */
     public function books()
     {
-        return $this->authUser->bookList();
+        return $this->authUser->usersBooks();
     }
 
     /**

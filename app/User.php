@@ -55,6 +55,7 @@ class User extends Authenticatable
     /**
      * @return Collection ID of all movies with statuses and other things where the user ID is the current logged users ID
      */
+
     public function movies()
     {
         return $this->hasMany(MovieUser::class);
@@ -89,10 +90,10 @@ class User extends Authenticatable
 
     // Use with '()'
     /**
-     * @return Collection All movies with statuses where the user ID is the current logged users ID
      * @param Integer $count  How many results do you want
+     * @return Collection All movies with statuses where the user ID is the current logged users ID
      */
-    public function movieList($count = 0)
+    public function usersMovies($count = 0)
     {
         $result = $this->movies->map(function ($movie) {
             return collect(
@@ -110,7 +111,7 @@ class User extends Authenticatable
     /**
      * @return Collection All books with statuses where the user ID is the current logged users ID
      */
-    public function bookList($count = 0)
+    public function usersBooks($count = 0)
     {
         $result = $this->books->map(function ($book) {
             return collect(Book::find($book->book_id))->merge(collect($book)->forget(["id", "user_id"]));

@@ -39,9 +39,9 @@ class Library extends Component
         $this->type = request()->segment(2);
         $this->statuses = LibraryDB::open()->getStatuses($this->type);
         if ($this->type == "movie") {
-            $this->library = auth()->user()->movieList();
+            $this->library = auth()->user()->usersMovies();
         } else {
-            $this->library = auth()->user()->bookList();
+            $this->library = auth()->user()->usersBooks();
         }
         $this->library_original = $this->library;
     }

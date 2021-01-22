@@ -19,11 +19,11 @@ class Result extends Component
      *
      * Pomocí třídy LibraryDB získá statusy příslušného typu (např. film - "plan to watch", kniha - "plan to read")
      *
-     * @param array|object $item         prop - výsledek vyhledávání
+     * @param array|object $item   prop - výsledek vyhledávání
      * @param String $searchtype   prop - typ vyhledávané položky (film nebo kniha)
      */
 
-    public function mount($item, String $searchtype)
+    public function mount($item, String $searchtype): void
     {
         $this->result = $item;
         $this->searchtype = $searchtype;
@@ -39,7 +39,7 @@ class Result extends Component
      * @return void
      */
 
-    public function updatedResultStatus(String $status)
+    public function updatedResultStatus(String $status): void
     {
         if ($this->result["type"] == "book") {
             Book::updateStatus($this->result, $status);

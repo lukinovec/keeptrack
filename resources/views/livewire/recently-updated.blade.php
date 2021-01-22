@@ -55,7 +55,7 @@
                                     </div>
                                     @else
                                     <div class="flex-1 w-64 p-3 m-2 text-center wrapper">
-                                        <h1 class="font-bold text-white">No movies in your list.</h1>
+                                        <h1 class="font-bold text-white">No TV shows in your list.</h1>
                                     </div>
                                     @endif
                                 </div>
@@ -85,7 +85,7 @@
                         <!-- Buttons -->
                         <div class="absolute flex items-center justify-center w-full px-4">
                             <template x-for="slide in slides" :key="slide">
-                                <button x-text="slide == 1 ? 'Recent movie' : 'Recent book'"
+                                <button x-text="slide == 1 ? 'Recent TV show' : 'Recent book'"
                                     class="flex-1 w-4 mx-2 mt-4 mb-0 overflow-hidden transition-colors duration-200 ease-out rounded-full hover:bg-blueGray-400 hover:shadow-lg"
                                     :class="{
                     'bg-blueGray-300 text-blueGray-800': activeSlide === slide,

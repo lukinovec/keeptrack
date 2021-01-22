@@ -1,8 +1,8 @@
-<div class="w-full h-full" x-data="{ searchtype: @entangle('searchtype'), isSearch: @entangle('isSearch'),  }">
+<div class="w-full h-full p-1" :class="{ 'overflow-hidden': !searchResponse }" x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('searchResponse'),  }">
     <div class="flex justify-center text-center">
-        <div :class="{ 'visible lg:flex-1': !isSearch }">
+        <div :class="{ 'visible lg:flex-1': !searchResponse }">
             <input wire:model.debounce.300ms="search"
-                :placeholder="searchtype == 'anime' ? 'Search an ' + searchtype : 'Search a ' + searchtype"
+                :placeholder="searchtype == 'anime' ? 'Type to search an ' + searchtype : 'Type to search a ' + searchtype"
                 type="search" class="input" />
 
             <select class="p-2 select bg-blueGray-900" wire:model="searchtype" name="searchtype" id="searchtype">
@@ -14,7 +14,7 @@
     </div>
 
     <div class="w-full h-full">
-        <div x-show="!isSearch" class="w-full h-full" x-transition:enter="transition ease-out duration-100"
+        <div x-show="!searchResponse" class="w-full h-full" x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
             x-transition:enter-end="opacity-100 transform scale-100">
             <livewire:menu class="flex content-center w-full h-auto" id="menu" />
@@ -25,12 +25,12 @@
         </div>
         <div x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
-            x-transition:enter-end="opacity-100 transform scale-100" x-show="isSearch"
+            x-transition:enter-end="opacity-100 transform scale-100" x-show="searchResponse"
             class="flex flex-wrap items-center justify-center mt-4">
 
-            @if ($results)
+            @if ($searchResponse)
 
-                @foreach ($results as $item)
+                @foreach ($searchResponse as $item)
                 <livewire:result class="flex-none" :item="$item" :searchtype="$searchtype" :key="$searchtype === 'movie' ? $item['formattedId'] : $item['id']" />
                 @endforeach
 

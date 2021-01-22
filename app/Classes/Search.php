@@ -4,63 +4,83 @@ namespace App\Classes;
 
 use App\Classes\Request;
 use App\Classes\LibraryDB;
+use Illuminate\Support\Collection;
 
+/**
+ * @method start()
+ * @method makeRequest(string $searchtype)
+ * @method type(string $searchtype)
+ * @method formatMovies()
+ * Format response to be displayed as results
+ * @method formatAnime()
+ * Format response to be displayed as results
+ * @method formatBooks()
+ * Format response to be displayed as results
+ */
 class Search
 {
-    public function __construct($search)
+    public function __construct(string $searchtype, string $search)
     {
         $this->search = $search;
-    }
-    public static function start($search)
-    {
-        return new static($search);
+        $this->searchtype = $searchtype;
     }
 
-    public function makeRequest(String $searchtype)
+    public static function start(string $searchtype, string $search)
     {
-        return Request::create($searchtype, $this->search)->search();
+        return new static($searchtype, $search);
     }
 
+    /**
+     * @return Collection   Výsledky vyhledávání ve správném formátu pro zobrazení
+     */
 
-    public function type(String $searchtype)
+    public function makeRequest()
     {
+
+        $request = Request::create($this->searchtype, $this->search)->search();
+
         // Get movies by name
-        if ($searchtype === "movie") {
-            return $this->formatMovies($this->makeRequest($searchtype));
+        if ($this->searchtype === "movie") {
+            return $this->formatMovies($request);
         }
 
         // Get a movie by ID
-        elseif ($searchtype === "movie_details") {
-            return $this->makeRequest($searchtype);
-        } elseif ($searchtype === "anime") {
-            return $this->formatAnime($this->makeRequest($searchtype));
+        elseif ($this->searchtype === "movie_details") {
+            return $request;
+        } elseif ($this->searchtype === "anime") {
+            return $this->formatAnime($request);
         }
 
         // Get a book by name
-        elseif ($searchtype === "book") {
+        elseif ($this->searchtype === "book") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
-            $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA);
             $results = json_decode(json_encode($xml))->search->results->work;
             return $this->formatBooks($results);
         }
 
         // Get a book by ID
-        elseif ($searchtype === "book_details") {
+        elseif ($this->searchtype === "book_details") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
-            $xml = simplexml_load_string($this->makeRequest($searchtype), 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA);
             $results = collect(json_decode(json_encode($xml))->book)->all();
             return $results;
         }
     }
 
-    // Format response to be displayed as results
-    public function formatMovies($query)
+
+    /**
+     * @param mixed $json   Odpověď API ve formátu JSON
+     * @return Collection   Výsledky vyhledávání ve správném formátu pro zobrazení
+     */
+
+    public function formatMovies($json): Collection
     {
-        if ($query["Response"] === "True") {
+        if ($json["Response"] === "True") {
             $statuses = LibraryDB::statuses("movie")->map(function ($movie) {
                 return ["apiID" => $movie->movie_id, "status" => $movie->status];
             });
-            return collect($query["Search"])->map(function ($item) use ($statuses) {
+            return collect($json["Search"])->map(function ($item) use ($statuses) {
                 $image_valid = false;
 
                 if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1] && $item["Poster"] != "N/A") {
@@ -85,12 +105,17 @@ class Search
         }
     }
 
-    public function formatAnime($query)
+    /**
+     * @param array $response   Odpověď API
+     * @return Collection       Výsledky vyhledávání ve správném formátu pro zobrazení
+     */
+
+    public function formatAnime(array $response): Collection
     {
         $statuses = LibraryDB::statuses("movie")->map(function ($anime) {
             return ["apiID" => $anime["mal_id"], "status" => $anime->status];
         });
-        return collect($query)->map(function ($item) use ($statuses) {
+        return collect($response)->map(function ($item) use ($statuses) {
             return [
                 "id" => $item["mal_id"],
                 "title" => $item["title"],
@@ -104,12 +129,17 @@ class Search
         });
     }
 
-    public function formatBooks($query)
+    /**
+     * @param array $response   Odpověď API
+     * @return Collection   Výsledky vyhledávání ve správném formátu pro zobrazení
+     */
+
+    public function formatBooks(array $response): Collection
     {
         $statuses = LibraryDB::statuses("book")->map(function ($book) {
             return ["apiID" => $book->book_id, "status" => $book->status];
         });
-        return collect($query)->map(function ($item) use ($statuses) {
+        return collect($response)->map(function ($item) use ($statuses) {
             return collect([
                 "id" => is_object($item->best_book->id) ? $item->best_book->id->{"0"} : $item->best_book->id,
                 "rating" => $item->average_rating,

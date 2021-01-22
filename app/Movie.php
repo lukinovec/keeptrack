@@ -17,8 +17,10 @@ class Movie extends Model
         return $this->hasMany(MovieUser::class, "movie_id");
     }
 
-    // Update movie's status in DB, if the movie doesn't exist in DB, create a new record
-    public static function updateStatus($movie, $status)
+    /**
+     * Update movie's status in DB, if the movie doesn't exist in DB, create a new record
+     */
+    public static function updateStatus(array $movie, String $status): void
     {
         $get_movie = self::find($movie["id"]);
         if ($get_movie) {
@@ -32,6 +34,7 @@ class Movie extends Model
         } else {
             $movie["totalSeasons"] = 0;
             $movie["seasons"] = "";
+
             if ($movie["type"] == "series") {
                 $request_details = Request::create("movie_details", $movie["id"]);
                 $totalSeasons = (int) $request_details->search()["totalSeasons"];
@@ -42,6 +45,7 @@ class Movie extends Model
                 $movie["seasons"] = $seasons;
                 $movie["totalSeasons"] = $totalSeasons;
             }
+
             self::create([
                 "apiID" => $movie["id"],
                 "image" => $movie["image"],
@@ -52,6 +56,7 @@ class Movie extends Model
                 "seasons" => $movie["seasons"],
                 "episodes" => $movie["episodes"] ?? null
             ]);
+
             MovieUser::create([
                 "user_id" => auth()->id(),
                 "movie_id" => $movie["id"],

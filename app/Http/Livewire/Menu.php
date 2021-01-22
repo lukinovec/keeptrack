@@ -17,8 +17,8 @@ class Menu extends Component
     public function mount()
     {
         $this->library = [];
-        $this->latestMovie = Auth::user()->movieList(1)->first();
-        $this->latestBook = Auth::user()->bookList(1)->first();
+        $this->latestMovie = Auth::user()->usersMovies(1)->firstWhere("seasons", "!==", "");
+        $this->latestBook = Auth::user()->usersBooks(1)->first();
         $this->authUser = Auth::user();
     }
 
@@ -26,9 +26,9 @@ class Menu extends Component
     public function getLibrary()
     {
         if ($this->clicked === "books") {
-            $this->library = $this->authUser->bookList();
+            $this->library = $this->authUser->usersBooks();
         } else {
-            $this->library = $this->authUser->movieList();
+            $this->library = $this->authUser->usersMovies();
         }
     }
 
