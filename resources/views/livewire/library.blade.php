@@ -1,4 +1,4 @@
-<div class="h-full w-full">
+<div class="w-full h-full">
 
     <div wire:loading wire:target='updateItem' class="loader" style="position: fixed; left: 50%; top: 7%"></div>
 
@@ -18,7 +18,7 @@
         <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
             class="input" />
     </div>
-    <div class="flex flex-row flex-wrap text-center justify-center md:mx-24">
+    <div class="flex flex-row flex-wrap justify-center text-center md:mx-24">
         @foreach ($library as $item)
         <div x-data='{
                     item: @json($item),
@@ -35,9 +35,9 @@
                         $wire.updateItem(item);
                         this.edit = false;
                     },
-                }' class="my-10 flex justify-center p-5 w-full sm:w-1/2 lg:w-1/3" :id="item.apiID">
+                }' class="flex justify-center w-full p-5 my-10 sm:w-1/2 lg:w-1/3" :id="item.apiID">
             @if ($type === "book")
-            <x-library-book :item="$item" />
+            <x-library-book class="" :item="$item" />
             @else
             <x-library-movie :item="$item" />
             @endif
@@ -45,7 +45,7 @@
         @endforeach
     </div>
     @else
-    <div wire:loading.remove class="mt-40 text-2xl w-full text-center">
+    <div wire:loading.remove class="w-full mt-40 text-2xl text-center">
         <span class="font-bold">
             No items in your library
         </span><br>

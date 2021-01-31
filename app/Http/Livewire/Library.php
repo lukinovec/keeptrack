@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Classes\LibraryDB;
+use Illuminate\Support\Facades\Auth;
 
 class Library extends Component
 {
@@ -19,13 +20,14 @@ class Library extends Component
     public $onlyFavorites = false;
     public $onlyAnime = false;
 
-
+    // Form Validation
     protected $rules = [
         'toUpdate.rating' => 'nullable|integer|max:10|min:1',
         'toUpdate.episode' => 'nullable|integer',
         'toUpdate.pages_read' => 'nullable|integer'
     ];
 
+    // Validation Error Messages
     protected $messages = [
         'toUpdate.rating.integer' => "Rating must be a number (1-10)",
         'toUpdate.rating.max' => "Rating must be a number from 1 to 10",
@@ -39,9 +41,9 @@ class Library extends Component
         $this->type = request()->segment(2);
         $this->statuses = LibraryDB::open()->getStatuses($this->type);
         if ($this->type == "movie") {
-            $this->library = auth()->user()->usersMovies();
+            $this->library = Auth::user()->usersMovies();
         } else {
-            $this->library = auth()->user()->usersBooks();
+            $this->library = Auth::user()->usersBooks();
         }
         $this->library_original = $this->library;
     }
