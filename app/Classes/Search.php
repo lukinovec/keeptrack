@@ -55,7 +55,7 @@ class Search
         elseif ($this->searchtype === "book") {
             // Convert XML to JSON - https://stackoverflow.com/a/19391553
             $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $results = json_decode(json_encode($xml))->search->results->work;
+            $results = json_decode(json_encode($xml))->search->results->work ?? false;
             return $this->formatBooks($results);
         }
 
@@ -71,10 +71,10 @@ class Search
 
     /**
      * @param mixed $json   Odpověď API ve formátu JSON
-     * @return Collection   Výsledky vyhledávání ve správném formátu pro zobrazení
+     * @return Collection|false   Výsledky vyhledávání ve správném formátu pro zobrazení, nebo false - když vyhledávání selže
      */
 
-    public function formatMovies($json): Collection
+    public function formatMovies($json): Collection|bool
     {
         if ($json["Response"] === "True") {
             $statuses = LibraryDB::statuses("movie")->map(function ($movie) {
@@ -130,12 +130,15 @@ class Search
     }
 
     /**
-     * @param array $response   Odpověď API
-     * @return Collection   Výsledky vyhledávání ve správném formátu pro zobrazení
+     * @param array|bool $response   Odpověď API
+     * @return Collection|bool   Výsledky vyhledávání ve správném formátu pro zobrazení
      */
 
-    public function formatBooks(array $response): Collection
+    public function formatBooks(array|bool $response): Collection|bool
     {
+        if ($response === false) {
+            return false;
+        }
         $statuses = LibraryDB::statuses("book")->map(function ($book) {
             return ["apiID" => $book->book_id, "status" => $book->status];
         });
