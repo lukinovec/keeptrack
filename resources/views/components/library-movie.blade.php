@@ -4,17 +4,10 @@
             :class="{ 'opacity-25': edit.apiID == item.apiID }" alt="Image not found">
 
         {{-- Edit --}}
-        <div class="absolute flex flex-col w-full h-full pb-32 text-left sm:pb-56 justify-evenly" x-show="edit.apiID == item.apiID"
-            style="z-index: 999; top: 15%">
+        <x-edit-component>
             <span class="flex-1 mx-3">
-                Rating: <input class="w-6 edit" x-model.number="item.rating" type="text" name="rating">/10
-            </span>
-            <span class="flex-1 mx-3">
-                Note: <input class="w-5/6 edit" x-model="item.note" type="text">
-            </span>
-            <br>
-            <span class="flex-1 mx-3">
-                Status: <select class="w-32 text-gray-700 edit" x-model="item.status" name="status">
+                <label class="m-1 text-base" for="status">Status</label>
+                <select id="status" class="w-40 p-1 bg-transparent border-4 text-blueGray-300 border-blueGray-300 rounded-xxl" x-model="item.status" name="status">
                     <option class="text-gray-700" value="completed" x-text="statuses['completed']"></option>
                     <option class="text-gray-700" value="ptw" x-text="statuses['ptw']"></option>
                     <option class="text-gray-700" x-show="item.type != 'movie'" value="watching" x-text="statuses['watching']">
@@ -36,7 +29,7 @@
                         <br class="my-2">
                         @endif
                         <label for="episodes">Episode</label>
-                        <input name="episodes" class="w-8 bg-black bg-opacity-25 border-b-2"
+                        <input id="episodes" name="episodes" class="w-8 bg-black bg-opacity-25 border-b-2"
                             x-model.number="item.episode" type="text">
                         /
                         <span
@@ -47,14 +40,12 @@
                 </div>
                 @endif
             </span>
-            <button
-                class="w-1/4 py-1 mx-auto mt-2 text-base bg-gray-700 rounded-lg focus:outline-none hover:bg-gray-900"
-                x-show="edit.apiID == item.apiID" x-on:click="$wire.emit('updateItem', item)">
-                Submit
-            </button>
-        </div>
+        </x-edit-component>
         {{-- Edit button --}}
         <x-edit-button />
+
+        {{-- Favorite button --}}
+        <x-favorite-button />
 
         <div class="absolute bottom-auto w-full p-3 text-xl bg-gray-700 bg-opacity-50 title rounded-b-xxxl" x-text="item.name"></div>
     </div>

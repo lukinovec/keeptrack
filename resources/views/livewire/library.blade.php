@@ -31,6 +31,10 @@
                             this.edit = item;
                         }
                     },
+                    favorite: function(item) {
+                        item.is_favorite = !item.is_favorite;
+                        $wire.favoriteItem(item);
+                    },
                     submit: function(item) {
                         $wire.updateItem(item);
                         this.edit = false;

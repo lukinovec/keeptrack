@@ -15,6 +15,8 @@ class Library extends Component
     public $toUpdate;
     public $statuses = [];
 
+    public $listeners = ["updateItem", "favoriteItem"];
+
     // Filtering
     public $filter = "none";
     public $onlyFavorites = false;
