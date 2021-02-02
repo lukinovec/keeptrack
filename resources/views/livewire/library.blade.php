@@ -1,6 +1,6 @@
 <div class="w-full h-full">
 
-    <div wire:loading wire:target='updateItem' class="loader" style="position: fixed; left: 50%; top: 7%"></div>
+    <div wire:loading wire:target='updateItem' class="loader" style="position: fixed; left: 50%; top: 8%"></div>
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -12,12 +12,12 @@
     </div>
     @endif
 
-    @if ($library->count() > 0)
-    {{-- Library Searchbar --}}
     <div class="flex-1 text-center">
         <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
             class="input" />
     </div>
+    @if ($library->count() > 0)
+    {{-- Library Searchbar --}}
     <div class="flex flex-row flex-wrap justify-center text-center md:mx-24">
         @foreach ($library as $item)
         <div x-data='{

@@ -1,10 +1,23 @@
-<div class="z-50 flex flex-col items-center justify-center mt-16 text-center sm:mt-0">
+<div class="z-50 flex flex-col items-center justify-center text-center">
             <div class="flex flex-col items-center justify-center w-11/12 text-center">
-                <h1 class="font-bold text-white">Recently updated</h1>
+                {{-- <h1 class="font-bold text-white">Recently updated</h1> --}}
                 <div class="flex flex-col items-center justify-center">
                     <div class="relative mx-auto" x-data="{ activeSlide: 1, slides: [1, 2] }">
+                        <!-- Buttons -->
+                        <div class="relative z-30 flex items-center justify-center w-full px-2">
+                            <template x-for="slide in slides" :key="slide">
+                                <button x-text="slide == 1 ? 'Recent TV show' : 'Recent book'"
+                                    class="flex-1 w-4 mx-2 mt-4 mb-0 overflow-hidden transition-colors duration-200 ease-out rounded-full hover:bg-blueGray-400 hover:shadow-lg"
+                                    :class="{
+                    'bg-blueGray-300 text-blueGray-800': activeSlide === slide,
+                    'bg-warmGray-900 text-blueGray-300': activeSlide !== slide
+                }" x-on:click="activeSlide = slide">
+                                </button>
+                            </template>
+                        </div>
+
                         <!-- Prev/Next Arrows -->
-                        <div class="absolute inset-0 z-0 flex">
+                        <div class="absolute inset-0 z-0 flex mt-8">
                             <div class="flex items-center justify-start w-1/2">
                                 <button
                                     class="w-12 h-12 ml-10 font-bold rounded-full bg-blueGray-300 text-blueGray-900 hover:text-warmGray-800 hover:shadow-lg"
@@ -79,23 +92,7 @@
                                 </div>
                             </div>
                         </template>
-
-
-
-                        <!-- Buttons -->
-                        <div class="absolute flex items-center justify-center w-full px-4">
-                            <template x-for="slide in slides" :key="slide">
-                                <button x-text="slide == 1 ? 'Recent TV show' : 'Recent book'"
-                                    class="flex-1 w-4 mx-2 mt-4 mb-0 overflow-hidden transition-colors duration-200 ease-out rounded-full hover:bg-blueGray-400 hover:shadow-lg"
-                                    :class="{
-                    'bg-blueGray-300 text-blueGray-800': activeSlide === slide,
-                    'bg-warmGray-900 text-blueGray-300': activeSlide !== slide
-                }" x-on:click="activeSlide = slide">
-                                </button>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
+    </div>
+</div>

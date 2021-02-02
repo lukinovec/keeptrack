@@ -32,7 +32,7 @@ class Dashboard extends Component
         if (strlen($this->search) > 2) {
             $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
         } else {
-            $this->searchResponse = [];
+            $this->searchResponse = false;
         }
     }
 

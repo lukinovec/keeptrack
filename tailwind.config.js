@@ -1,9 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-    purge: [
-        './resources/views/**/*.blade.php',
-    ],
+    purge: [],
     prefix: '',
     important: false,
     separator: ':',

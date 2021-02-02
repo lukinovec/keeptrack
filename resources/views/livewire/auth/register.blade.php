@@ -7,11 +7,10 @@
         <input class="w-full input" :class="confirmed" x-on:keydown.enter="$wire.register()" placeholder="Confirm password" type="password"
             wire:model="password_confirmation" name="confirm_password" />
 
-        <div class="flex">
-            <button class="btn auth-btn-primary" wire:click="register">Register</button>
-            <button class="btn auth-btn-secondary" wire:click="login">Login</button>
-        </div>
-
+        <button class="btn auth-btn-primary" wire:click="register">Register</button>
+        <span class="flex p-2 m-2 text-base justify-evenly text-blueGray-300">
+            <button class="hover:underline" wire:click="login">Already have an account?</button>
+        </span>
     </div>
     @if ($errors)
     <div class="auth-error">

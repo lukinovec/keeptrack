@@ -83,8 +83,10 @@ class Search
             return collect($json["Search"])->map(function ($item) use ($statuses) {
                 $image_valid = false;
 
-                if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1] && $item["Poster"] != "N/A") {
-                    $image_valid = true;
+                if ($item["Poster"] != "N/A") {
+                    if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1]) {
+                        $image_valid = true;
+                    }
                 }
 
                 return [
