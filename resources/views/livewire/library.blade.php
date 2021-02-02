@@ -12,9 +12,9 @@
     </div>
     @endif
 
-    <div class="flex-1 text-center">
+    <div class="w-full text-center">
         <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
-            class="input" />
+            class="w-1/3 input" />
     </div>
     @if ($library->count() > 0)
     {{-- Library Searchbar --}}

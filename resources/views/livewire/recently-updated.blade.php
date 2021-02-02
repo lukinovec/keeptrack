@@ -1,4 +1,5 @@
-            <div class="flex flex-col items-center justify-center w-11/12 text-center">
+<div class="absolute z-50 flex flex-col items-center justify-center text-center" style="top: 30%" x-show="!searchResponse">
+    <div class="flex flex-col items-center justify-center w-2/3 text-center">
                 {{-- <h1 class="font-bold text-white">Recently updated</h1> --}}
                 <div class="flex flex-col items-center justify-center">
                     <div class="relative mx-auto" x-data="{ activeSlide: 1, slides: [1, 2] }">
@@ -93,3 +94,4 @@
             </div>
         </div>
     </div>
+</div>

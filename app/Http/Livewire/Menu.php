@@ -12,8 +12,6 @@ class Menu extends Component
     public $latestMovie;
     public $library = [];
 
-    protected $listeners = ["goToLibrary"];
-
     public function mount()
     {
         $this->library = [];
@@ -36,12 +34,6 @@ class Menu extends Component
     {
         $this->getLibrary();
         $this->emit("emitLibraryType", $clicked);
-    }
-
-    public function goToLibrary($searchtype)
-    {
-        $this->clicked = $searchtype;
-        $this->getLibrary();
     }
 
     public function render()

@@ -83,8 +83,12 @@ class Search
                 $image_valid = false;
 
                 if ($item["Poster"] != "N/A") {
-                    if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1]) {
-                        $image_valid = true;
+                    try {
+                        if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1]) {
+                            $image_valid = true;
+                        }
+                    } catch (\Throwable $th) {
+                        $image_valid = false;
                     }
                 }
 
