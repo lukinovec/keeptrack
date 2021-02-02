@@ -1,4 +1,4 @@
-<div class="z-50 flex flex-col items-center justify-center text-center">
+
             <div class="flex flex-col items-center justify-center w-11/12 text-center">
                 {{-- <h1 class="font-bold text-white">Recently updated</h1> --}}
                 <div class="flex flex-col items-center justify-center">
@@ -95,4 +95,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -13,6 +13,5 @@
             Recently updated
             https://codepen.io/simeonunder2/pen/povGyVJ
         --}}
-        <livewire:recently-updated :latestBook="$latestBook" :latestMovie="$latestMovie" />
 
 </div>

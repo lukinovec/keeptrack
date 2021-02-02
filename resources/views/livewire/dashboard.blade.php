@@ -18,10 +18,14 @@
     </div>
 
     <div class="flex justify-center h-full mt-16">
-        <div x-show="!searchResponse" class="w-full h-full" x-transition:enter="transition ease-out duration-100"
+        {{-- <div x-show="!searchResponse" class="w-full h-full" x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
             x-transition:enter-end="opacity-100 transform scale-100">
             <livewire:menu class="flex content-center w-full h-auto" id="menu" />
+        </div> --}}
+
+        <div class="absolute z-50 flex flex-col items-center justify-center text-center" style="top: 40%" x-show="!searchResponse">
+            <livewire:recently-updated :latestBook="$latestBook" :latestMovie="$latestMovie" />
         </div>
 
         <div wire:loading.delay class="loader" style="position: fixed; left: 50%; top: 8%">
