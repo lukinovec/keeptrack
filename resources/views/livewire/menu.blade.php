@@ -1,6 +1,6 @@
 <div class="z-30 flex flex-col items-center justify-between w-full h-full" style="height: 59%">
 
-        <section class="flex m-16 space-x-6 sm:space-x-32">
+        <section class="flex justify-center w-1/3 m-16 space-x-6 sm:space-x-32">
             <a class="flex-1" href="/library/movie">
                 <livewire:library-link type="movie" />
             </a>
