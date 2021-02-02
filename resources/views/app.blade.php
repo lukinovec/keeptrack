@@ -135,6 +135,13 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
+
+        .top-35 {
+            top: 35%
+        }
+        .top-5rem {
+            top: 5rem
+        }
     </style>
     @livewireStyles
     <script defer src="{!! mix('js/app.js') !!}"></script>

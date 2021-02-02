@@ -1,5 +1,5 @@
 <div class="w-full h-full p-1" :class="{ 'overflow-hidden': !searchResponse }" x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('searchResponse'),  }">
-    <div class="absolute justify-center text-center" style="top: 2rem; left: 50%">
+    <div class="absolute items-center justify-center text-center" style="left: 50%" :class="{ 'top-35': !searchResponse, 'top-5rem': searchResponse }">
         <div class="relative md:flex" :class="{ 'visible lg:flex-1': !searchResponse }" style="left: -50%">
                 {{-- <label class="m-1 text-xs" for="searchinput">Search</label> --}}
                 <input name="searchinput" id="searchinput" wire:model.debounce.300ms="search"
@@ -18,13 +18,8 @@
     </div>
 
     <div class="flex justify-center h-full mt-16">
-        {{-- <div x-show="!searchResponse" class="w-full h-full" x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="opacity-0 transform scale-90"
-            x-transition:enter-end="opacity-100 transform scale-100">
-            <livewire:menu class="flex content-center w-full h-auto" id="menu" />
-        </div> --}}
 
-        <div class="absolute z-50 flex flex-col items-center justify-center text-center" style="top: 40%" x-show="!searchResponse">
+        <div class="absolute z-50 flex flex-col items-center justify-center text-center" style="top: 60%" x-show="!searchResponse">
             <livewire:recently-updated :latestBook="$latestBook" :latestMovie="$latestMovie" />
         </div>
 

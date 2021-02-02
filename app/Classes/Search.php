@@ -38,7 +38,6 @@ class Search
     {
 
         $request = Request::create($this->searchtype, $this->search)->search();
-
         // Get movies by name
         if ($this->searchtype === "movie") {
             return $this->formatMovies($request);
@@ -100,8 +99,9 @@ class Search
                     "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                 ];
             })->reject(function ($item) {
-                return $item["type"] == "game" || !$item["image_valid"];
-            });
+                return $item["type"] == "game";
+            })
+                ->sortBy('image_valid', SORT_REGULAR, true);
         } else {
             return false;
         }
