@@ -12,11 +12,11 @@
                         <option class="select-option" value="book">Book</option>
                     </select>
                 </span>
-                <button wire:click="startSearching" class="p-2 btn">Search</button>
         </div>
 
-        <div wire:loading.delay wire:target='startSearching' class="loader" style="position: fixed; left: 50%; top: 8%">
+        <div wire:loading.delay class="loader" style="position: fixed; left: 50%; top: 8%">
         </div>
+
         <div x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
             x-transition:enter-end="opacity-100 transform scale-100" x-show="searchResponse"
