@@ -41,11 +41,13 @@ class Result extends Component
 
     public function updatedResultStatus(String $status): void
     {
+        session()->flash('message', 'Updating item...');
         if ($this->result["type"] == "book") {
             Book::updateStatus($this->result, $status);
         } else {
             Movie::updateStatus($this->result, $status);
         }
+        session()->flash('message', 'Item is now available in your library!');
     }
 
     public function render()

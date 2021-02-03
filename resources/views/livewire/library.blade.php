@@ -24,6 +24,10 @@
                     item: @json($item),
                     statuses: @json($statuses),
                     edit: false,
+                    removeConfirmation: {
+                        accepted: false,
+                        item: {}
+                    },
                     editButton: function(item) {
                         if(item.apiID == this.edit.apiID) {
                             this.edit = false;
@@ -31,15 +35,35 @@
                             this.edit = item;
                         }
                     },
+
                     favorite: function(item) {
                         item.is_favorite = !item.is_favorite;
                         $wire.favoriteItem(item);
                     },
+
                     submit: function(item) {
                         $wire.updateItem(item);
                         this.edit = false;
                     },
+
+                    remove: function(item) {
+                        if(Object.keys(this.removeConfirmation.item).length === 0) {
+                            this.removeConfirmation.item = item;
+                        } else {
+                            this.removeConfirmation.item = {};
+                        }
+                    },
+
+                    confirmRemove: function(confirmed) {
+                        if(confirmed) {
+                            this.item.status = "none";
+                            $wire.updateItem(this.item);
+                        } else {
+                            this.removeConfirmation.item = {};
+                        }
+                    }
                 }' class="flex justify-center w-full p-5 my-10 sm:w-1/2 lg:w-1/3" :id="item.apiID">
+
             @if ($type === "book")
             <x-library-book class="" :item="$item" />
             @else

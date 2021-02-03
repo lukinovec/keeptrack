@@ -33,12 +33,13 @@ class Dashboard extends Component
     public function startSearching()
     {
         $this->searching = true;
+        $this->reset('searchResponse');
         if (strlen(trim($this->search)) > 2) {
             $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
+            $this->searching = false;
         } else {
             $this->searchResponse = false;
         }
-        $this->searching = false;
     }
 
     /**
@@ -47,7 +48,6 @@ class Dashboard extends Component
     public function updated($updated_property)
     {
         if ($updated_property == "search" || $updated_property == "searchtype" && !$this->searching) {
-            $this->reset('searchResponse');
             $this->startSearching();
         }
     }

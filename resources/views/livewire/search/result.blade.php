@@ -7,7 +7,11 @@
     <section class="text-lg">
         <span class="font-bold">{{ $result["title"] }}</span> {{ $result["year"] }}
     </section>
-
+    @if (session()->has('message'))
+            <div class="absolute top-0 left-0 w-12 h-10 text-6xl font-extrabold text-blueGray-300">
+                {{ session('message') }}
+            </div>
+        @endif
     <img class="my-2 rounded-xxxl" src="{{ $result['image'] }}" alt="image">
 
     <section class="flex p-2 font-bold info">
