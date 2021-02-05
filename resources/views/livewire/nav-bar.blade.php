@@ -27,7 +27,7 @@
                     <livewire:library-link type="book" />
                 </a>
 
-                <a href="/recent" class="flex items-center justify-center p-1 text-lg font-bold text-center duration-75 transform text-blueGray-300 hover:scale-105"
+                <a x-show="'{{ Auth::check() }}'" href="/recent" class="flex items-center justify-center p-1 text-lg font-bold text-center duration-75 transform text-blueGray-300 hover:scale-105"
                 :class='{"border-b-2 border-blueGray-300": currentRoute === "recent"}'>
                 <img class="w-6 m-2" src="{{ url(asset('images/star.svg')) }}" alt="">
                 Recent
