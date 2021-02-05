@@ -18,7 +18,7 @@
             <span class="flex-1">
                 @if ($item['type'] != "movie")
                 <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
-                    <div class="text-sm">
+                    <div class="flex items-center space-x-2 text-base">
                         @if($item['type'] == 'series')
                         <label for="seasons">Season</label>
                         <select class="w-12 bg-black bg-opacity-25" x-model.number="item.season" id="seasons"
@@ -36,22 +36,19 @@
                         <span
                             x-text="item.seasons ? (item.seasons[item.season-1].episodes.Episodes).length : item.episodes"></span>
 
-                        <button class="p-1 rounded-full bg-blueGray-700" x-on:click="item.episode++">+1</button>
+                        <button class="flex items-center justify-center rounded-full bg-blueGray-700" style="width: 36px; height: 36px; padding: 10px" x-on:click="item.episode++">+1</button>
+
                     </div>
                 </div>
                 @endif
             </span>
         </x-edit-component>
 
-        {{-- Edit button --}}
-        <x-edit-button />
 
         {{-- Remove button --}}
         <x-remove-button />
 
-        {{-- Favorite button --}}
-        <x-favorite-button />
 
-        <div class="absolute bottom-auto w-full p-3 text-xl bg-gray-700 bg-opacity-50 title rounded-b-xxxl" x-text="item.name"></div>
+        <x-item-footer />
     </div>
 </div>

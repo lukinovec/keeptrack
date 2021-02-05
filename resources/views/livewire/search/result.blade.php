@@ -7,11 +7,13 @@
     <section class="text-lg">
         <span class="font-bold">{{ $result["title"] }}</span> {{ $result["year"] }}
     </section>
-    @if (session()->has('message'))
-            <div class="absolute top-0 left-0 w-12 h-10 text-6xl font-extrabold text-blueGray-300">
-                {{ session('message') }}
-            </div>
-        @endif
+
+    @if ($updating)
+    <div class="flex items-center justify-center text-lg font-bold bg-blueGray-900 loader text-blueGray-300" style="position: fixed; left: 50%; top: 8%">
+        Updating status...
+    </div>
+    @endif
+
     <img class="my-2 rounded-xxxl" src="{{ $result['image'] }}" alt="image">
 
     <section class="flex p-2 font-bold info">
@@ -29,7 +31,7 @@
             class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-800"
             {{-- :class="{ 'bg-green-900': resultStatus !== '' && resultStatus !== 'none' }" --}}
             wire:model="resultStatus">
-            <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select an Option' : statuses[resultStatus]" selected hidden></option>
+            <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select Status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="ptw" x-text="statuses.ptw"></option>
             @if ($result["type"] !== "movie")

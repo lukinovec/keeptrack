@@ -6,14 +6,16 @@
                 x-transition:leave-end="opacity-0 transform scale-90" class="flex flex-col space-y-2 text-center">
                 @if ($type == "book")
                 <div class="{{ $classes }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(203, 213, 225)" class="{{ $svg_classes }}">
+                    <svg fill="rgba(203, 213, 225)" class="{{ $svg_classes }}" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m454 0h-396c-11.046 0-20 8.954-20 20v432c0 11.046 8.954 20 20 20h100v20c0 7.043 3.705 13.568 9.755 17.176 6.048 3.608 13.55 3.77 19.748.422l40.497-21.868 40.497 21.868c6.193 3.345 13.696 3.189 19.748-.422 6.05-3.608 9.755-10.133 9.755-17.176v-20h156c11.046 0 20-8.954 20-20v-432c0-11.046-8.954-20-20-20zm-20 352h-276v-312h276zm-316-312v312h-40v-312zm-40 392v-40h80v40zm159.503 15.402c-5.93-3.202-13.076-3.202-19.006 0l-20.497 11.068v-66.47h60v66.47zm60.497-15.402v-40h136v40zm-100-292c0-11.046 8.954-20 20-20h156c26.536 1.056 26.516 38.953 0 40h-156c-11.046 0-20-8.954-20-20z"/></svg>
+
+                    {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(203, 213, 225)" class="{{ $svg_classes }}">
                         <g>
                             <path class="secondary"
                             d="M12 21a2 2 0 0 1-1.41-.59l-.83-.82A2 2 0 0 0 8.34 19H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4a5 5 0 0 1 4 2v16z" />
                             <path class="primary"
                             d="M12 21V5a5 5 0 0 1 4-2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4.34a2 2 0 0 0-1.42.59l-.83.82A2 2 0 0 1 12 21z" />
                         </g>
-                    </svg>
+                    </svg> --}}
                     Your books
                 </div>
                 @else

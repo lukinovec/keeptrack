@@ -12,6 +12,7 @@ class Result extends Component
     public $result;
     public $searchtype;
     public $resultStatus;
+    public $updating;
     public $statuses = [];
 
     /**
@@ -41,17 +42,18 @@ class Result extends Component
 
     public function updatedResultStatus(String $status): void
     {
-        session()->flash('message', 'Updating item...');
+        $this->updating = true;
         if ($this->result["type"] == "book") {
             Book::updateStatus($this->result, $status);
         } else {
             Movie::updateStatus($this->result, $status);
         }
+        $this->updating = false;
         session()->flash('message', 'Item is now available in your library!');
     }
 
     public function render()
     {
-        return view('livewire.search.result', ["result" => $this->result]);
+        return view('livewire.search.result', ["result" => $this->result, "updating" => $this->updating]);
     }
 }

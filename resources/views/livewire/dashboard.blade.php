@@ -1,4 +1,5 @@
 <div class="flex flex-col items-center justify-between w-full h-full p-1 text-center" :class="{ 'overflow-hidden lg:pt-48': !searchResponse }" x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('searchResponse'),  }">
+    <h1 x-show="searchResponse">You can add a <span x-text="searchtype"></span> to your library by selecting a status</h1>
         <div class="flex items-center justify-center w-full" :class="{ 'visible': !searchResponse }">
                 {{-- <label class="m-1 text-xs" for="searchinput">Search</label> --}}
                 <input name="searchinput" id="searchinput" wire:model.debounce.300ms="search"

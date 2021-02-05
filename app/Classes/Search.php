@@ -5,6 +5,7 @@ namespace App\Classes;
 use App\Classes\Request;
 use App\Classes\LibraryDB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @method start()
@@ -76,7 +77,7 @@ class Search
     public function formatMovies($json): Collection|bool
     {
         if ($json["Response"] === "True") {
-            $statuses = LibraryDB::statuses("movie")->map(function ($movie) {
+            $statuses = Auth::user()->movies->map(function ($movie) {
                 return ["apiID" => $movie->movie_id, "status" => $movie->status];
             });
             return collect($json["Search"])->map(function ($item) use ($statuses) {
@@ -118,7 +119,7 @@ class Search
 
     public function formatAnime(array $response): Collection
     {
-        $statuses = LibraryDB::statuses("movie")->map(function ($anime) {
+        $statuses = Auth::user()->movies->map(function ($anime) {
             return ["apiID" => $anime["mal_id"], "status" => $anime->status];
         });
         return collect($response)->map(function ($item) use ($statuses) {
@@ -145,7 +146,7 @@ class Search
         if ($response === false) {
             return false;
         }
-        $statuses = LibraryDB::statuses("book")->map(function ($book) {
+        $statuses = Auth::user()->books->map(function ($book) {
             return ["apiID" => $book->book_id, "status" => $book->status];
         });
         return collect($response)->map(function ($item) use ($statuses) {
