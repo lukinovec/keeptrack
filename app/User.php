@@ -96,9 +96,7 @@ class User extends Authenticatable
     public function usersMovies($count = 0)
     {
         $result = $this->movies->map(function ($movie) {
-            return collect(
-                Movie::find($movie->movie_id)
-            )->merge(collect($movie)->forget(["id", "user_id"]));
+            return collect($movie)->merge($movie->movie);
         });
 
         if ($count != 0) {
@@ -114,7 +112,7 @@ class User extends Authenticatable
     public function usersBooks($count = 0)
     {
         $result = $this->books->map(function ($book) {
-            return collect(Book::find($book->book_id))->merge(collect($book)->forget(["id", "user_id"]));
+            return collect($book)->merge($book->book);
         });
 
         if ($count != 0) {
