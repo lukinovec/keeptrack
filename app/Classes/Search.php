@@ -81,18 +81,6 @@ class Search
                 return ["apiID" => $movie->movie_id, "status" => $movie->status];
             });
             return collect($json["Search"])->map(function ($item) use ($statuses) {
-                $image_valid = false;
-
-                if ($item["Poster"] != "N/A") {
-                    try {
-                        if (getimagesize($item["Poster"])[0] < getimagesize($item["Poster"])[1]) {
-                            $image_valid = true;
-                        }
-                    } catch (\Throwable $th) {
-                        $image_valid = false;
-                    }
-                }
-
                 return [
                     "id" => $item["imdbID"],
                     "formattedId" => (int) preg_replace("/[^0-9]/", "", $item["imdbID"]),
@@ -100,13 +88,9 @@ class Search
                     "year" => $item["Year"],
                     "type" => $item["Type"],
                     "image" => $item["Poster"],
-                    "image_valid" => $image_valid,
                     "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                 ];
-            })->reject(function ($item) {
-                return $item["type"] == "game";
-            })
-                ->sortBy('image_valid', SORT_REGULAR, true);
+            });
         } else {
             return false;
         }

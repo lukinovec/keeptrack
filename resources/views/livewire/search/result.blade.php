@@ -14,8 +14,11 @@
     </div>
     @endif
 
-    <img class="my-2 rounded-xxxl" src="{{ $result['image'] }}" alt="image">
-
+    @if($result['image'] != "N/A")
+    <img class="my-2 rounded-xxxl" src="{{ $result['image'] }}" alt="Image not available">
+    @else
+    <h1>Image not available</h1>
+    @endif
     <section class="flex p-2 font-bold info">
         @if ($searchtype == "movie")
         <a class="h-8 text-center border-none btn" href="https://www.imdb.com/title/{{ $result["id"] }}/" target="_blank">
