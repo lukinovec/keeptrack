@@ -2,6 +2,7 @@
     <h1 x-show="searchResponse">You can add a <span x-text="searchtype"></span> to your library by selecting a status</h1>
         <div class="flex items-center justify-center w-full" :class="{ 'visible': !searchResponse }">
                 {{-- <label class="m-1 text-xs" for="searchinput">Search</label> --}}
+                <img class="w-6 m-2" src="{{ url(asset('images/lupa.svg')) }}" alt="">
                 <input name="searchinput" id="searchinput" wire:model.debounce.300ms="search"
                 :placeholder="searchtype == 'anime' ? 'Type to search an ' + searchtype : 'Type to search a ' + searchtype"
                 type="search" class="w-1/2 h-12 my-3 lg:w-1/4 input" />
