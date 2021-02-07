@@ -31,12 +31,13 @@
         </a>
         @endif
         <select x-data='{ statuses: @json($statuses), resultStatus: @json($result).status }'
-            class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-800"
+            class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-900"
             {{-- :class="{ 'bg-green-900': resultStatus !== '' && resultStatus !== 'none' }" --}}
             wire:model="resultStatus">
-            <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select Status' : statuses[resultStatus]" selected hidden></option>
+            <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="ptw" x-text="statuses.ptw"></option>
+            <option x-show="resultStatus !== '' && resultStatus !== 'none'" value="none" class="bg-blueGray-800">Remove</option>
             @if ($result["type"] !== "movie")
             <option class="bg-blueGray-800" value="watching" x-text="statuses.watching"></option>
             @endif

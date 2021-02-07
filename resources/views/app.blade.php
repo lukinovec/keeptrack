@@ -161,7 +161,7 @@
 
         @if (Auth::check())
         @endif
-        <div class="flex items-center justify-center flex-1 h-full">
+        <div class="flex items-center justify-center flex-1 h-full p-8">
             @yield("content")
         </div>
     </div>
