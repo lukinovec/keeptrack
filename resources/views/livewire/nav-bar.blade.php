@@ -1,5 +1,5 @@
 {{-- <div class="flex justify-end w-full"> --}}
-    <div x-data="{ destination: '/', currentRoute: '{{ basename(Request::url()) }}' }" x-init="'{{ Auth::check() }}' ? destination = '/home' : '/'"
+    <div x-cloak x-data="{ destination: '/', currentRoute: '{{ basename(Request::url()) }}' }" x-init="'{{ Auth::check() }}' ? destination = '/home' : '/'"
         class="flex flex-col">
             {{-- <span class="flex items-center justify-start flex-1 p-1 font-bold text-blueGray-300"> --}}
                 <div class="flex justify-between flex-1 m-4">

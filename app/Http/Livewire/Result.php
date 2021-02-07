@@ -12,7 +12,7 @@ class Result extends Component
     public $result;
     public $searchtype;
     public $resultStatus;
-    public $updating;
+    public $message = "";
     public $statuses = [];
 
     /**
@@ -42,18 +42,28 @@ class Result extends Component
 
     public function updatedResultStatus(String $status): void
     {
-        $this->updating = true;
-        if ($this->result["type"] == "book") {
-            Book::updateStatus($this->result, $status);
+        $this->message = "Changing item status...";
+
+        // Delete item from user's library
+        if ($status === "none") {
+            $this->result["status"] = "none";
+            $this->result["type"] = $this->searchtype;
+            LibraryDB::open()->updateDetails(json_decode(collect($this->result)->toJson()));
+            $this->resultStatus = "";
+            $this->message = "Item deleted from your library";
         } else {
-            Movie::updateStatus($this->result, $status);
+            // Update status
+            if ($this->result["type"] == "book") {
+                Book::updateStatus($this->result, $status);
+            } else {
+                Movie::updateStatus($this->result, $status);
+            }
+            $this->message = "Item added to your library";
         }
-        $this->updating = false;
-        session()->flash('message', 'Item is now available in your library!');
     }
 
     public function render()
     {
-        return view('livewire.search.result', ["result" => $this->result, "updating" => $this->updating]);
+        return view('livewire.search.result', ["result" => $this->result, "message" => $this->message]);
     }
 }

@@ -8,9 +8,11 @@
         <span class="font-bold">{{ $result["title"] }}</span> {{ $result["year"] }}
     </section>
 
-    @if ($updating)
-    <div class="flex items-center justify-center text-lg font-bold bg-blueGray-900 loader text-blueGray-300" style="position: fixed; left: 50%; top: 8%">
-        Updating status...
+    @if ($message)
+    <div class="flex items-center justify-center text-lg font-bold text-blueGray-300" style="position: fixed; left: 50%; top: 15%">
+        <span class="relative" style="left: -50%">
+            {{ $message }}
+        </span>
     </div>
     @endif
 

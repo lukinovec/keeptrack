@@ -13,11 +13,17 @@ class Login extends Component
 
     public function login()
     {
+        // dd(Hash::make($password))
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
             // Authentication passed...
             return redirect()->intended("home");
         }
         $this->error = "Invalid credentials. If you don't have an account, click the register button.";
+    }
+
+    public function forgotPassword()
+    {
+        return redirect("forgot-password");
     }
 
     public function register()

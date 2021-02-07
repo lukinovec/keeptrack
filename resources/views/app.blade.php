@@ -142,6 +142,8 @@
         .top-5rem {
             top: 5rem
         }
+
+        [x-cloak] { display: none; }
     </style>
     @livewireStyles
     <script defer src="{!! mix('js/app.js') !!}"></script>
@@ -151,9 +153,6 @@
 </head>
 
 <body class="">
-    {{-- <img src="{{ asset('images/tv.png') }}" class="fixed bottom-0 left-0 w-64 opacity-25 fa-rotate-45" />
-    <img src="{{ asset('images/book.png') }}" class="fixed bottom-0 right-0 w-64 opacity-50 fa-rotate-45-negative" />
-    --}}
     <div id="app"
         class="h-screen flex flex-col mx-4 {{ !str_contains(Request::fullUrl(), '/library') && !str_contains(Request::fullUrl(), '/home') ? 'overflow-hidden' : '' }}">
 

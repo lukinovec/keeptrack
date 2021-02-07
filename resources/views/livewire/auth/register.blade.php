@@ -1,4 +1,4 @@
-<div class="absolute auth-wrapper" style="top: 20%" x-data="{ confirmed: @entangle('confirmed') }">
+<div class="absolute auth-wrapper" style="top: 10%" x-data="{ confirmed: @entangle('confirmed') }">
     <div class="auth">
         <input class="w-full input" placeholder="Email" x-on:keydown.enter="$wire.register()" type="email" wire:model.defer="email" name="email" />
         <br><br>
