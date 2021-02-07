@@ -40,7 +40,7 @@
             @endif
         </div>
 
-        <p class="flex items-end justify-center p-3 text-blueGray-300 footer">
+        <p class="flex flex-wrap items-end justify-center p-3 text-blueGray-300 footer">
                 Icons made by <a href="https://www.freepik.com" class="px-2 underline" title="Freepik">Freepik</a> from <a class="px-2 underline" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         </p>
 
