@@ -14,12 +14,10 @@
 
     {{-- Library Searchbar --}}
     <div x-on:click="filter = !filter" class="w-full p-1 m-2 text-lg font-bold text-center underline cursor-pointer select-none text-blueGray-300">Filter library</div>
-    <div x-show="filter">
-        <div class="w-full text-center">
+        <div x-show="filter" class="w-full text-center">
             <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
-                class="w-1/3 input" />
+                class="w-full sm:w-2/3 input" />
         </div>
-    </div>
 
 
     @if ($library->count() > 0)
