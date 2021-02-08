@@ -69,11 +69,8 @@
                     }
                 }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :id="item.apiID">
 
-            @if ($type === "book")
-            <x-library-book class="" :item="$item" />
-            @else
-            <x-library-movie :item="$item" />
-            @endif
+            <x-library-item :item="$item" />
+
         </div>
         @endforeach
     </div>

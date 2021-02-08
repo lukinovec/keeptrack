@@ -30,7 +30,9 @@
             @if ($searchResponse && count($searchResponse) > 0)
 
                 @foreach ($searchResponse as $item)
+                @if($item["type"] != "game")
                 <livewire:result :item="$item" :searchtype="$searchtype" :key="$searchtype === 'movie' ? $item['formattedId'] : $item['id']" />
+                @endif
                 @endforeach
 
             @else
