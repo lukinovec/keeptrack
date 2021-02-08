@@ -10,7 +10,7 @@
 
     @if ($message)
     <div class="flex items-center justify-center text-lg font-bold text-blueGray-300" style="position: fixed; left: 50%; top: 15%">
-        <span class="relative" style="left: -50%">
+        <span class="relative p-4 bg-green-600 rounded-xxl" style="left: -50%">
             {{ $message }}
         </span>
     </div>
@@ -35,7 +35,7 @@
         <select x-data='{ statuses: @json($statuses), resultStatus: @json($result).status }'
             class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-900"
             {{-- :class="{ 'bg-green-900': resultStatus !== '' && resultStatus !== 'none' }" --}}
-            wire:model="resultStatus">
+            wire:model="resultStatus" x-model="resultStatus">
             <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="ptw" x-text="statuses.ptw"></option>
