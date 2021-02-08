@@ -39,10 +39,10 @@
             <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="ptw" x-text="statuses.ptw"></option>
-            <option x-show="resultStatus !== '' && resultStatus !== 'none'" value="none" class="bg-blueGray-800">Remove</option>
             @if ($result["type"] !== "movie")
             <option class="bg-blueGray-800" value="watching" x-text="statuses.watching"></option>
             @endif
+            <option x-show="resultStatus !== '' && resultStatus !== 'none'" value="none" class="bg-blueGray-800">Remove</option>
         </select>
     </section>
 </div>
