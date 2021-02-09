@@ -50,7 +50,9 @@ class Result extends Component
             $this->result["type"] = $this->searchtype;
             LibraryDB::open()->updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "";
-            $this->message = "Item deleted from your library";
+            $this->message = "<span>
+            Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+        </span>";
         } else {
             // Update status
             if ($this->result["type"] == "book") {
@@ -58,7 +60,9 @@ class Result extends Component
             } else {
                 Movie::updateStatus($this->result, $status);
             }
-            $this->message = "Item added to your library";
+            $this->message = "<span>
+            Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+            </span>";
         }
     }
 

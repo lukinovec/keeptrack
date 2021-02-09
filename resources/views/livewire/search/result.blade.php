@@ -9,22 +9,18 @@
     </section>
 
     @if ($message)
-    <div class="flex items-center justify-center text-lg font-bold text-blueGray-300" style="position: fixed; left: 50%; top: 15%">
-        <span class="relative p-4 bg-green-600 rounded-xxl" style="left: -50%">
-            {{ $message }}
-        </span>
-    </div>
+    <x-flash-message :message="$message" />
     @endif
 
     @if($result['image'] != "N/A")
-    <img class="my-2 rounded-xxxl" src="{{ $result['image'] }}" alt="Image not available">
+    <img class="my-2 rounded-xxxl max-h-3/4" src="{{ $result['image'] }}" alt="Image not available">
     @else
     <h1>Image not available</h1>
     @endif
-    <section class="flex p-2 font-bold info">
+    <section class="flex items-center justify-center p-2 font-bold info">
         @if ($searchtype == "movie")
         <a class="h-8 text-center border-none btn" href="https://www.imdb.com/title/{{ $result["id"] }}/" target="_blank">
-            <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb">
+            <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb link">
         </a>
         @elseif($searchtype == "book")
         <a class="flex-1 h-8 text-center btn" href="https://www.goodreads.com/book/show/{{ $result["id"] }}"
