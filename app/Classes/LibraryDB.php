@@ -2,8 +2,9 @@
 
 namespace App\Classes;
 
-use App\MovieUser;
 use App\BookUser;
+use App\MovieUser;
+use App\Models\Status;
 
 class LibraryDB
 {
@@ -31,43 +32,20 @@ class LibraryDB
     }
 
     /**
-     *  @return Collection  Collection of all statuses ("ptw" => "Plan to Watch")
-     *  @param  $type   String  type of item
-     */
-    public function getStatuses($type)
-    {
-        if ($type == "book" || $type == "books") {
-            return [
-                "ptw" => "Plan to Read",
-                "completed" => "Completed",
-                "watching" => "Reading",
-                "none" => "None"
-            ];
-        } else {
-            return [
-                "ptw" => "Plan to Watch",
-                "completed" => "Completed",
-                "watching" => "Watching",
-                "none" => "None"
-            ];
-        }
-    }
-
-    /**
      *  @return Collection Všechny filmy, které má uživatel v knihovně
      */
-    public function movies()
-    {
-        return $this->authUser->usersMovies();
-    }
+    // public function movies()
+    // {
+    //     return $this->authUser->usersMovies();
+    // }
 
     /**
      *  @return Collection Všechny knihy, které má uživatel v knihovně
      */
-    public function books()
-    {
-        return $this->authUser->usersBooks();
-    }
+    // public function books()
+    // {
+    //     return $this->authUser->usersBooks();
+    // }
 
     /**
      * @param $item Collection  Item to be updated
@@ -80,7 +58,7 @@ class LibraryDB
                 $item->status !== "none" ? BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
                     ["pages_read" => $item->pages_read, "rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
                 ) : BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->delete();
-                return $this->books();
+                return $this->authUser->getByType($item->type);
             } else {
                 $movie_user = MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id);
                 if ($item->type == "series" || $item->type == "tv") {
@@ -92,7 +70,7 @@ class LibraryDB
                         ["rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
                     ) : $movie_user->delete();
                 }
-                return $this->movies();
+                return $this->authUser->getByType($item->type);
             }
         } catch (\Throwable $th) {
             throw $th;

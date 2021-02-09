@@ -5,7 +5,6 @@ namespace App;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Movie;
 
 class User extends Authenticatable
 {
@@ -97,6 +96,18 @@ class User extends Authenticatable
     {
         $result = $this->movies->map(function ($movie) {
             return collect($movie)->merge($movie->movie);
+        });
+
+        if ($count != 0) {
+            return $result->sortByDesc('updated_at')->slice(0, $count);
+        }
+        return $result;
+    }
+
+    public function getByType($type, $count = 0)
+    {
+        $result = $this->{$type . 's'}->map(function ($item) use ($type) {
+            return collect($item)->merge($item->$type);
         });
 
         if ($count != 0) {

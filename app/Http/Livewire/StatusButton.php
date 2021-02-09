@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Classes\LibraryDB;
+use App\Models\Status;
 use Livewire\Component;
+use App\Classes\LibraryDB;
 
 class StatusButton extends Component
 {
@@ -14,7 +15,7 @@ class StatusButton extends Component
     public function mount($item)
     {
         $this->item = $item;
-        $this->statuses = LibraryDB::open()->getStatuses($item["type"]);
+        $this->statuses = Status::where("type", $item["type"]);
     }
 
     public function render()

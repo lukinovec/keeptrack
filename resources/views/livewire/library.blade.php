@@ -1,4 +1,4 @@
-<div x-data="{ filter: false }" class="w-full h-full">
+<div class="w-full h-full">
 
     <div wire:loading wire:target='updateItem' class="loader" style="position: fixed; left: 50%; top: 8%"></div>
 
@@ -13,8 +13,8 @@
     @endif
 
     {{-- Library Searchbar --}}
-    <div x-on:click="filter = !filter" class="w-full p-1 m-2 text-lg font-bold text-center underline cursor-pointer select-none text-blueGray-300">Filter library</div>
-        <div x-show="filter" class="w-full text-center">
+    <div class="w-full p-1 m-2 text-lg font-bold text-center text-blueGray-300">Library filter</div>
+        <div class="w-full text-center">
             <input wire:model.debounce.300ms="search" placeholder="Search {{ $type }}s in library" type="search"
                 class="w-full sm:w-2/3 input" />
         </div>

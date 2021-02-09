@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Classes\LibraryDB;
 use App\Book;
 use App\Movie;
+use App\Models\Status;
 use Livewire\Component;
+use App\Classes\LibraryDB;
 
 class Result extends Component
 {
@@ -28,7 +29,7 @@ class Result extends Component
     {
         $this->result = $item;
         $this->searchtype = $searchtype;
-        $this->statuses = LibraryDB::open()->getStatuses($item["type"]);
+        $this->statuses = Status::where("type", $searchtype)->firstOrFail();
     }
 
     /**

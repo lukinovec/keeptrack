@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Status;
 use Livewire\Component;
 use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
@@ -41,12 +42,8 @@ class Library extends Component
     public function mount()
     {
         $this->type = request()->segment(2);
-        $this->statuses = LibraryDB::open()->getStatuses($this->type);
-        if ($this->type == "movie") {
-            $this->library = Auth::user()->usersMovies();
-        } else {
-            $this->library = Auth::user()->usersBooks();
-        }
+        $this->statuses = Status::where("type", $this->type)->firstOrFail();
+        $this->library = Auth::user()->getByType($this->type);
         $this->library_original = $this->library;
     }
 

@@ -32,7 +32,6 @@ class Dashboard extends Component
      */
     public function startSearching()
     {
-        $this->searching = true;
         $this->reset('searchResponse');
         if (strlen(trim($this->search)) > 2) {
             $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
