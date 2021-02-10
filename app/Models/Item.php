@@ -57,7 +57,7 @@ class Item extends Model
                     for ($i = 1; $i <= $totalSeasons; $i++) {
                         $seasons[] = ["number" => $i, "episodes" => $request_details->getSeason($i)];
                     }
-                    $create["progress"] = ["seasons" => $seasons, "totalSeasons" => $totalSeasons];
+                    $create["progress"] = ["seasons" => $seasons, "totalSeasons" => $totalSeasons, "yourSeason" => 1, "yourEpisode" => 1];
                     break;
 
                 case 'book':

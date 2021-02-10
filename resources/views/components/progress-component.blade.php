@@ -4,9 +4,9 @@
         <template x-if="item.type == 'series'">
             <span class="flex-1">
                 <label for="seasons">Season</label>
-                <select class="w-12 bg-black bg-opacity-25" x-model.number="item.season" id="seasons"
+                <select class="w-12 bg-black bg-opacity-25" x-model.number="item.progress.yourSeason" id="seasons"
                 name="seasons">
-                <template x-for="season in item.seasons">
+                <template x-for="season in item.progress.seasons">
                     <option x-model="season.number" value="season.number" x-text="season.number"></option>
                 </template>
             </select>
@@ -14,11 +14,11 @@
             <span class="flex items-center">
                 <label class="pr-1" for="episodes">Episode</label>
                 <input id="episodes" name="episodes" class="w-8 bg-black bg-opacity-25 border-b-2"
-                x-model.number="item.episode" type="text">
+                x-model.number="item.progress.yourEpisode" type="text">
                 /
                 <span
-                x-text="item.seasons ? (item.seasons[item.season-1].episodes.Episodes).length : item.episodes"></span>
-                <button class="flex items-center justify-center rounded-full bg-blueGray-700" style="width: 36px; height: 36px; padding: 10px" x-on:click="item.episode++">+1</button>
+                x-text="item.progress.seasons ? (item.progress.seasons[item.progress.yourSeason-1].episodes.Episodes).length : item.progress.yourEpisodes"></span>
+                <button class="flex items-center justify-center rounded-full bg-blueGray-700" style="width: 36px; height: 36px; padding: 10px" x-on:click="item.progress.yourEpisode++">+1</button>
             </span>
             </span>
         </template>

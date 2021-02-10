@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Item;
 use App\Models\Status;
+use App\Observers\ItemObserver;
 use App\Observers\StatusObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -30,5 +32,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Status::observe(StatusObserver::class);
+        Item::observe(ItemObserver::class);
     }
 }
