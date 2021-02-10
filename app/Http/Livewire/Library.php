@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Status;
 use Livewire\Component;
+use App\Models\ItemUser;
 use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,7 +81,16 @@ class Library extends Component
         $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
-        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
+
+        if($item["status"] !== "none") {
+                ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
+                    ["progress" => $item["progress"], "rating" => $item["rating"], "note" => $item["note"], "status" => $item["status"], "is_favorite" => $item["is_favorite"]]
+                );
+        } else {
+            ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
+        }
+
+        $this->library_original = Auth::user()->getByType($this->type);
         $this->library = $this->library_original;
     }
 

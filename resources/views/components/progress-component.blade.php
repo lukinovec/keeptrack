@@ -1,6 +1,7 @@
 <span class="flex-1">
     <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
         <div class="flex items-center space-x-2 text-base">
+
         <template x-if="item.type == 'series'">
             <span class="flex-1">
                 <label for="seasons">Season</label>
@@ -22,14 +23,15 @@
             </span>
             </span>
         </template>
+
         <template x-if="item.type == 'book'">
             <span class="flex-1">
                 <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
                     <div class="flex items-center space-x-2 text-base">
                         <label for="pages_read">Pages Read</label>
                         <input id="pages_read" name="pages_read" class="w-12 p-1 bg-black bg-opacity-25 border-b-2"
-                        x-model.number="item.pages_read" type="text">
-                        <button class="flex items-center justify-center rounded-full bg-blueGray-700" style="width: 36px; height: 36px; padding: 10px" x-on:click="item.pages_read++">+1</button>
+                        x-model.number="item.progress.pages_read" type="text">
+                        <button class="flex items-center justify-center rounded-full bg-blueGray-700" style="width: 36px; height: 36px; padding: 10px" x-on:click="item.progress.pages_read++">+1</button>
                     </div>
                 </div>
             </span>
