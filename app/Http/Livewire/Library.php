@@ -39,11 +39,11 @@ class Library extends Component
         'toUpdate.pages_read.integer' => "Page must be a number",
     ];
 
-    public function mount()
+    public function mount($type)
     {
-        $this->type = request()->segment(2);
-        $this->statuses = Status::where("type", $this->type)->firstOrFail();
-        $this->library = Auth::user()->getByType($this->type);
+        $this->type = $type;
+        $this->statuses = Status::where("type", $type)->firstOrFail();
+        $this->library = Auth::user()->getByType($type);
         $this->library_original = $this->library;
     }
 

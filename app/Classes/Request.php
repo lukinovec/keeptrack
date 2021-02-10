@@ -72,7 +72,7 @@ class Request
                 ]);
 
             default:
-                throw new ErrorException("Unexpected error in Request class - fetching results failed (probably invalid searchtype)");
+                throw new ErrorException("Fetching results failed (probably invalid searchtype) in Request class. Make sure to add API request case (search()) and a format case for your new searchtype (in Search class - format()).");
         }
     }
 
