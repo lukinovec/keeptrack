@@ -12,8 +12,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Automatic Revert
-      uses: srt32/revert@v0.0.1
 
     - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
       with:
