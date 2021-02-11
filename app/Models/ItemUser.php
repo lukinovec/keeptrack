@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ItemUser extends Model
 {
@@ -11,6 +12,7 @@ class ItemUser extends Model
 
     protected $table = 'item_users';
     protected $guarded = ['id'];
+    protected $casts = ['user_progress' => 'object'];
 
     public function users()
     {
@@ -20,5 +22,17 @@ class ItemUser extends Model
     public function item()
     {
         return $this->hasOne(Item::class, "apiID", "item_id");
+    }
+
+    public static function updateDetails($item)
+    {
+        $item = collect($item);
+        if($item["status"] !== "none") {
+                ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
+                    ["user_progress" => $item["user_progress"], "rating" => $item["rating"], "note" => $item["note"], "status" => $item["status"], "is_favorite" => $item["is_favorite"]]
+                );
+        } else {
+            ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
+        }
     }
 }

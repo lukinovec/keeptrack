@@ -22,7 +22,6 @@ class Library extends Component
     // Filtering
     public $filter = "none";
     public $onlyFavorites = false;
-    public $onlyAnime = false;
 
     // Form Validation
     protected $rules = [
@@ -75,29 +74,16 @@ class Library extends Component
         }
     }
 
-
+    // Update or delete
     public function updateItem($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
 
-        if($item["status"] !== "none") {
-                ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
-                    ["progress" => $item["progress"], "rating" => $item["rating"], "note" => $item["note"], "status" => $item["status"], "is_favorite" => $item["is_favorite"]]
-                );
-        } else {
-            ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
-        }
+        ItemUser::updateDetails($item);
 
         $this->library_original = Auth::user()->getByType($this->type);
-        $this->library = $this->library_original;
-    }
-
-    public function favoriteItem($item)
-    {
-        $item["id"] = $item["apiID"] ?: $item["apiID"];
-        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
         $this->library = $this->library_original;
     }
 

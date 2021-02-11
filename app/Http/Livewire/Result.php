@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
 use App\Classes\LibraryDB;
+use App\Models\ItemUser;
 
 class Result extends Component
 {
@@ -49,7 +50,7 @@ class Result extends Component
         // Delete item from user's library
         if ($status === "none") {
             $this->result["status"] = "none";
-            LibraryDB::open()->updateDetails(json_decode(collect($this->result)->toJson()));
+            ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "";
             $this->message = "<span>
             Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>

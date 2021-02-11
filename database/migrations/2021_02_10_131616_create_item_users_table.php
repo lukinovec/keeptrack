@@ -23,7 +23,7 @@ class CreateItemUsersTable extends Migration
             $table->text('note')->nullable();
             $table->integer('rating')->nullable();
             $table->boolean('is_favorite')->default(false);
-            $table->json('progress')->nullable();
+            $table->json('user_progress')->default('{}');
             $table->timestamps();
         });
     }
