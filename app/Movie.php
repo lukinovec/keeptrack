@@ -2,21 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Item;
 use App\Classes\Request;
 
-class Movie extends Model
+class Movie extends Item
 {
-    protected $fillable = ['apiID', 'image', 'name', 'type', 'year', 'totalSeasons', 'seasons', 'episodes'];
-    protected $primaryKey = 'apiID';
-    protected $casts = ['apiID' => 'string', 'seasons' => 'array'];
-    public $incrementing = false;
-
-    public function users()
-    {
-        return $this->hasMany(MovieUser::class, "movie_id");
-    }
-
     /**
      * Update movie's status in DB, if the movie doesn't exist in DB, create a new record
      */

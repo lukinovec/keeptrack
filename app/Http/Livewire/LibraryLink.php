@@ -6,20 +6,20 @@ use Livewire\Component;
 
 class LibraryLink extends Component
 {
-    public $type = "";
+    public $status;
     public $classes = "flex items-center justify-center text-lg font-bold rounded-full duration-75 transform text-blueGray-300 hover:scale-105";
     public $svg_classes = "w-12 h-12 p-2 bg-transparent ";
 
 
-    public function mount($type)
+    public function mount($statusLink)
     {
-        $this->type = $type;
+        $this->status = collect(json_decode($statusLink));
     }
 
     public function render()
     {
         return view('livewire.library-link', [
-            "type" => $this->type,
+            "status" => $this->status,
             "classes" => $this->classes
         ]);
     }

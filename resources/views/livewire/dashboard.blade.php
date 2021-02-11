@@ -12,9 +12,9 @@
                 <span class="flex items-center justify-center my-3">
                     {{-- <label class="m-1 text-xs" for="searchtype">Type</label> --}}
                     <select class="p-2 select bg-blueGray-900" wire:model="searchtype" name="searchtype" id="searchtype">
-                        <option class="select-option" value="movie">TV / Movie</option>
-                        <option class="select-option" value="anime">Anime</option>
-                        <option class="select-option" value="book">Book</option>
+                        @foreach(\App\Models\Status::all() as $status)
+                        <option class="select-option" value="{{ $status->type }}">{{ ucfirst($status->type) }}s</option>
+                        @endforeach
                     </select>
                 </span>
             </div>
@@ -31,7 +31,7 @@
 
                 @foreach ($searchResponse as $item)
                 @if($item["type"] != "game")
-                <livewire:result :item="$item" :searchtype="$searchtype" :key="$searchtype === 'movie' ? $item['formattedId'] : $item['id']" />
+                <livewire:result :item="$item" :searchtype="$searchtype" :key="$item['id']" />
                 @endif
                 @endforeach
 

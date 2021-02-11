@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Models\ItemUser;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -60,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(MovieUser::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(ItemUser::class);
+    }
+
     public function findItem($type, $item_id)
     {
         if ($type == "book") {
@@ -89,45 +95,18 @@ class User extends Authenticatable
 
     // Use with '()'
     /**
+     * @param String $type  Search type (book, movie)
      * @param Integer $count  How many results do you want
      * @return Collection All movies with statuses where the user ID is the current logged users ID
      */
-    public function usersMovies($count = 0)
-    {
-        $result = $this->movies->map(function ($movie) {
-            return collect($movie)->merge($movie->movie);
-        });
-
-        if ($count != 0) {
-            return $result->sortByDesc('updated_at')->slice(0, $count);
-        }
-        return $result;
-    }
-
     public function getByType($type, $count = 0)
     {
-        $result = $this->{$type . 's'}->map(function ($item) use ($type) {
-            return collect($item)->merge($item->$type);
+        $result = $this->items->where("searchtype", $type)->map(function ($item) use ($type) {
+            return collect($item)->merge($item->item);
         });
 
         if ($count != 0) {
             return $result->sortByDesc('updated_at')->slice(0, $count);
-        }
-        return $result;
-    }
-
-    // Use with '()'
-    /**
-     * @return Collection All books with statuses where the user ID is the current logged users ID
-     */
-    public function usersBooks($count = 0)
-    {
-        $result = $this->books->map(function ($book) {
-            return collect($book)->merge($book->book);
-        });
-
-        if ($count != 0) {
-            return $result->slice(0, $count);
         }
         return $result;
     }

@@ -32,7 +32,6 @@ class Book extends Model
             self::create([
                 "apiID" => $book["id"],
                 "image" => preg_replace('/._.*_/', '._SY385_', $book["image"]),
-                "author" => $book["creator_name"],
                 "name" => $book["title"],
                 "type" => "book",
                 "year" => $book["year"]
