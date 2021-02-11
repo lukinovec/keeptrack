@@ -42,7 +42,7 @@
 
                     favorite: function(item) {
                         item.is_favorite = !item.is_favorite;
-                        $wire.favoriteItem(item);
+                        $wire.updateItem(item);
                     },
 
                     submit: function(item) {

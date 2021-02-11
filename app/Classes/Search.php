@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use Exception;
 use App\Classes\Request;
 use App\Classes\LibraryDB;
 use Illuminate\Support\Collection;
@@ -11,12 +12,7 @@ use Illuminate\Support\Facades\Auth;
  * @method start()
  * @method makeRequest(string $searchtype)
  * @method type(string $searchtype)
- * @method formatMovies()
- * Format response to be displayed as results
- * @method formatAnime()
- * Format response to be displayed as results
- * @method formatBooks()
- * Format response to be displayed as results
+ * @method format()
  */
 class Search
 {
@@ -37,64 +33,87 @@ class Search
 
     public function makeRequest()
     {
-
         $request = Request::create($this->searchtype, $this->search)->search();
-        // Get movies by name
-        if ($this->searchtype === "movie") {
-            return $this->formatMovies($request);
-        }
-
-        // Get a movie by ID
-        elseif ($this->searchtype === "movie_details") {
-            return $request;
-        } elseif ($this->searchtype === "anime") {
-            return $this->formatAnime($request);
-        }
-
-        // Get a book by name
-        elseif ($this->searchtype === "book") {
-            // Convert XML to JSON - https://stackoverflow.com/a/19391553
-            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $results = json_decode(json_encode($xml))->search->results->work ?? false;
-            return $this->formatBooks($results);
-        }
-
-        // Get a book by ID
-        elseif ($this->searchtype === "book_details") {
-            // Convert XML to JSON - https://stackoverflow.com/a/19391553
-            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $results = collect(json_decode(json_encode($xml))->book)->all();
-            return $results;
-        }
+        return $this->format($this->searchtype, $request);
     }
 
 
     /**
-     * @param mixed $json   Odpověď API ve formátu JSON
-     * @return Collection|false   Výsledky vyhledávání ve správném formátu pro zobrazení, nebo false - když vyhledávání selže
+     * @param string $type      Typ vyhledávání v jednotném čísle (movie, book,...)
+     * @param mixed $response   Odpověď API ve formátu JSON
+     * @return Collection|false Výsledky vyhledávání ve správném formátu pro zobrazení, nebo false - když vyhledávání selže
      */
-
-    public function formatMovies($json): Collection|bool
+    public function format($type, $response)
     {
-        if ($json["Response"] === "True") {
-            $statuses = Auth::user()->movies->map(function ($movie) {
-                return ["apiID" => $movie->movie_id, "status" => $movie->status];
-            });
-            return collect($json["Search"])->map(function ($item) use ($statuses) {
-                return [
-                    "id" => $item["imdbID"],
-                    "formattedId" => (int) preg_replace("/[^0-9]/", "", $item["imdbID"]),
-                    "title" => $item["Title"],
-                    "year" => $item["Year"],
-                    "type" => $item["Type"],
-                    "image" => $item["Poster"],
-                    "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
-                ];
-            });
-        } else {
-            return false;
+        $statuses = Auth::user()->items->map(function ($item) {
+            return ["apiID" => $item->item_id, "status" => $item->status];
+        });
+
+        switch ($type) {
+            case 'movie':
+
+                // Nejprve zkontrolujeme, jestli data odpovědi existují
+
+                if ($response["Response"] !== "True") {
+                    return false;
+                }
+
+                /**
+                 * Potom formátujeme odpověď do podoby, kterou lze zobrazit na stránce.
+                 * Všechny položky, na které je pole mapováno, jsou povinné pro každé API.
+                 * Doporučuji kopírovat celý case a měnit jen 1) kontrolu existence dat a 2) přiřazené hodnoty v "return [...]"
+                 */
+
+                return collect($response["Search"])->map(function ($item) use ($statuses) {
+                    return [
+                        "id" => $item["imdbID"],
+                        "searchtype" => "movie",
+                        "title" => $item["Title"],
+                        "year" => $item["Year"],
+                        "type" => $item["Type"],
+                        "image" => $item["Poster"],
+                        "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
+                    ];
+                });
+
+            case 'movie_details':
+                return $response;
+
+            /**
+             * Odpověď od Goodreads API je ve formátu XML, je třeba jej převést na JSON
+             */
+            case 'book':
+                // Convert XML to JSON - https://stackoverflow.com/a/19391553
+                $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
+                $response = json_decode(json_encode($xml))->search->results->work ?? false;
+
+                if ($response === false) {
+                    return false;
+                }
+
+                return collect($response)->map(function ($item) use ($statuses) {
+                    return collect([
+                        "id" => is_object($item->best_book->id) ? $item->best_book->id->{"0"} : $item->best_book->id,
+                        "searchtype" => "book",
+                        "title" => $item->best_book->title,
+                        "year" => is_object($item->original_publication_year) ? $item->original_publication_year->{"0"} ?? null : $item->original_publication_year ?? null,
+                        "type" => "book",
+                        "image" => preg_replace('/._.*_/', '._SY385_', $item->best_book->image_url),
+                        "status" => $statuses->firstWhere("apiID", $item->best_book->id)["status"] ?? ""
+                    ]);
+                })->whereNotNull("year");
+
+            // Detaily jedné knihy
+            case 'book_details':
+                $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
+                return collect(json_decode(json_encode($xml))->book)->all();
+
+            default:
+                throw new Exception("Invalid type supplied to the format function (Search.php class)", 1);
+                break;
         }
     }
+
 
     /**
      * @param array $response   Odpověď API
@@ -118,33 +137,5 @@ class Search
                 "status" => $statuses->firstWhere("apiID", $item["mal_id"])["status"] ?? ""
             ];
         });
-    }
-
-    /**
-     * @param array|bool $response   Odpověď API
-     * @return Collection|bool   Výsledky vyhledávání ve správném formátu pro zobrazení
-     */
-
-    public function formatBooks(array|bool $response): Collection|bool
-    {
-        if ($response === false) {
-            return false;
-        }
-        $statuses = Auth::user()->books->map(function ($book) {
-            return ["apiID" => $book->book_id, "status" => $book->status];
-        });
-        return collect($response)->map(function ($item) use ($statuses) {
-            return collect([
-                "id" => is_object($item->best_book->id) ? $item->best_book->id->{"0"} : $item->best_book->id,
-                "rating" => $item->average_rating,
-                "title" => $item->best_book->title,
-                "year" => is_object($item->original_publication_year) ? $item->original_publication_year->{"0"} ?? null : $item->original_publication_year ?? null,
-                "type" => "book",
-                "creator_name" => $item->best_book->author->name,
-                "creator_id" => is_object($item->best_book->author->id) ? $item->best_book->author->id->{"0"} ?? "" : $item->best_book->author->id ?? "",
-                "image" => preg_replace('/._.*_/', '._SY385_', $item->best_book->image_url),
-                "status" => $statuses->firstWhere("apiID", $item->best_book->id)["status"] ?? ""
-            ]);
-        })->whereNotNull("year");
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use App\BookUser;
+use App\Models\ItemUser;
 use App\MovieUser;
 use App\Models\Status;
 
@@ -54,24 +55,14 @@ class LibraryDB
     public function updateDetails($item)
     {
         try {
-            if ($item->type == "book") {
-                $item->status !== "none" ? BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->update(
-                    ["pages_read" => $item->pages_read, "rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
-                ) : BookUser::where("user_id", $this->authUser->id)->where("book_id", $item->id)->delete();
-                return $this->authUser->getByType($item->type);
+            if($item->status !== "none") {
+                ItemUser::where("user_id", $this->authUser->id)->where("item_id", $item->id)->update(
+                    ["progress" => $item->progress, "rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
+                );
             } else {
-                $movie_user = MovieUser::where("user_id", $this->authUser->id)->where("movie_id", $item->id);
-                if ($item->type == "series" || $item->type == "tv") {
-                    $item->status !== "none" ? $movie_user->update(
-                        ["season" => $item->season, "episode" => $item->episode, "rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
-                    ) : $movie_user->delete();
-                } elseif ($item->type == "movie") {
-                    $item->status !== "none" ? $movie_user->update(
-                        ["rating" => $item->rating, "note" => $item->note, "status" => $item->status, "is_favorite" => $item->is_favorite]
-                    ) : $movie_user->delete();
-                }
-                return $this->authUser->getByType($item->type);
+                ItemUser::where("user_id", $this->authUser->id)->where("item_id", $item->id)->delete();
             }
+            return $this->authUser->getByType($item->searchtype);
         } catch (\Throwable $th) {
             throw $th;
         }

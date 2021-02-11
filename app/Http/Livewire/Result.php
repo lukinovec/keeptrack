@@ -4,9 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Book;
 use App\Movie;
+use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
 use App\Classes\LibraryDB;
+use App\Models\ItemUser;
 
 class Result extends Component
 {
@@ -19,7 +21,7 @@ class Result extends Component
     /**
      * Po nasazení komponentu přiřadit props proměnným v komponentu
      *
-     * Pomocí třídy LibraryDB získá statusy příslušného typu (např. film - "plan to watch", kniha - "plan to read")
+     * Pomocí modelu Status získá statusy příslušného typu (např. film - "plan to watch", kniha - "plan to read")
      *
      * @param array|object $item   prop - výsledek vyhledávání
      * @param String $searchtype   prop - typ vyhledávané položky (film nebo kniha)
@@ -48,19 +50,15 @@ class Result extends Component
         // Delete item from user's library
         if ($status === "none") {
             $this->result["status"] = "none";
-            $this->result["type"] = $this->searchtype;
-            LibraryDB::open()->updateDetails(json_decode(collect($this->result)->toJson()));
+            ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "";
             $this->message = "<span>
             Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
         </span>";
         } else {
             // Update status
-            if ($this->result["type"] == "book") {
-                Book::updateStatus($this->result, $status);
-            } else {
-                Movie::updateStatus($this->result, $status);
-            }
+            Item::updateStatus($this->result, $status);
+
             $this->message = "<span>
             Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
             </span>";

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Status;
 use Livewire\Component;
+use App\Models\ItemUser;
 use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,6 @@ class Library extends Component
     // Filtering
     public $filter = "none";
     public $onlyFavorites = false;
-    public $onlyAnime = false;
 
     // Form Validation
     protected $rules = [
@@ -39,11 +39,11 @@ class Library extends Component
         'toUpdate.pages_read.integer' => "Page must be a number",
     ];
 
-    public function mount()
+    public function mount($type)
     {
-        $this->type = request()->segment(2);
-        $this->statuses = Status::where("type", $this->type)->firstOrFail();
-        $this->library = Auth::user()->getByType($this->type);
+        $this->type = $type;
+        $this->statuses = Status::where("type", $type)->firstOrFail();
+        $this->library = Auth::user()->getByType($type);
         $this->library_original = $this->library;
     }
 
@@ -74,20 +74,16 @@ class Library extends Component
         }
     }
 
-
+    // Update or delete
     public function updateItem($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
-        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
-        $this->library = $this->library_original;
-    }
 
-    public function favoriteItem($item)
-    {
-        $item["id"] = $item["apiID"] ?: $item["apiID"];
-        $this->library_original = LibraryDB::open()->updateDetails((object) $item);
+        ItemUser::updateDetails($item);
+
+        $this->library_original = Auth::user()->getByType($this->type);
         $this->library = $this->library_original;
     }
 
