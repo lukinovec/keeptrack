@@ -16,7 +16,7 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->text('image')->default(asset('images/default-image.svg'));
+            $table->text('image')->nullable();
             $table->string('ptw');
             $table->string('completed');
             $table->string('watching');
