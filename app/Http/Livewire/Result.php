@@ -52,16 +52,20 @@ class Result extends Component
             $this->result["status"] = "none";
             ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "";
-            $this->message = "<span>
-            Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
-        </span>";
+            $this->message = "
+            <span>
+                Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+            </span>
+            ";
         } else {
             // Update status
             Item::updateStatus($this->result, $status);
 
-            $this->message = "<span>
-            Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
-            </span>";
+            $this->message = "
+            <span>
+                Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+            </span>
+            ";
         }
     }
 

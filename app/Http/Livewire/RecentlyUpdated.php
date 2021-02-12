@@ -4,30 +4,30 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Classes\LibraryDB;
+use App\Models\ItemUser;
 use Illuminate\Support\Facades\Auth;
 
 class RecentlyUpdated extends Component
 {
-    public $latestBook;
-    public $latestMovie;
+    public $current;
 
     public function mount()
     {
-        $this->latestMovie = Auth::user()->usersMovies(1)->firstWhere("seasons", "!==", "");
-        $this->latestBook = Auth::user()->usersBooks(1)->first();
+        $this->current = Auth::user()->items->where("status", "watching")->whereNotNull("user_progress")->map(function ($item) {
+            return collect($item)->merge($item->item);
+        })->sortByDesc("updated_at");
     }
 
     public function submitChanges($item)
     {
         $item["id"] = $item["apiID"] ?: $item["apiID"];
-        LibraryDB::open()->updateDetails((object) $item);
+        ItemUser::updateDetails((object) $item);
     }
 
     public function render()
     {
         return view("livewire.recently-updated", [
-            "latestBook" => $this->latestBook,
-            "latestMovie" => $this->latestMovie
+            "current" => $this->current
         ])->extends("app")->section("content");
     }
 }

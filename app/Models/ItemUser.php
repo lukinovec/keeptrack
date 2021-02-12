@@ -14,7 +14,7 @@ class ItemUser extends Model
     protected $guarded = ['id'];
     protected $casts = ['user_progress' => 'object'];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -28,11 +28,11 @@ class ItemUser extends Model
     {
         $item = collect($item);
         if($item["status"] !== "none") {
-                ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
+                self::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
                     ["user_progress" => $item["user_progress"], "rating" => $item["rating"], "note" => $item["note"], "status" => $item["status"], "is_favorite" => $item["is_favorite"]]
                 );
         } else {
-            ItemUser::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
+            self::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
         }
     }
 }

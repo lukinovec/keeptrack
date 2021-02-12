@@ -43,24 +43,6 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-    // Use without '()'
-    /**
-     * @return Collection ID of all books with statuses where the user ID is the current logged users ID
-     */
-    public function books()
-    {
-        return $this->hasMany(BookUser::class);
-    }
-
-    /**
-     * @return Collection ID of all movies with statuses and other things where the user ID is the current logged users ID
-     */
-
-    public function movies()
-    {
-        return $this->hasMany(MovieUser::class);
-    }
-
     public function items()
     {
         return $this->hasMany(ItemUser::class);
@@ -101,7 +83,8 @@ class User extends Authenticatable
      */
     public function getByType($type, $count = 0)
     {
-        $result = $this->items->where("searchtype", $type)->map(function ($item) use ($type) {
+        $result = $this->items->where("searchtype", $type)->map(function ($item) {
+            dd(collect($item), $item);
             return collect($item)->merge($item->item);
         });
 
