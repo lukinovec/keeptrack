@@ -38,7 +38,8 @@
     @if ($library->count() > 0)
     <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
         @foreach ($library as $item)
-        <template x-if="('{{ $item["type"] }}' === filter || filter === '') && (status_filter.includes('{{ $item["status"] }}') || status_filter.length === 0) && (favorite_only ? {{ $item["is_favorite"] }} : true)">
+        <template
+        x-if="('{{ $item["type"] }}' === filter || filter === '') && (status_filter.includes('{{ $item["status"] }}') || status_filter.length === 0) && (favorite_only ? {{ $item["is_favorite"] }} : true)">
         <div x-data='{
                     item: @json($item),
                     edit: false,

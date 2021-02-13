@@ -20,16 +20,19 @@
                     Search
                 </a>
 
-                @foreach (\App\Models\Status::all() as $statusLink)
-                <a x-show="'{{ Auth::check() }}'" href="/library/{{ $statusLink->type }}" :class='{"border-b-2 border-blueGray-300": currentRoute === "{{ $statusLink->type }}"}'>
-                    <livewire:library-link :key="'{{ $statusLink->type }}'" statusLink="{!! $statusLink !!}" />
-                </a>
-                @endforeach
+                {{-- @foreach (\App\Models\Status::all() as $statusLink)
+                    <a x-show="'{{ Auth::check() }}'" href="/library/{{ $statusLink->type }}" :class='{"border-b-2 border-blueGray-300": currentRoute === "{{ $statusLink->type }}"}'>
+                        <livewire:library-link :key="'{{ $statusLink->type }}'" statusLink="{!! $statusLink !!}" />
+                        </a>
+                        @endforeach --}}
 
-                <a x-show="'{{ Auth::check() }}'" href="/recent" class="flex items-center justify-center p-1 text-lg font-bold text-center duration-75 transform text-blueGray-300 hover:scale-105"
+                        <a x-show="'{{ Auth::check() }}'" href="/library" :class='{"border-b-2 border-blueGray-300": currentRoute === "library"}'>
+                            <livewire:library-link />
+                        </a>
+                {{-- <a x-show="'{{ Auth::check() }}'" href="/recent" class="flex items-center justify-center p-1 text-lg font-bold text-center duration-75 transform text-blueGray-300 hover:scale-105"
                 :class='{"border-b-2 border-blueGray-300": currentRoute === "recent"}'>
                 <img class="w-6 m-2" src="{{ url(asset('images/star.svg')) }}" alt="">
-                Recent
+                Recent --}}
             </a>
         </div>
 
