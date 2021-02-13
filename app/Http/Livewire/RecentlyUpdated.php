@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Auth;
 class RecentlyUpdated extends Component
 {
     public $current;
+    public $filter = "";
 
     public function mount()
     {
-        $this->current = Auth::user()->items->where("status", "watching")->whereNotNull("user_progress")->map(function ($item) {
+        $this->current = Auth::user()->items->where("status", "watching")->whereNotNull("user_progress")->sortByDesc("updated_at")->map(function ($item) {
             return collect($item)->merge($item->item);
-        })->sortByDesc("updated_at");
+        });
     }
 
     public function submitChanges($item)
@@ -27,7 +28,8 @@ class RecentlyUpdated extends Component
     public function render()
     {
         return view("livewire.recently-updated", [
-            "current" => $this->current
+            "current" => $this->current,
+            "filter" => $this->filter
         ])->extends("app")->section("content");
     }
 }

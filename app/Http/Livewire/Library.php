@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Status;
 use Livewire\Component;
 use App\Models\ItemUser;
-use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
 class Library extends Component
@@ -15,13 +13,6 @@ class Library extends Component
     public $type;
     public $search;
     public $toUpdate;
-    public $statuses = [];
-
-    public $listeners = ["updateItem", "favoriteItem"];
-
-    // Filtering
-    public $filter = "none";
-    public $onlyFavorites = false;
 
     // Form Validation
     protected $rules = [
@@ -39,11 +30,10 @@ class Library extends Component
         'toUpdate.pages_read.integer' => "Page must be a number",
     ];
 
-    public function mount($type)
+    public function mount($type = "any")
     {
         $this->type = $type;
-        $this->statuses = Status::where("type", $type)->firstOrFail();
-        $this->library = Auth::user()->getByType($type);
+        $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;
     }
 
@@ -58,32 +48,17 @@ class Library extends Component
         }
     }
 
-    public function updatedFilter($filter)
-    {
-        if ($filter == "none") {
-            $this->filter = $filter;
-            $this->library = $this->library_original;
-        } elseif ($filter != "favorite") {
-            $this->library = $this->library_original->filter(function ($item) use ($filter) {
-                return $item["status"] == $filter;
-            });
-        } else {
-            $this->library = $this->library_original->filter(function ($item) {
-                return $item["is_favorite"];
-            });
-        }
-    }
-
     // Update or delete
     public function updateItem($item)
     {
-        $item["id"] = $item["apiID"] ?: $item["apiID"];
+        dd($item);
+        $item["id"] = $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
 
         ItemUser::updateDetails($item);
 
-        $this->library_original = Auth::user()->getByType($this->type);
+        $this->library_original = Auth::user()->getItems();
         $this->library = $this->library_original;
     }
 
