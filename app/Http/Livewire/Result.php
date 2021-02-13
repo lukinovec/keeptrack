@@ -54,7 +54,7 @@ class Result extends Component
             $this->resultStatus = "";
             $this->message = "
             <span>
-                Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+                Item deleted from <a class='underline' href='/library'>your library</a>
             </span>
             ";
         } else {
@@ -63,7 +63,7 @@ class Result extends Component
 
             $this->message = "
             <span>
-                Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+                Item added to <a class='underline' href='/library'>your library</a>
             </span>
             ";
         }
