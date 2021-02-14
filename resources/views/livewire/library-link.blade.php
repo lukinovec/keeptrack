@@ -6,7 +6,7 @@
                 x-transition:leave-end="opacity-0 transform scale-90" class="flex flex-col space-y-2 text-center">
 
     <div class="{{ $classes }}">
-        <img class="{{ $svg_classes }}" src="{{ asset($status["image"]) }}" alt="library link">
-        Your {{ $status["type"] }}s
+        <img class="{{ $svg_classes }}" src="{{ asset('images/book.svg') }}" alt="library link">
+        Your Library
     </div>
 </div>

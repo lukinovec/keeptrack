@@ -2,48 +2,33 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Status;
 use Livewire\Component;
 use App\Models\ItemUser;
-use App\Classes\LibraryDB;
 use Illuminate\Support\Facades\Auth;
 
 class Library extends Component
 {
-    public $library;
-    public $library_original;
-    public $type;
-    public $search;
+    protected $library;
+    protected $library_original;
+    protected $type;
+    protected $search;
     public $toUpdate;
-    public $statuses = [];
-
-    public $listeners = ["updateItem", "favoriteItem"];
-
-    // Filtering
-    public $filter = "none";
-    public $onlyFavorites = false;
 
     // Form Validation
     protected $rules = [
-        'toUpdate.rating' => 'nullable|integer|max:10|min:1',
-        'toUpdate.episode' => 'nullable|integer',
-        'toUpdate.pages_read' => 'nullable|integer'
+        'toUpdate.user_progress.episode' => 'nullable|integer',
+        'toUpdate.user_progress.pages_read' => 'nullable|integer'
     ];
 
     // Validation Error Messages
     protected $messages = [
-        'toUpdate.rating.integer' => "Rating must be a number (1-10)",
-        'toUpdate.rating.max' => "Rating must be a number from 1 to 10",
-        'toUpdate.rating.min' => "Rating must be a number from 1 to 10",
-        'toUpdate.episode.integer' => "Episode must be a number",
-        'toUpdate.pages_read.integer' => "Page must be a number",
+        'toUpdate.user_progress.episode.integer' => "Episode must be a number",
+        'toUpdate.user_progress.pages_read.integer' => "Page must be a number",
     ];
 
-    public function mount($type)
+    public function mount()
     {
-        $this->type = $type;
-        $this->statuses = Status::where("type", $type)->firstOrFail();
-        $this->library = Auth::user()->getByType($type);
+        $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;
     }
 
@@ -58,40 +43,23 @@ class Library extends Component
         }
     }
 
-    public function updatedFilter($filter)
-    {
-        if ($filter == "none") {
-            $this->filter = $filter;
-            $this->library = $this->library_original;
-        } elseif ($filter != "favorite") {
-            $this->library = $this->library_original->filter(function ($item) use ($filter) {
-                return $item["status"] == $filter;
-            });
-        } else {
-            $this->library = $this->library_original->filter(function ($item) {
-                return $item["is_favorite"];
-            });
-        }
-    }
-
     // Update or delete
     public function updateItem($item)
     {
-        $item["id"] = $item["apiID"] ?: $item["apiID"];
+        $item["id"] = $item["apiID"];
         $this->toUpdate = $item;
         $this->validate();
 
         ItemUser::updateDetails($item);
 
-        $this->library_original = Auth::user()->getByType($this->type);
+        $this->library_original = Auth::user()->getItems();
         $this->library = $this->library_original;
     }
 
     public function render()
     {
         return view('livewire.library', [
-            "library" => $this->library,
-            "type" => $this->type,
+            "library" => $this->library
         ])->extends('app')
             ->section('content');
     }

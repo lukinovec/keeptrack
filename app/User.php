@@ -84,12 +84,23 @@ class User extends Authenticatable
     public function getByType($type, $count = 0)
     {
         $result = $this->items->where("searchtype", $type)->map(function ($item) {
-            dd(collect($item), $item);
             return collect($item)->merge($item->item);
         });
 
         if ($count != 0) {
             return $result->sortByDesc('updated_at')->slice(0, $count);
+        }
+        return $result;
+    }
+
+    public function getItems($count = 0)
+    {
+        $result = $this->items->sortByDesc("updated_at")->sortByDesc("is_favorite")->map(function ($item) {
+            return collect($item)->merge($item->item);
+        });
+
+        if ($count != 0) {
+            return $result->sortByDesc("updated_at")->sortByDesc("is_favorite")->slice(0, $count);
         }
         return $result;
     }

@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Book;
-use App\Movie;
 use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
-use App\Classes\LibraryDB;
 use App\Models\ItemUser;
 
 class Result extends Component
@@ -54,7 +51,7 @@ class Result extends Component
             $this->resultStatus = "";
             $this->message = "
             <span>
-                Item deleted from <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+                Item deleted from <a class='underline' href='/library'>your library</a>
             </span>
             ";
         } else {
@@ -63,7 +60,7 @@ class Result extends Component
 
             $this->message = "
             <span>
-                Item added to <a class='underline' href='/library/{$this->searchtype}'>your library</a>
+                Item added to <a class='underline' href='/library'>your library</a>
             </span>
             ";
         }

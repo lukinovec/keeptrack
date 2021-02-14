@@ -10,6 +10,7 @@ class Item extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $with = ['statuses'];
     protected $primaryKey = 'apiID';
     protected $casts = ['apiID' => 'string', 'progress' => 'array'];
     public $incrementing = false;
@@ -17,6 +18,11 @@ class Item extends Model
     public function users()
     {
         return $this->hasMany(ItemUser::class, "item_id");
+    }
+
+    public function statuses()
+    {
+        return $this->hasOne(Status::class, "type", "searchtype");
     }
 
     /**
@@ -30,6 +36,8 @@ class Item extends Model
                 [
                     "user_id" => auth()->id(),
                     "item_id" => $get_item->apiID,
+                    "type" => $get_item->type,
+                    "searchtype" => $get_item->searchtype,
                 ],
                 ["status" => $status]
             );
@@ -46,6 +54,7 @@ class Item extends Model
             $createItemUsersModel = [
                 "user_id" => auth()->id(),
                 "item_id" => $item["id"],
+                "user_progress" => [],
                 "type" => $item["type"],
                 "searchtype" => $item["searchtype"],
                 "status" => $status

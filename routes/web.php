@@ -27,7 +27,7 @@ Route::get("/", Welcome::class)->name("welcome");
 Route::middleware(["auth", "cors"])->group(function () {
     Route::get("/home", Dashboard::class)->name("home");
     Route::get("/recent", RecentlyUpdated::class)->name("recent");
-    Route::get("/library/{type}", Library::class)->name("library");
+    Route::get("/library", Library::class)->name("library");
 });
 
 

@@ -17,9 +17,9 @@ class CreateStatusesTable extends Migration
             $table->id();
             $table->string('type');
             $table->text('image')->nullable();
-            $table->string('ptw');
+            $table->string('planning');
             $table->string('completed');
-            $table->string('watching');
+            $table->string('in_progress');
             $table->string('none');
         });
     }
