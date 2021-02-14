@@ -54,6 +54,7 @@ class Item extends Model
             $createItemUsersModel = [
                 "user_id" => auth()->id(),
                 "item_id" => $item["id"],
+                "user_progress" => [],
                 "type" => $item["type"],
                 "searchtype" => $item["searchtype"],
                 "status" => $status

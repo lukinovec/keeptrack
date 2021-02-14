@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Book;
-use App\Movie;
 use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
-use App\Classes\LibraryDB;
 use App\Models\ItemUser;
 
 class Result extends Component

@@ -95,12 +95,12 @@ class User extends Authenticatable
 
     public function getItems($count = 0)
     {
-        $result = $this->items->map(function ($item) {
+        $result = $this->items->sortByDesc("updated_at")->sortByDesc("is_favorite")->map(function ($item) {
             return collect($item)->merge($item->item);
         });
 
         if ($count != 0) {
-            return $result->sortByDesc('updated_at')->slice(0, $count);
+            return $result->sortByDesc("updated_at")->sortByDesc("is_favorite")->slice(0, $count);
         }
         return $result;
     }
