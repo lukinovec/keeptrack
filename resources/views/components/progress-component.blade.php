@@ -7,9 +7,9 @@
                 <label for="seasons">Season</label>
                 <select class="w-12 bg-black bg-opacity-25" x-model.number="item.user_progress.season" id="seasons"
                 name="seasons">
-                <template x-for="season in item.progress.seasons">
-                    <option x-model="season.number" value="season.number" x-text="season.number"></option>
-                </template>
+                    <template x-for="season in item.progress.seasons">
+                        <option class="text-gray-700 bg-white" x-model="season.number" value="season.number" x-text="season.number"></option>
+                    </template>
                 </select>
                 <br class="my-2">
                 <span class="flex items-center space-x-1">

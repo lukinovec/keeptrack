@@ -5,9 +5,7 @@ use App\Http\Livewire\Login;
 use App\Http\Livewire\Register;
 use App\Http\Livewire\Welcome;
 use App\Http\Livewire\Library;
-use App\Http\Livewire\RecentlyUpdated;
 use App\Http\Livewire\ForgotPassword;
-use App\Http\Livewire\PasswordReset;
 use App\Http\Livewire\ResetPassword;
 use Illuminate\Support\Facades\Route;
 /*
@@ -26,7 +24,6 @@ Route::get("/", Welcome::class)->name("welcome");
 // Nepříhlášení uživatelé budou přesměrování na login
 Route::middleware(["auth", "cors"])->group(function () {
     Route::get("/home", Dashboard::class)->name("home");
-    Route::get("/recent", RecentlyUpdated::class)->name("recent");
     Route::get("/library", Library::class)->name("library");
 });
 

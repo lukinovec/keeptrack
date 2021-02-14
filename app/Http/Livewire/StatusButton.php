@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Status;
 use Livewire\Component;
-use App\Classes\LibraryDB;
 
 class StatusButton extends Component
 {

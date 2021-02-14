@@ -4,7 +4,6 @@ namespace App\Classes;
 
 use Exception;
 use App\Classes\Request;
-use App\Classes\LibraryDB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 

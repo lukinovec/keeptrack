@@ -118,31 +118,9 @@
                 height: 5em;
             }
         }
-
-        /* https://stackoverflow.com/questions/22747193/statically-rotate-font-awesome-icons */
-        .fa-rotate-45 {
-            -webkit-transform: rotate(45deg);
-            -moz-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            -o-transform: rotate(45deg);
-            transform: rotate(45deg);
+        input[type=checkbox] {
+            transform: scale(1.5);
         }
-
-        .fa-rotate-45-negative {
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-
-        .top-35 {
-            top: 35%
-        }
-        .top-5rem {
-            top: 5rem
-        }
-
         [x-cloak] { display: none; }
     </style>
     @livewireStyles
