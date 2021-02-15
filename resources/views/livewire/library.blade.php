@@ -21,7 +21,7 @@
             <span class="ml-2 underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="filter_hidden = !filter_hidden" x-text="filter_hidden ? 'Show' : 'Hide'"></span>
         </div>
 
-        <section x-show="!filter_hidden">
+        <section x-show="!filter_hidden" class="w-full">
             <input wire:model.debounce.300ms="search" placeholder="Search in library" type="search"
             class="w-full sm:w-2/3 input" />
             <div class="flex flex-wrap items-center justify-center pt-2 space-x-5 text-lg text-blueGray-300">
