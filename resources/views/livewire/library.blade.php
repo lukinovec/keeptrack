@@ -45,8 +45,8 @@
 
                 <span class="ml-2 font-bold underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="clearFilters()">Remove filters</span>
             </div>
-            </section>
-        </div>
+        </section>
+    </div>
 
         @if ($library->count() > 0)
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
