@@ -31,16 +31,18 @@ class Item extends Model
     public static function updateStatus($item, String $status): void
     {
         $get_item = self::find($item["id"]);
+
+        $createItemUsersModel = [
+            "user_id" => auth()->id(),
+            "item_id" => $item["id"],
+            "user_progress" => [],
+            "type" => $item["type"],
+            "searchtype" => $item["searchtype"],
+            "status" => $status
+        ];
+
         if ($get_item) {
-            ItemUser::updateOrCreate(
-                [
-                    "user_id" => auth()->id(),
-                    "item_id" => $get_item->apiID,
-                    "type" => $get_item->type,
-                    "searchtype" => $get_item->searchtype,
-                ],
-                ["status" => $status]
-            );
+            ItemUser::updateOrCreate($createItemUsersModel, ["status" => $status]);
         } else {
             $createItemModel = [
                 "apiID" => $item["id"],
@@ -49,15 +51,6 @@ class Item extends Model
                 "name" => $item["title"],
                 "type" => $item["type"],
                 "year" => $item["year"],
-            ];
-
-            $createItemUsersModel = [
-                "user_id" => auth()->id(),
-                "item_id" => $item["id"],
-                "user_progress" => [],
-                "type" => $item["type"],
-                "searchtype" => $item["searchtype"],
-                "status" => $status
             ];
 
             /**

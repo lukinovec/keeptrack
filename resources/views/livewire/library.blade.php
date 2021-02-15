@@ -101,6 +101,13 @@
                         if(this.item.user_progress.episode >= (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length) {
                             this.item.user_progress.season += 1;
                             this.item.user_progress.episode = 1;
+                        } else if(this.item.user_progress.episode < 1) {
+                            if(this.item.user_progress.season === 1) {
+                                this.item.user_progress.episode = 1;
+                            } else {
+                                this.item.user_progress.season -= 1;
+                                this.item.user_progress.episode = (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length;
+                            }
                         }
                     }
                 }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :id="item.apiID">

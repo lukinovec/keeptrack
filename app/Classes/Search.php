@@ -38,6 +38,17 @@ class Search
 
 
     /**
+     * Pro rozšíření backendu aplikace je třeba upravit tento soubor, Request.php a database/seeders/StatusSeeder.php
+     * Pokud rozšíření ještě potřebuje další úpravy, například nastavení postupu, nebo získávání sérií, rozšiřte soubor app/models/Item.php
+     *
+     * Pro rozšíření frontendu aplikace je třeba upravit soubor resources/views/livewire/search/result.blade.php - sekce @if($searchtype == ...)
+     * Pokud rozšíření obsahuje položku user_progress,
+     * je třeba upravit soubor resources/views/components/progress-component.blade.php
+     * - najděte section tag a dovnitř přidejte <template x-if="item.type == jmeno_noveho_typu">, do tohoto tagu vložte svůj design pro úpravu uživatelova postupu.
+     * Doporučuji <template> zkopírovat a jen přepsat hodnoty, které jsou pro vaše rozšíření jiné.
+     */
+
+    /**
      * @param string $type      Typ vyhledávání v jednotném čísle (movie, book,...)
      * @param mixed $response   Odpověď API ve formátu JSON
      * @return Collection|false Výsledky vyhledávání ve správném formátu pro zobrazení, nebo false - když vyhledávání selže

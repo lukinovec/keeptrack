@@ -34,6 +34,7 @@ class StatusSeeder extends Seeder
                 "none" => "None"
              ]
         ];
+
         foreach ($statuses as $status) {
             DB::table('statuses')->insert($status);
         }

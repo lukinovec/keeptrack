@@ -1,7 +1,6 @@
 <span class="flex-1">
     <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
-        <div class="flex items-center space-x-2 text-base">
-
+        <section class="flex items-center space-x-2 text-base">
         <template x-if="item.type == 'series'">
             <span class="flex-1">
                 <label for="seasons">Season</label>
@@ -35,6 +34,6 @@
                 </div>
             </span>
         </template>
-        </div>
+        </section>
     </div>
 </span>
