@@ -98,7 +98,7 @@
                     },
 
                     nextSeason: function() {
-                        if(this.item.user_progress.episode >= (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length) {
+                        if(this.item.user_progress.episode > (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length) {
                             this.item.user_progress.season += 1;
                             this.item.user_progress.episode = 1;
                         } else if(this.item.user_progress.episode < 1) {
