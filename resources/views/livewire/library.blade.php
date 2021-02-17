@@ -15,6 +15,8 @@
     @endif
 
     {{-- Library Searchbar --}}
+
+    @if ($library->count() > 0)
     <div class="flex flex-col items-center w-full text-center select-none">
         <div class="p-1 m-2 text-lg font-bold text-center text-blueGray-300">
             Library filter
@@ -48,7 +50,6 @@
         </section>
     </div>
 
-        @if ($library->count() > 0)
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
             @foreach ($library as $item)
             <template
