@@ -44,7 +44,7 @@ class Register extends Component
 
     public function login()
     {
-        return redirect("login");
+        return redirect("/");
     }
 
     public function render()

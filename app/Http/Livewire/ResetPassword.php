@@ -41,7 +41,7 @@ class ResetPassword extends Component
         );
         if ($status === Password::PASSWORD_RESET) {
             session()->flash("message", "<span class='text-green-600'>Password successfuly changed!</span>");
-            return redirect("login");
+            return redirect("/");
         } else {
             $this->errorMessage = $status === Password::INVALID_TOKEN ? "<span class='text-red-600'>Invalid password reset token. Try resetting your password again.</span>" : "<span class='text-red-600'>An error has occured.</span>";
         }

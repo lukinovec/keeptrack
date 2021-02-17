@@ -1,4 +1,4 @@
-<div class="w-3/5 text-center auth-wrapper" x-data="{ confirmed: @entangle('confirmed') }">
+<div class="text-center auth-wrapper" x-data="{ confirmed: @entangle('confirmed') }">
     <div class="auth">
         <input class="w-full input" placeholder="Email" x-on:keydown.enter="$wire.register()" type="email" wire:model.defer="email" name="email" />
         <br><br>
@@ -9,7 +9,7 @@
 
         <button class="btn auth-btn-primary" wire:click="register">Register</button>
         <span class="flex p-2 m-2 text-base justify-evenly text-blueGray-300">
-            <button class="hover:underline" x-on:click="$dispatch('login-mode-change', { mode: 'login' })">Already have an account?</button>
+            <button class="hover:underline" wire:click="login">Already have an account?</button>
         </span>
     </div>
     @if ($errors)

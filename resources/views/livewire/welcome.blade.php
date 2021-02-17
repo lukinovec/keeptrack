@@ -10,11 +10,6 @@ style="background: #0f172a" x-data="{ logIn: true }" @login-mode-change.window="
         </svg>
     </section>
     <section class="flex flex-col items-center flex-1 text-6xl font-extrabold justify-evenly bg-blueGray-800 right-pane">
-        <template x-if="logIn">
-            <livewire:login />
-        </template>
-        <template x-if="!logIn">
-            <livewire:register />
-        </template>
+            <livewire:login :key="'login'" />
     </section>
 </div>
