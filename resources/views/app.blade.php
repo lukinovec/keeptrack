@@ -124,21 +124,21 @@
         [x-cloak] { display: none; }
     </style>
     @livewireStyles
-    <script defer src="{!! mix('js/app.js') !!}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" defer></script>
     <meta name="Description" content="KeepTrack - Track progress in your TV shows and books">
+    <script defer src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false"></script>
+    <script defer src="{!! mix('js/app.js') !!}"></script>
 </head>
 
-<body class="">
+<body>
     <div id="app"
-        class="h-screen flex flex-col mx-4 {{ !str_contains(Request::fullUrl(), '/library') && !str_contains(Request::fullUrl(), '/home') ? 'overflow-hidden' : '' }}">
-
-        <livewire:nav-bar />
+        class="h-screen flex flex-col {{ !str_contains(Request::fullUrl(), '/library') && !str_contains(Request::fullUrl(), '/home') ? 'overflow-hidden' : '' }}">
 
         @if (Auth::check())
+        <livewire:nav-bar />
         @endif
-        <div class="flex items-center justify-center flex-1 h-full p-8">
+
+        <div class="flex items-center justify-center flex-1 h-full">
             @yield("content")
         </div>
     </div>

@@ -30,7 +30,6 @@ Route::middleware(["auth", "cors"])->group(function () {
 
 // Příhlášení uživatelé budou přesměrování na home
 Route::middleware(["guest"])->group(function () {
-    Route::get("/login", Login::class)->name("login");
     Route::get("/register", Register::class)->name("register");
     Route::get("/forgot-password", ForgotPassword::class)->name("forgot-password");
     Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');

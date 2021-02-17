@@ -29,7 +29,7 @@
 
             @if ($searchResponse && count($searchResponse) > 0)
 
-                @foreach ($searchResponse as $item)
+                @foreach ($searchResponse->unique() as $item)
                 @if($item["type"] != "game")
                 <livewire:result :item="$item" :searchtype="$searchtype" :key="$item['id']" />
                 @endif
