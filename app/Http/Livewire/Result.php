@@ -42,7 +42,11 @@ class Result extends Component
 
     public function updatedResultStatus(String $status): void
     {
-        $this->message = "Changing item status...";
+        $this->message = "
+        <span>
+            Changing item status...
+        </span>
+        ";
 
         // Delete item from user's library
         if ($status === "none") {

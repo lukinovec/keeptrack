@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Classes\Type;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
+
 
 class StatusSeeder extends Seeder
 {
@@ -14,29 +17,13 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        /**
-         * Pro přidání nového statusu přidejte do $statuses pole podle vzoru a přepište hodnoty podle potřeby
-         */
-        $statuses = [
+        foreach (
             [
-                "type" => "movie",
-                "planning" => "Plan to Watch",
-                "completed" => "Completed",
-                "in_progress" => "Watching",
-                "none" => "None"
-            ],
-
-            [
-                "type" => "book",
-                "planning" => "Plan to Read",
-                "completed" => "Completed",
-                "in_progress" => "Reading",
-                "none" => "None"
-             ]
-        ];
-
-        foreach ($statuses as $status) {
-            DB::table('statuses')->insert($status);
+                Type::new("movie")->change("in_progress", "Watching")->change("planning", "Plan to Watch"),
+                Type::new("book")->change("in_progress", "Reading")->change("planning", "Plan to Read"),
+            ]
+         as $status) {
+            DB::table('statuses')->insert((array) $status);
         }
     }
 }
