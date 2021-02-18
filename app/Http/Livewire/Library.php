@@ -11,7 +11,6 @@ class Library extends Component
     protected $library;
     protected $library_original;
     protected $type;
-    protected $search;
     public $toUpdate;
 
     // Form Validation
@@ -30,17 +29,6 @@ class Library extends Component
     {
         $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;
-    }
-
-    public function updatedSearch($search)
-    {
-        if ($this->library->count() > 0 && $search !== "") {
-            $this->library = $this->library->filter(function ($item) use ($search) {
-                return stripos($item['name'], $search) !== false;
-            });
-        } else {
-            $this->library = $this->library_original;
-        }
     }
 
     // Update or delete

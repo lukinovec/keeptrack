@@ -45,12 +45,12 @@ class UpdateStatus {
                             $this->item_users_blueprint->user_progress = ["episode" => 1, "season" => 1];
                             break;
 
-                        case 'book':
+                    case 'book':
                             $this->item_blueprint->image = preg_replace('/._.*_/', '._SY385_', $this->item["image"]);
                             $this->item_users_blueprint->user_progress = ["pages_read" => 0];
                             break;
 
-                        default:
+                    default:
                             break;
             }
             $this->item_blueprint->create();
