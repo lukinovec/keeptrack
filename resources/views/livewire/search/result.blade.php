@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between p-5 mx-10 my-4 overflow-hidden border-t-2 border-b-2 shadow-xl min-w-5/6 text-blueGray-300 md:w-1/4 lg:w-1/5 rounded-xxxl item border-blueGray-300"
+<div class="flex flex-col items-center justify-between py-4 item"
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
@@ -17,7 +17,7 @@
     @else
     <h1>Image not available</h1>
     @endif
-    <section class="flex items-center justify-center p-2 font-bold info">
+    <section class="flex items-center justify-center w-full p-2 my-2 font-bold info">
         @if ($searchtype == "movie")
         <a class="h-8 text-center border-none btn" href="https://www.imdb.com/title/{{ $result["id"] }}/" target="_blank">
             <img class="h-full" src="{{ asset('images/imdb.png') }}" alt="IMDb link">
@@ -25,7 +25,7 @@
         @elseif($searchtype == "book")
         <a class="flex-1 h-8 text-center btn" href="https://www.goodreads.com/book/show/{{ $result["id"] }}"
             target="_blank">
-            See on Goodreads
+            Details
         </a>
         @endif
         <select x-data='{ statuses: @json($statuses), resultStatus: @json($result).status }'
