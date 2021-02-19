@@ -52,11 +52,12 @@
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
             @foreach ($library->unique("item_id") as $item)
-            <template
+            <template class="{{ $item["item_id"] }}"
             x-if="((filter.includes('{{ $item["type"] }}') || filter.length === 0)
             && (status_filter.includes('{{ $item["status"] }}') || status_filter.length === 0)
             && (favorite_only ? {{ $item["is_favorite"] }} : true))
-            && ('{{ $item["name"] }}'.toLowerCase().includes(search) || search == null)" :key="$item.item_id">
+            && ('{{ $item["name"] }}'.toLowerCase().includes(search) || search == null)"
+             :key="$item.item_id">
             <div x-data='{
                     item: @json($item),
                     edit: false,
@@ -74,8 +75,8 @@
                     },
 
                     favorite: function(item) {
-                        item.is_favorite = !item.is_favorite;
-                        this.$wire.updateItem(item);
+                        this.item.is_favorite = !item.is_favorite;
+                        this.$wire.updateItem(this.item, "favorite");
                     },
 
                     submit: function(item) {

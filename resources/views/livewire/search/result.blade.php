@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-between py-4 item"
+<div class="flex flex-col justify-between p-5 mx-10 my-4 overflow-hidden border-t-2 border-b-2 shadow-xl min-w-5/6 text-blueGray-300 md:w-1/4 lg:w-1/5 rounded-xxxl item border-blueGray-300"
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
