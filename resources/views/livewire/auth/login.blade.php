@@ -19,7 +19,7 @@
         </div>
     </div>
     @if ($errors)
-    <div class="auth-error">
+    <div class="text-base auth-error">
         {{ $error }}
     </div>
     @endif

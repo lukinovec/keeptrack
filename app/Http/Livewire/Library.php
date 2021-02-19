@@ -11,7 +11,6 @@ class Library extends Component
     protected $library;
     protected $library_original;
     protected $type;
-    protected $search;
     public $toUpdate;
 
     // Form Validation
@@ -32,19 +31,8 @@ class Library extends Component
         $this->library_original = $this->library;
     }
 
-    public function updatedSearch($search)
-    {
-        if ($this->library->count() > 0 && $search !== "") {
-            $this->library = $this->library->filter(function ($item) use ($search) {
-                return stripos($item['name'], $search) !== false;
-            });
-        } else {
-            $this->library = $this->library_original;
-        }
-    }
-
     // Update or delete
-    public function updateItem($item)
+    public function updateItem($item, $type = "")
     {
         $item["id"] = $item["apiID"];
         $this->toUpdate = $item;
@@ -52,8 +40,12 @@ class Library extends Component
 
         ItemUser::updateDetails($item);
 
-        $this->library_original = Auth::user()->getItems();
-        $this->library = $this->library_original;
+        if($type == "favorite") {
+            return redirect("library");
+        } else {
+            $this->library_original = Auth::user()->getItems();
+            $this->library = $this->library_original;
+        }
     }
 
     public function render()

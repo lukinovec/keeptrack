@@ -14,6 +14,8 @@ class Dashboard extends Component
     public String $search = "";
     public String $searchtype = "movie";
     public $searchResponse = false;
+    public $minYear = null;
+    public $maxYear = null;
     public $authUser;
 
     /**

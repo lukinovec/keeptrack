@@ -6,7 +6,7 @@
                 <x-note-component x-show="Object.keys(removeConfirmation.item).length === 0" />
                 <x-status-component x-show="Object.keys(removeConfirmation.item).length === 0" />
                 {{ $slot }}
-                <x-progress-component x-show="item.type != 'movie' && Object.keys(removeConfirmation.item).length === 0" />
+                <x-progress-component x-show="item.progress !== null && Object.keys(removeConfirmation.item).length === 0" />
                 <x-submit-button x-show="Object.keys(removeConfirmation.item).length === 0" />
             </div>
             <span x-show="Object.keys(removeConfirmation.item).length !== 0">

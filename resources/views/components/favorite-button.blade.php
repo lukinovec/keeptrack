@@ -1,4 +1,4 @@
-<span x-on:click="favorite(item); $dispatch('item-updated')"
+<span x-on:click="favorite(item)"
     class="z-30 duration-300 transform bg-black cursor-pointer rounded-xxxl sm:hover:scale-125"  style="width:30px; height:30px"
     :class="{ 'bg-yellow-600': item.is_favorite }">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px" height="30px"  class="icon-star"  style="padding: 6px">
