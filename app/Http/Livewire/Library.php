@@ -41,8 +41,8 @@ class Library extends Component
 
         ItemUser::updateDetails($item);
 
-        $this->library_original = Auth::user()->getItems();
-        $this->library = $this->library_original;
+        $this->library = Auth::user()->getItems();
+        $this->library_original = $this->library;
 
         if($type == "favorite" || $type == "delete") {
             $this->render();

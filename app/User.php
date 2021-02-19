@@ -58,7 +58,7 @@ class User extends Authenticatable
     {
         $result = $this->items->sortByDesc("updated_at")->sortByDesc("is_favorite")->map(function ($result) {
             return collect($result)->merge($result->item);
-     ;   });
+        });
 
         if ($count != 0) {
             return $result->sortByDesc("updated_at")->sortByDesc("is_favorite")->slice(0, $count);

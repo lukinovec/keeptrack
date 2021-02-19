@@ -52,7 +52,7 @@
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
-            @foreach ($library->unique("item_id") as $item)
+            @foreach ($library as $item)
             <template class="{{ $item["item_id"] }}"
             x-if="((filter.includes('{{ $item["type"] }}') || filter.length === 0)
             && (status_filter.includes('{{ $item["status"] }}') || status_filter.length === 0)
@@ -98,6 +98,9 @@
                         if(confirmed) {
                             this.item.status = "none";
                             this.$wire.updateItem(this.item, "remove");
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 250);
                         } else {
                             this.removeConfirmation.item = {};
                         }
@@ -116,7 +119,7 @@
                             }
                         }
                     }
-                }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :id="item.apiID">
+                }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :key="item.item_id">
             <x-library-item :item="$item" />
         </div>
         </template>
