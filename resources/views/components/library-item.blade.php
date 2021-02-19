@@ -9,5 +9,5 @@
         <x-remove-button />
 
         <x-item-footer />
-        </div>
+    </div>
 </div>

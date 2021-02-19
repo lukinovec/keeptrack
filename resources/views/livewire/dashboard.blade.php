@@ -20,6 +20,9 @@ x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('search
 
         <div wire:loading.delay class="loader" style="position: fixed; left: 50%; top: 8%"></div>
 
+
+        <livewire:flash-container />
+
         <div x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="opacity-0 transform scale-90"
             x-transition:enter-end="opacity-100 transform scale-100" x-show="searchResponse"

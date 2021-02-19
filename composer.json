@@ -15,7 +15,8 @@
         "laravel/framework": "^8.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "livewire/livewire": "^2.3.8"
+        "livewire/livewire": "^2.3.8",
+        "mattlibera/livewire-flash": "^0.5.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",

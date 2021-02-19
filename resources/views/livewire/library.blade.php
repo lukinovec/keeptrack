@@ -5,7 +5,6 @@
         this.favorite_only = false;
     }
 }" @item-updated="clearFilters()" class="w-full h-full">
-
     <div wire:loading wire:target='updateItem' class="z-50 loader" style="position: fixed; left: 50%; top: 8%"></div>
 
     @if ($errors->any())
@@ -16,7 +15,7 @@
 
     {{-- Library Searchbar --}}
 
-    @if ($library->count() > 0)
+    @if (!empty($library))
     <div class="flex flex-col items-center w-full text-center select-none">
         <div class="p-1 m-2 text-lg font-bold text-center text-blueGray-300">
             Library filter
@@ -27,10 +26,12 @@
             <input x-model="search" placeholder="Search in library" type="search"
             class="w-full sm:w-2/3 input" />
             <div class="flex flex-wrap items-center justify-center pt-2 space-x-5 text-lg text-blueGray-300">
+                @if ($library->contains("is_favorite", true))
                 <span>
                     <input x-model="favorite_only" type="checkbox" id="filter_favorite" name="filter_favorite" value="true">
                     <label for="filter_favorite">Only favorites</label>
                 </span>
+                @endif
                 @foreach ($library->unique("type") as $unique)
                 <span>
                     <input x-model="filter" type="checkbox" id="{{ $unique["type"] }}" name="filter_type" value="{{ $unique["type"] }}">
@@ -96,7 +97,7 @@
                     confirmRemove: function(confirmed) {
                         if(confirmed) {
                             this.item.status = "none";
-                            this.$wire.updateItem(this.item);
+                            this.$wire.updateItem(this.item, "remove");
                         } else {
                             this.removeConfirmation.item = {};
                         }
@@ -116,7 +117,6 @@
                         }
                     }
                 }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :id="item.apiID">
-
             <x-library-item :item="$item" />
         </div>
         </template>

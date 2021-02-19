@@ -12,12 +12,14 @@ class Dashboard extends Component
     public $clicked = "";
     public $searching = false;
     public String $search = "";
+    public Bool $updating_message = true;
     public String $searchtype = "movie";
     public $searchResponse = false;
     public $minYear = null;
     public $maxYear = null;
     public $authUser;
 
+    protected $listeners = ["changing-status" => "onStatusChange"];
     /**
      *
      */
@@ -42,6 +44,12 @@ class Dashboard extends Component
         } else {
             $this->searchResponse = false;
         }
+    }
+
+    public function onStatusChange($message, $type = "info")
+    {
+        $this->updating_message = false;
+        flash($message)->{$type}()->livewire($this);
     }
 
     /**
