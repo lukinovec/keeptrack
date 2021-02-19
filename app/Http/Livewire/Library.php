@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Library extends Component
 {
-    protected $library;
-    protected $library_original;
+    protected $library = [];
+    protected $library_original = [];
     protected $type;
+    public $favorite_only = false;
     public $toUpdate;
 
     // Form Validation
@@ -40,11 +41,12 @@ class Library extends Component
 
         ItemUser::updateDetails($item);
 
-        if($type == "favorite") {
+        $this->library = Auth::user()->getItems();
+        $this->library_original = $this->library;
+
+        if($type == "favorite" || $type == "delete") {
+            $this->render();
             return redirect("library");
-        } else {
-            $this->library_original = Auth::user()->getItems();
-            $this->library = $this->library_original;
         }
     }
 

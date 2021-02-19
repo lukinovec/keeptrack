@@ -2,15 +2,13 @@
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
-    style="height: 40rem;">
+    style="height: 40rem;"a>
+
+    <div wire:loading.delay class="loader" style="position: fixed; left: 50%; top: 8%"></div>
 
     <section class="text-lg">
         <span class="font-bold">{{ $result["title"] }}</span> {{ $result["year"] }}
     </section>
-
-    @if ($message)
-    <x-flash-message :message="$message" />
-    @endif
 
     @if($result['image'] != "N/A")
     <img class="my-2 rounded-xxxl max-h-3/4" src="{{ $result['image'] }}" alt="Image not available">
@@ -31,7 +29,7 @@
         <select x-data='{ statuses: @json($statuses), resultStatus: @json($result).status }'
             class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-900"
             {{-- :class="{ 'bg-green-900': resultStatus !== '' && resultStatus !== 'none' }" --}}
-            wire:model="resultStatus" x-model="resultStatus">
+            wire:model="resultStatus" x-model="resultStatus" x-on:change="$dispatch('updating-status')">
             <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' ? 'Select status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="planning" x-text="statuses.planning"></option>

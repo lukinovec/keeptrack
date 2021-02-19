@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
 use App\Models\ItemUser;
+use MattLibera\LivewireFlash;
 
 class Result extends Component
 {
@@ -42,36 +43,21 @@ class Result extends Component
 
     public function updatedResultStatus(String $status): void
     {
-        $this->message = "
-        <span>
-            Changing item status...
-        </span>
-        ";
-
         // Delete item from user's library
         if ($status === "none") {
             $this->result["status"] = "none";
             ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "";
-            $this->message = "
-            <span>
-                Item deleted from <a class='underline' href='/library'>your library</a>
-            </span>
-            ";
+            $this->emit("changing-status", "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>", "success");
         } else {
             // Update status
             Item::updateStatus($this->result, $status);
-
-            $this->message = "
-            <span>
-                Item added to <a class='underline' href='/library'>your library</a>
-            </span>
-            ";
+            $this->emit("changing-status", "<span>Item status updated. See it in <a class='underline' href='/library'>your library</a></span>", "success");
         }
     }
 
     public function render()
     {
-        return view('livewire.search.result', ["result" => $this->result, "message" => $this->message]);
+        return view('livewire.search.result', ["result" => $this->result]);
     }
 }

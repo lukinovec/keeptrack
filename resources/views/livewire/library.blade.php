@@ -5,7 +5,6 @@
         this.favorite_only = false;
     }
 }" @item-updated="clearFilters()" class="w-full h-full">
-
     <div wire:loading wire:target='updateItem' class="z-50 loader" style="position: fixed; left: 50%; top: 8%"></div>
 
     @if ($errors->any())
@@ -16,7 +15,7 @@
 
     {{-- Library Searchbar --}}
 
-    @if ($library->count() > 0)
+    @if (!empty($library))
     <div class="flex flex-col items-center w-full text-center select-none">
         <div class="p-1 m-2 text-lg font-bold text-center text-blueGray-300">
             Library filter
@@ -27,10 +26,12 @@
             <input x-model="search" placeholder="Search in library" type="search"
             class="w-full sm:w-2/3 input" />
             <div class="flex flex-wrap items-center justify-center pt-2 space-x-5 text-lg text-blueGray-300">
+                @if ($library->contains("is_favorite", true))
                 <span>
                     <input x-model="favorite_only" type="checkbox" id="filter_favorite" name="filter_favorite" value="true">
                     <label for="filter_favorite">Only favorites</label>
                 </span>
+                @endif
                 @foreach ($library->unique("type") as $unique)
                 <span>
                     <input x-model="filter" type="checkbox" id="{{ $unique["type"] }}" name="filter_type" value="{{ $unique["type"] }}">
@@ -51,7 +52,7 @@
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
-            @foreach ($library->unique("item_id") as $item)
+            @foreach ($library as $item)
             <template class="{{ $item["item_id"] }}"
             x-if="((filter.includes('{{ $item["type"] }}') || filter.length === 0)
             && (status_filter.includes('{{ $item["status"] }}') || status_filter.length === 0)
@@ -96,7 +97,10 @@
                     confirmRemove: function(confirmed) {
                         if(confirmed) {
                             this.item.status = "none";
-                            this.$wire.updateItem(this.item);
+                            this.$wire.updateItem(this.item, "remove");
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 250);
                         } else {
                             this.removeConfirmation.item = {};
                         }
@@ -115,8 +119,7 @@
                             }
                         }
                     }
-                }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :id="item.apiID">
-
+                }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :key="item.item_id">
             <x-library-item :item="$item" />
         </div>
         </template>
