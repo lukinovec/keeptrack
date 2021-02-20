@@ -20,6 +20,8 @@ class CreateStatusesTable extends Migration
             $table->string('planning');
             $table->string('completed');
             $table->string('in_progress');
+            $table->string('restrict_type');
+            $table->string('plural');
             $table->string('none');
         });
     }

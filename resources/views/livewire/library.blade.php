@@ -15,7 +15,7 @@
 
     {{-- Library Searchbar --}}
 
-    @if (!empty($library))
+    @if ($library->count() > 0)
     <div class="flex flex-col items-center w-full text-center select-none">
         <div class="p-1 m-2 text-lg font-bold text-center text-blueGray-300">
             Library filter
@@ -25,30 +25,36 @@
         <section x-show="!filter_hidden" class="w-full">
             <input x-model="search" placeholder="Search in library" type="search"
             class="w-full sm:w-2/3 input" />
-            <div class="flex flex-wrap items-center justify-center pt-2 space-x-5 text-lg text-blueGray-300">
+            <div class="flex flex-wrap items-center justify-center pt-4 space-x-8 text-lg text-blueGray-300">
                 @if ($library->contains("is_favorite", true))
-                <span>
+                <span class="flex space-x-2">
                     <input x-model="favorite_only" type="checkbox" id="filter_favorite" name="filter_favorite" value="true">
-                    <label for="filter_favorite">Only favorites</label>
+                    <label  for="filter_favorite">Only favorites</label>
                 </span>
                 @endif
-                @foreach ($library->unique("type") as $unique)
-                <span>
-                    <input x-model="filter" type="checkbox" id="{{ $unique["type"] }}" name="filter_type" value="{{ $unique["type"] }}">
-                    <label for="{{ $unique["type"] }}">{{ ucfirst($unique["type"]) }}</label>
+                <span class="flex flex-col items-start justify-start">
+                    @foreach ($library->unique("type") as $unique)
+                    <span class="flex space-x-2">
+                        <input x-model="filter" type="checkbox" id="{{ $unique["type"] }}" name="filter_type" value="{{ $unique["type"] }}">
+                        <span>
+                            <label for="{{ $unique["type"] }}">{{ ucfirst($unique["type"]) }}</label> <span class="text-sm text-blueGray-600"> | {{ ucfirst($unique["searchtype"]) }}</span>
+                        </span>
+                    </span>
+                    @endforeach
                 </span>
-                @endforeach
 
-                @foreach ($library->unique("status") as $unique)
-                <span>
-                    <input x-model="status_filter" type="checkbox" id="{{ $unique["status"] }}" name="filter_status" value="{{ $unique["status"] }}">
-                    <label for="{{ $unique["status"] }}">{{ ucfirst(str_replace('_', ' ', $unique["status"])) }}</label>
+                <span class="flex flex-col items-start justify-start">
+                    @foreach ($library->unique("status") as $unique)
+                    <span class="flex space-x-2">
+                        <input x-model="status_filter" type="checkbox" id="{{ $unique["status"] }}" name="filter_status" value="{{ $unique["status"] }}">
+                        <label  for="{{ $unique["status"] }}">{{ ucfirst(str_replace('_', ' ', $unique["status"])) }}</label>
+                    </span>
+                    @endforeach
                 </span>
-                @endforeach
 
-                <span class="ml-2 font-bold underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="clearFilters()">Remove filters</span>
-            </div>
-        </section>
+                    <span class="ml-2 font-bold underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="clearFilters()">Remove filters</span>
+                </div>
+            </section>
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">

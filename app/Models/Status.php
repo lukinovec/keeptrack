@@ -10,6 +10,6 @@ class Status extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $casts = ["restrict_types" => "collection"];
     public $timestamps = false;
 }

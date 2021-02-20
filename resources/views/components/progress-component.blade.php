@@ -1,6 +1,7 @@
 <span class="flex-1">
     <div class="mx-3" x-show="item.apiID == edit.apiID" style="z-index: 999">
         <section class="flex items-center space-x-2 text-base">
+
         <template x-if="item.type == 'series'">
             <span class="flex-1">
                 <label for="seasons">Season</label>
@@ -32,6 +33,20 @@
                         x-model.number="item.user_progress.pages_read" type="number">
                     </div>
                 </div>
+            </span>
+        </template>
+
+        <template x-if="item.searchtype == 'anime'">
+            <span class="flex-1">
+                <span class="flex items-center space-x-1">
+                    <label class="pr-1" for="episodes">Episode</label>
+                    <input id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
+                    x-model.number="item.user_progress.episode" type="number">
+                    /
+                    <span
+                    x-text="item.progress.episodes">
+                    </span>
+                </span>
             </span>
         </template>
         </section>

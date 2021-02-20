@@ -118,34 +118,27 @@ class Search
                 $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
                 return collect(json_decode(json_encode($xml))->book)->all();
 
+            case 'anime':
+                if (empty($response)) {
+                    return false;
+                }
+
+                return collect($response)->map(function ($item) use ($statuses) {
+                    return [
+                        "id" => $item["mal_id"],
+                        "searchtype" => "anime",
+                        "title" => $item["title"],
+                        "year" => explode("-", $item["start_date"])[0],
+                        "type" => $item["type"],
+                        "image" => $item["image_url"],
+                        "progress" => ["episodes" => $item["episodes"]],
+                        "status" => $statuses->firstWhere("apiID", $item["mal_id"])["status"] ?? ""
+                    ];
+                });
+
             default:
                 throw new Exception("Invalid type supplied to the format function (Search.php class)", 1);
                 break;
         }
-    }
-
-
-    /**
-     * @param array $response   Odpověď API
-     * @return Collection       Výsledky vyhledávání ve správném formátu pro zobrazení
-     */
-
-    public function formatAnime(array $response): Collection
-    {
-        $statuses = Auth::user()->movies->map(function ($anime) {
-            return ["apiID" => $anime["mal_id"], "status" => $anime->status];
-        });
-        return collect($response)->map(function ($item) use ($statuses) {
-            return [
-                "id" => $item["mal_id"],
-                "title" => $item["title"],
-                "year" => substr($item["start_date"], 0, 4),
-                "type" => strtolower($item["type"]),
-                "episodes" => $item["episodes"],
-                "isAnime" => true,
-                "image" => $item["image_url"],
-                "status" => $statuses->firstWhere("apiID", $item["mal_id"])["status"] ?? ""
-            ];
-        });
     }
 }

@@ -12,7 +12,6 @@ class Dashboard extends Component
     public $clicked = "";
     public $searching = false;
     public String $search = "";
-    public Bool $updating_message = true;
     public String $searchtype = "movie";
     public $searchResponse = false;
     public $minYear = null;
@@ -48,7 +47,6 @@ class Dashboard extends Component
 
     public function onStatusChange($message, $type = "info")
     {
-        $this->updating_message = false;
         flash($message)->{$type}()->livewire($this);
     }
 

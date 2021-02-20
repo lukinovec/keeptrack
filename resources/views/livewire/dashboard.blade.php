@@ -11,7 +11,7 @@ x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('search
                     {{-- <label class="m-1 text-xs" for="searchtype">Type</label> --}}
                     <select class="p-2 select bg-blueGray-900" wire:model="searchtype" name="searchtype" id="searchtype">
                         @foreach(\App\Models\Status::all() as $status)
-                        <option class="select-option" value="{{ $status->type }}">{{ ucfirst($status->type) }}s</option>
+                        <option class="select-option" value="{{ $status->type }}">{{ ucfirst($status->plural) }}</option>
                         @endforeach
                     </select>
                 </span>
@@ -31,7 +31,7 @@ x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('search
             @if ($searchResponse && count($searchResponse) > 0)
 
                 @foreach ($searchResponse->unique() as $item)
-                @if($item["type"] != "game")
+                @if($item["type"] != \App\Models\Status::where("type", $searchtype)->first()->restrict_type)
                     <livewire:result :item="$item" :searchtype="$searchtype" :key="$item['id']" />
                 @endif
                 @endforeach

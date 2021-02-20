@@ -44,8 +44,7 @@ class Library extends Component
         $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;
 
-        if($type == "favorite" || $type == "delete") {
-            $this->render();
+        if($type == "favorite") {
             return redirect("library");
         }
     }
