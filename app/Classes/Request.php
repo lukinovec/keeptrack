@@ -83,10 +83,16 @@ class Request
 
     public function getSeason(Int $season = 1)
     {
-        return Http::get('https://www.omdbapi.com', [
+        $response = Http::get('https://www.omdbapi.com', [
             'apikey' => config('services.apikey.omdb'),
             'i' => $this->query,
             'season' => $season
         ])->json();
+
+        if(!array_key_exists("Episodes", $response)) {
+            $response["Episodes"] = ["Title" => "Season request failed"];
+        };
+
+        return $response;
     }
 }

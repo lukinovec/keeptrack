@@ -16,7 +16,7 @@
     {{-- Library Searchbar --}}
 
     @if ($library->count() > 0)
-    <div class="flex flex-col items-center w-full text-center select-none">
+    <div x-cloak class="flex flex-col items-center w-full text-center select-none">
         <div class="p-1 m-2 text-lg font-bold text-center text-blueGray-300">
             Library filter
             <span class="ml-2 underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="filter_hidden = !filter_hidden" x-text="filter_hidden ? 'Show' : 'Hide'"></span>

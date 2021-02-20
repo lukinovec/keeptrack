@@ -16,7 +16,9 @@
                     <label class="pr-1" for="episodes">Episode</label>
                     <input x-on:change="nextSeason()" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
                     x-model.number="item.user_progress.episode" type="number">
-                    /
+                    <span x-show="item.progress.seasons[item.user_progress.season - 1].episodes.Episodes.Title !== 'Season request failed'">
+                        /
+                    </span>
                     <span
                     x-text="item.progress.seasons ? (item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length : item.user_progress.episodes">
                     </span>

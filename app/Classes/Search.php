@@ -87,7 +87,10 @@ class Search
                 });
 
             case 'movie_details':
-                return $response;
+                dd($response);
+                // return $response->map(function($item) {
+                //     $item["Response"] === "False" ? $item[""] : "";
+                // });
 
             /**
              * Odpověď od Goodreads API je ve formátu XML, je třeba jej převést na JSON
