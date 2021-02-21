@@ -36,8 +36,13 @@
                     @foreach ($library->unique("type") as $unique)
                     <span class="flex space-x-2">
                         <input x-model="filter" type="checkbox" id="{{ $unique["type"] }}" name="filter_type" value="{{ $unique["type"] }}">
-                        <span>
-                            <label for="{{ $unique["type"] }}">{{ ucfirst($unique["type"]) }}</label> <span class="text-sm text-blueGray-600"> | {{ ucfirst($unique["searchtype"]) }}</span>
+                        <span class="flex items-center justify-center space-x-2">
+                            <label class="flex items-center justify-center" for="{{ $unique["type"] }}">{{ ucfirst($unique["type"]) }}
+                                <span class="flex text-sm text-blueGray-600">
+                                    <img class="w-3 mx-1" src="{{ asset(\App\Models\Status::where("type", $unique["searchtype"])->first()->image) }}" alt="Searchtype image">
+                                    {{ ucfirst($unique["searchtype"]) }}
+                                </span>
+                            </label>
                         </span>
                     </span>
                     @endforeach
@@ -51,10 +56,20 @@
                     </span>
                     @endforeach
                 </span>
-
                     <span class="ml-2 font-bold underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="clearFilters()">Remove filters</span>
                 </div>
             </section>
+
+            {{-- <section id="order_by" class="flex space-x-3">
+                <span class="flex space-x-2" x-on:click="order_by('rating')">
+                    <img src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
+                    <h3>Rating</h3>
+                </span>
+                <span class="flex space-x-2" wire:click="$library->orderBy">
+                    <img src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
+                    <h3>Alphabet</h3>
+                </span>
+            </section> --}}
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
@@ -112,16 +127,18 @@
                         }
                     },
 
-                    nextSeason: function() {
-                        if(this.item.user_progress.episode > (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length) {
-                            this.item.user_progress.season += 1;
-                            this.item.user_progress.episode = 1;
-                        } else if(this.item.user_progress.episode < 1) {
-                            if(this.item.user_progress.season === 1) {
+                    nextEpisode: function() {
+                        if(typeof this.item.progress.seasons[this.item.user_progress.season] !== "undefined") {
+                            if(this.item.user_progress.episode > (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length) {
+                                this.item.user_progress.season += 1;
                                 this.item.user_progress.episode = 1;
-                            } else {
-                                this.item.user_progress.season -= 1;
-                                this.item.user_progress.episode = (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length;
+                            } else if(this.item.user_progress.episode < 1) {
+                                if(this.item.user_progress.season === 1) {
+                                    this.item.user_progress.episode = 1;
+                                } else {
+                                    this.item.user_progress.season -= 1;
+                                    this.item.user_progress.episode = (this.item.progress.seasons[this.item.user_progress.season-1].episodes.Episodes).length;
+                                }
                             }
                         }
                     }

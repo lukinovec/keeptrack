@@ -16,7 +16,7 @@ class Register extends Component
     public $getUserByEmail;
 
     protected $rules = [
-        'email' => 'required|email|unique:users,email',
+        'email' => 'required|email:rfc,dns|unique:users,email',
         'password' => 'required|confirmed'
     ];
 

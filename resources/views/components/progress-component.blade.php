@@ -14,14 +14,17 @@
                 <br class="my-2">
                 <span class="flex items-center space-x-1">
                     <label class="pr-1" for="episodes">Episode</label>
-                    <input x-on:change="nextSeason()" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
+                    <input x-on:change="nextEpisode()" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
                     x-model.number="item.user_progress.episode" type="number">
-                    <span x-show="item.progress.seasons[item.user_progress.season - 1].episodes.Episodes.Title !== 'Season request failed'">
-                        /
+
+                    <template x-if="item.progress.seasons[item.user_progress.season - 1].episodes.Episodes.Title !== 'Season request failed' && typeof item.progress.seasons[item.user_progress.season-1] !== 'undefined'">
+                    <span>
+                            /
+                        <span
+                            x-text="item.progress.seasons ? (item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length : item.user_progress.episodes">
+                        </span>
                     </span>
-                    <span
-                    x-text="item.progress.seasons ? (item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length : item.user_progress.episodes">
-                    </span>
+                    </template>
                 </span>
             </span>
         </template>
