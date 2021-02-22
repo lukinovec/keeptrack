@@ -1,5 +1,12 @@
-<div class="flex-1 w-3/5 text-center auth-wrapper" x-data="{}">
-
+<div class="w-4/5 text-center sm:w-5/6 md:w-2/3 auth-wrapper" x-data="{}">
+    <span class="flex flex-col items-center justify-center m-5 space-y-2 text-4xl font-bold text-blueGray-300">
+        <span class="flex border-b-2 md:hidden border-blueGray-300">
+            Welcome to KeepTrack!
+        </span>
+            <span class="text-xl font-normal">
+                Please log in to continue.
+            </span>
+         </span>
     @if (session()->has("message"))
     <div class="auth-error">
         {!! session("message") !!}
@@ -12,8 +19,11 @@
             wire:model.defer="password" />
         <br>
         <button class="btn auth-btn-primary" wire:click="login">Log In</button>
-        <span class="flex p-2 m-2 text-base justify-evenly text-blueGray-300">
+        <span class="flex p-2 m-2 space-x-1 text-base justify-evenly text-blueGray-300">
             <button class="hover:underline" wire:click="forgotPassword">Forgot password?</button>
+            <span class="select-none">
+                |
+            </span>
             <button class="hover:underline" wire:click="register">Don't have an account?</button>
         </span>
         <div wire:loading.delay wire:target='login' class="loader" style="position: fixed; left: 50%; top: 7%">
