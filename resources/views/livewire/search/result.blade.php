@@ -1,8 +1,8 @@
-<div class="flex flex-col justify-between p-5 mx-10 my-4 overflow-hidden border-t-2 border-b-2 shadow-xl min-w-5/6 text-blueGray-300 md:w-1/4 lg:w-1/5 rounded-xxxl item border-blueGray-300"
+<div class="flex flex-col items-center justify-between p-5 mx-10 my-4 overflow-hidden border-t-2 border-b-2 shadow-xl min-w-5/6 md:min-w-0 text-blueGray-300 md:w-1/3 lg:w-1/5 rounded-xxxl item border-blueGray-300"
     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
     x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
-    style="height: 40rem;"a>
+    style="height: 40rem;">
 
     <div wire:loading.delay class="loader" style="position: fixed; left: 50%; top: 8%"></div>
 
@@ -11,7 +11,7 @@
     </section>
 
     @if($result['image'] != "N/A")
-    <img class="my-2 rounded-xxxl max-h-3/4" src="{{ $result['image'] }}" alt="Image not available">
+    <img class="my-2 rounded-xxxl max-h-3/4" src="{{ $result['image'] }}" style="max-width: 350px" alt="Image not available">
     @else
     <h1>Image not available</h1>
     @endif
