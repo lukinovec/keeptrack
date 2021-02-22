@@ -3,7 +3,7 @@ x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('search
         <h1 x-show="searchResponse">You can add a <span x-text="searchtype"></span> to your library by selecting a status</h1>
         <div class="flex flex-col items-center justify-center w-1/2 space-x-2" :class="{ 'visible': !searchResponse }">
                 {{-- <label class="m-1 text-xs" for="searchinput">Search</label> --}}
-            <div class="flex flex-1 w-full">
+            <div class="flex flex-col flex-1 w-full sm:flex-row">
                 <input name="searchinput" id="searchinput" wire:model.debounce.300ms="search"
                 :placeholder="searchtype == 'anime' ? 'Type to search an ' + searchtype : 'Type to search a ' + searchtype"
                 type="search" class="flex-1 h-12 my-3 input" />
