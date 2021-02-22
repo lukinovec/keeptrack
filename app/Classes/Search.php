@@ -86,12 +86,6 @@ class Search
                     ];
                 });
 
-            case 'movie_details':
-                dd($response);
-                // return $response->map(function($item) {
-                //     $item["Response"] === "False" ? $item[""] : "";
-                // });
-
             /**
              * Odpověď od Goodreads API je ve formátu XML, je třeba jej převést na JSON
              */
@@ -115,11 +109,6 @@ class Search
                         "status" => $statuses->firstWhere("apiID", $item->best_book->id)["status"] ?? ""
                     ]);
                 })->whereNotNull("year");
-
-            // Detaily jedné knihy
-            case 'book_details':
-                $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
-                return collect(json_decode(json_encode($xml))->book)->all();
 
             case 'anime':
                 if (empty($response)) {

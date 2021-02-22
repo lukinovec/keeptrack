@@ -66,11 +66,6 @@ class Request
                     'q' => $this->query,
                 ]);
 
-            case "book_details":
-                return Http::get("https://www.goodreads.com/book/show/$this->query.xml", [
-                    'key' => config('services.apikey.goodreads'),
-                ]);
-
             default:
                 throw new ErrorException("Fetching results failed (probably invalid searchtype) in Request class. Make sure to add API request case (search()) and a format case for your new searchtype (in Search class - format()).");
         }
