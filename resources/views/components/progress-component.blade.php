@@ -14,16 +14,16 @@
                 <br class="my-2">
                 <span class="flex items-center space-x-1">
                     <label class="pr-1" for="episodes">Episode</label>
-                    <input x-on:change="nextEpisode()" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
+                    <input x-on:change="nextEpisode()" min="0" :max="(item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length+1" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
                     x-model.number="item.user_progress.episode" type="number">
 
                     <template x-if="item.progress.seasons[item.user_progress.season - 1].episodes.Episodes.Title !== 'Season request failed' && typeof item.progress.seasons[item.user_progress.season-1] !== 'undefined'">
-                    <span>
-                            /
-                        <span
-                            x-text="item.progress.seasons ? (item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length : item.user_progress.episodes">
+                        <span>
+                                /
+                            <span
+                                x-text="item.progress.seasons ? (item.progress.seasons[item.user_progress.season-1].episodes.Episodes).length : item.user_progress.episodes">
+                            </span>
                         </span>
-                    </span>
                     </template>
                 </span>
             </span>
@@ -34,7 +34,7 @@
                 <div x-show="item.apiID == edit.apiID" style="z-index: 999">
                     <div class="flex items-center space-x-2 text-base">
                         <label for="pages_read">Pages Read</label>
-                        <input id="pages_read" name="pages_read" class="w-16 p-1 bg-black bg-opacity-25 border-b-2"
+                        <input min="0" id="pages_read" name="pages_read" class="w-16 p-1 bg-black bg-opacity-25 border-b-2"
                         x-model.number="item.user_progress.pages_read" type="number">
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             <span class="flex-1">
                 <span class="flex items-center space-x-1">
                     <label class="pr-1" for="episodes">Episode</label>
-                    <input id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
+                    <input min="0" :max="item.progress.episodes" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
                     x-model.number="item.user_progress.episode" type="number">
                     /
                     <span
