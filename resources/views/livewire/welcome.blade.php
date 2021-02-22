@@ -10,6 +10,12 @@ style="background: #0f172a" x-data="{ logIn: true }" @login-mode-change.window="
         </svg>
     </section>
     <section class="flex flex-col items-center flex-1 text-6xl font-extrabold justify-evenly bg-blueGray-800 right-pane">
-            <livewire:login :key="'login'" />
+        <span class="flex flex-col items-center justify-center m-5 text-4xl font-bold text-blueGray-300 md:hidden">
+            Welcome to KeepTrack! <br>
+            <span class="text-xl">
+                Log in to continue
+            </span>
+         </span>
+        <livewire:login  :key="'login'" />
     </section>
 </div>

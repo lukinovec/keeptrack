@@ -1,4 +1,5 @@
-<div class="w-3/5 text-center auth-wrapper" x-data="{}">
+<div class="flex-1 w-3/5 text-center auth-wrapper" x-data="{}">
+
     @if (session()->has("message"))
     <div class="auth-error">
         {!! session("message") !!}
