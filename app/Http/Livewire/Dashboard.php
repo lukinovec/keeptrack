@@ -17,18 +17,26 @@ class Dashboard extends Component
     public $minYear = null;
     public $maxYear = null;
     public $authUser;
+    public $status;
 
     protected $listeners = ["changing-status" => "onStatusChange"];
     /**
      *
      */
-    public function mount()
+    public function mount(\App\Models\Status $status)
     {
-        if (Auth::id()) {
-            $this->authUser = Auth::id();
-        } else {
-            $this->authUser = "Not logged in.";
-        }
+        $this->authUser = Auth::id() ?: "Not logged in.";
+        $this->status = $status;
+    }
+
+    public function getAllStatuses()
+    {
+        return $this->status->all();
+    }
+
+    public function getRestrictedType()
+    {
+        return $this->status->where("type", $this->searchtype)->first()->restrict_type;
     }
 
     /**

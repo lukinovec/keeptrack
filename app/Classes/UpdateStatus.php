@@ -29,6 +29,7 @@ class UpdateStatus {
                 default:
                         break;
             }
+            $this->item_users_blueprint->updateOrCreate();
 
         } else {
             switch ($this->item["searchtype"]) {
@@ -59,7 +60,7 @@ class UpdateStatus {
                     break;
             }
             $this->item_blueprint->create();
+            $this->item_users_blueprint->updateOrCreate();
         }
-        $this->item_users_blueprint->create();
     }
 }

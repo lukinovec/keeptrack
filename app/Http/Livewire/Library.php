@@ -13,6 +13,8 @@ class Library extends Component
     protected $type;
     public $favorite_only = false;
     public $toUpdate;
+    public $ratingDesc = true;
+    public $nameAsc = true;
 
     // Form Validation
     protected $rules = [
@@ -30,6 +32,30 @@ class Library extends Component
     {
         $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;
+    }
+
+    public function sortBy(string $criteria, bool $descending)
+    {
+        switch($criteria) {
+            case "name":
+                if($descending) {
+                    $this->library =Auth::user()->getItems()->sortByDesc("item.name");
+                } else {
+                    $this->library =Auth::user()->getItems()->sortBy("item.name");
+                }
+                break;
+
+            case "rating":
+                if ($descending) {
+                    $this->library = Auth::user()->getItems()->sortByDesc("rating");
+                } else {
+                    $this->library = Auth::user()->getItems()->sortBy("rating");
+                }
+                break;
+            default:
+                $this->library = Auth::user()->getItems()->sortBy($criteria);
+                break;
+        }
     }
 
     // Update or delete

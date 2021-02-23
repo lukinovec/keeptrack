@@ -60,16 +60,16 @@
                 </div>
             </section>
 
-            {{-- <section id="order_by" class="flex space-x-3">
-                <span class="flex space-x-2" x-on:click="order_by('rating')">
-                    <img src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
+            <section id="order_by" class="flex space-x-3" x-data="{ ratingDesc: @entangle('ratingDesc'), nameAsc: @entangle('nameAsc') }">
+                <span class="flex space-x-2 cursor-pointer text-blueGray-300" x-on:click="sortBy('rating', ratingDesc)">
+                    <img class="fill-current" src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
                     <h3>Rating</h3>
                 </span>
-                <span class="flex space-x-2" wire:click="$library->orderBy">
-                    <img src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
+                <span class="flex space-x-2 cursor-pointer text-blueGray-300" x-on:click="sortBy('name', nameAsc)">
+                    <img class="fill-current" src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
                     <h3>Alphabet</h3>
                 </span>
-            </section> --}}
+            </section>
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">

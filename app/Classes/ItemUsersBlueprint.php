@@ -7,14 +7,27 @@ class ItemUsersBlueprint {
     public function __construct($item, $status) {
         $this->user_id = auth()->id();
         $this->item_id = $item["id"];
-        $this->user_progress = [];
         $this->status = $status;
         $this->type = $item["type"];
         $this->searchtype = $item["searchtype"];
     }
 
-    public function create()
+    private function create()
     {
-        ItemUser::updateOrCreate((array) $this, ["status" => $this->status]);
+        ItemUser::create((array) $this);
+    }
+
+    public function updateOrCreate()
+    {
+        $item = ItemUser::firstWhere([
+            "user_id" => $this->user_id,
+            "item_id" => $this->item_id
+        ]);
+
+        if($item) {
+            $item->update(["status" => $this->status]);
+        } else {
+            $this->create();
+        }
     }
 }

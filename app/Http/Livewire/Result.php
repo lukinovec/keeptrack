@@ -6,7 +6,6 @@ use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
 use App\Models\ItemUser;
-use MattLibera\LivewireFlash;
 
 class Result extends Component
 {
@@ -25,11 +24,11 @@ class Result extends Component
      * @param String $searchtype   prop - typ vyhledávané položky (film nebo kniha)
      */
 
-    public function mount($item, String $searchtype): void
+    public function mount($result, String $searchtype, Status $status): void
     {
-        $this->result = $item;
+        $this->result = $result;
         $this->searchtype = $searchtype;
-        $this->statuses = Status::where("type", $searchtype)->firstOrFail();
+        $this->statuses = $status->where("type", $searchtype)->firstOrFail();
     }
 
     /**
