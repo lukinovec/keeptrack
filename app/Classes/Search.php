@@ -61,13 +61,10 @@ class Search
 
         switch ($type) {
             case 'movie':
-
                 // Nejprve zkontrolujeme, jestli data odpovědi existují
-
                 if ($response["Response"] !== "True") {
                     return false;
                 }
-
                 /**
                  * Potom formátujeme odpověď do podoby, kterou lze zobrazit na stránce.
                  * Všechny položky, na které je pole mapováno, jsou povinné pro každé API.
@@ -81,7 +78,7 @@ class Search
                         "title" => $item["Title"],
                         "year" => $item["Year"],
                         "type" => $item["Type"],
-                        "image" => $item["Poster"],
+                        "image" => preg_replace('/_.*.jpg/', 'SX385', $item["Poster"]),
                         "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
                     ];
                 });

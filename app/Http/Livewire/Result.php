@@ -28,6 +28,7 @@ class Result extends Component
     {
         $this->result = $result;
         $this->searchtype = $searchtype;
+        $this->resultStatus = $result["status"];
         $this->statuses = $status->where("type", $searchtype)->firstOrFail();
     }
 
@@ -46,7 +47,7 @@ class Result extends Component
         if ($status === "none") {
             $this->result["status"] = "none";
             ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
-            $this->resultStatus = "";
+            $this->resultStatus = "none";
             $this->emit("changing-status", "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>", "success");
         } else {
             // Update status

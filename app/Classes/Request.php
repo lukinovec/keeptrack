@@ -40,7 +40,7 @@ class Request
      * @return mixed    Odpověď koncového bodu ve formátu JSON
      */
 
-    public function search()
+    public function search(Int $season = 1)
     {
         switch ($this->searchtype) {
             case "movie":
@@ -54,6 +54,19 @@ class Request
                     'apikey' => config('services.apikey.omdb'),
                     'i' => $this->query,
                 ])->json();
+
+            case "season":
+                $response = Http::get('https://www.omdbapi.com', [
+                    'apikey' => config('services.apikey.omdb'),
+                    'i' => $this->query,
+                    'season' => $season
+                ])->json();
+
+                if(!array_key_exists("Episodes", $response)) {
+                    $response["Episodes"] = ["Title" => "Season request failed"];
+                };
+
+                return $response;
 
             case "anime":
                 return Http::get("https://api.jikan.moe/v3/search/anime", [
@@ -69,25 +82,5 @@ class Request
             default:
                 throw new ErrorException("Fetching results failed (probably invalid searchtype) in Request class. Make sure to add API request case (search()) and a format case for your new searchtype (in Search class - format()).");
         }
-    }
-
-    /**
-     * @param Int $season   Číslo požadované série, výchozí hodnota je 1
-     * @return mixed        Odpověď koncového bodu ve formátu JSON
-     */
-
-    public function getSeason(Int $season = 1)
-    {
-        $response = Http::get('https://www.omdbapi.com', [
-            'apikey' => config('services.apikey.omdb'),
-            'i' => $this->query,
-            'season' => $season
-        ])->json();
-
-        if(!array_key_exists("Episodes", $response)) {
-            $response["Episodes"] = ["Title" => "Season request failed"];
-        };
-
-        return $response;
     }
 }

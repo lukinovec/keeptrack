@@ -59,17 +59,6 @@
                     <span class="ml-2 font-bold underline cursor-pointer text-blueGray-500 hover:text-blueGray-400" x-on:click="clearFilters()">Remove filters</span>
                 </div>
             </section>
-
-            <section id="order_by" class="flex space-x-3" x-data="{ ratingDesc: @entangle('ratingDesc'), nameAsc: @entangle('nameAsc') }">
-                <span class="flex space-x-2 cursor-pointer text-blueGray-300" x-on:click="sortBy('rating', ratingDesc)">
-                    <img class="fill-current" src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
-                    <h3>Rating</h3>
-                </span>
-                <span class="flex space-x-2 cursor-pointer text-blueGray-300" x-on:click="sortBy('name', nameAsc)">
-                    <img class="fill-current" src="{{ asset("images/chevron-down.svg") }}" alt="chevron">
-                    <h3>Alphabet</h3>
-                </span>
-            </section>
     </div>
 
         <div x-ref="items" class="flex flex-row flex-wrap justify-center text-center md:mx-24">
@@ -104,6 +93,9 @@
                     submit: function(item) {
                         this.$wire.updateItem(item);
                         this.edit = false;
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 250);
                     },
 
                     remove: function(item) {
@@ -143,7 +135,7 @@
                         }
                     }
                 }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :key="item.item_id">
-            <x-library-item :item="$item" />
+            <x-library-item />
         </div>
         </template>
         @endforeach

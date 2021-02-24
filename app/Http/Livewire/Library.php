@@ -30,32 +30,22 @@ class Library extends Component
 
     public function mount()
     {
-        $this->library = Auth::user()->getItems();
+        $this->library = $this->getUserLibrary();
         $this->library_original = $this->library;
     }
 
-    public function sortBy(string $criteria, bool $descending)
-    {
-        switch($criteria) {
-            case "name":
-                if($descending) {
-                    $this->library =Auth::user()->getItems()->sortByDesc("item.name");
-                } else {
-                    $this->library =Auth::user()->getItems()->sortBy("item.name");
-                }
-                break;
+    // public function sortBy(string $criteria, string $direction)
+    // {
+    //     $sortBy = [
+    //         "asc" => "sortBy",
+    //         "desc" => "sortByDesc"
+    //     ];
+    //     $this->library = $this->getUserLibrary()->{$sortBy[$direction]}($criteria);
+    // }
 
-            case "rating":
-                if ($descending) {
-                    $this->library = Auth::user()->getItems()->sortByDesc("rating");
-                } else {
-                    $this->library = Auth::user()->getItems()->sortBy("rating");
-                }
-                break;
-            default:
-                $this->library = Auth::user()->getItems()->sortBy($criteria);
-                break;
-        }
+    public function getUserLibrary()
+    {
+        return Auth::user()->getItems();
     }
 
     // Update or delete

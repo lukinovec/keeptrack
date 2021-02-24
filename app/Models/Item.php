@@ -34,7 +34,6 @@ class Item extends Model
      */
     public static function updateStatus($item, String $status): void
     {
-        $update = new UpdateStatus($item, $status);
-        $update->run();
+        (new UpdateStatus($item, $status))->run();
     }
 }

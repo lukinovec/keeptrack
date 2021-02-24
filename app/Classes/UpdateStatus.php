@@ -13,11 +13,10 @@ class UpdateStatus {
         $this->item_found = Item::find($item["id"]) ? true : false;
     }
 
-    public function run()
+    private function updateUserItem()
     {
-        if ($this->item_found) {
-
-            switch ($this->item["type"]) {
+        // Přidejte case v případě, že v nové položce uživatel může mít nějaký progress (epizody, knihy)
+        switch ($this->item["type"]) {
                 case 'series':
                         $this->item_users_blueprint->user_progress = ["episode" => 1, "season" => 1];
                         break;
@@ -28,18 +27,20 @@ class UpdateStatus {
 
                 default:
                         break;
-            }
-            $this->item_users_blueprint->updateOrCreate();
+        }
 
-        } else {
-            switch ($this->item["searchtype"]) {
+        $this->item_users_blueprint->updateOrCreate();
+    }
+
+    private function prepareBlueprints()
+    {
+        switch ($this->item["searchtype"]) {
                 case 'movie':
                     if($this->item["type"] == "series") {
-                        $request_details = Request::create("movie_details", $this->item["id"]);
-                        $total_seasons = (int) $request_details->search()["totalSeasons"];
+                        $total_seasons = (int) Request::create("movie_details", $this->item["id"])->search()["totalSeasons"];
                         $seasons = [];
                         for ($i = 1; $i <= $total_seasons; $i++) {
-                            $seasons[] = ["number" => $i, "episodes" => $request_details->getSeason($i)];
+                            $seasons[] = ["number" => $i, "episodes" => Request::create("season", $this->item["id"])->search($i)];
                         }
                         $this->item_blueprint->progress = ["seasons" => $seasons, "totalSeasons" => $total_seasons];
                         $this->item_users_blueprint->user_progress = ["episode" => 1, "season" => 1];
@@ -59,6 +60,18 @@ class UpdateStatus {
                 default:
                     break;
             }
+    }
+
+    public function run()
+    {
+        if ($this->item_found) {
+
+            $this->updateUserItem();
+
+        } else {
+
+            $this->prepareBlueprints();
+
             $this->item_blueprint->create();
             $this->item_users_blueprint->updateOrCreate();
         }

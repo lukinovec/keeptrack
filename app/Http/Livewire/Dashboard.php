@@ -34,6 +34,11 @@ class Dashboard extends Component
         return $this->status->all();
     }
 
+    public function getStatusPlural(string $status_name)
+    {
+        return $this->status->where("type", $status_name)->first()->plural;
+    }
+
     public function getRestrictedType()
     {
         return $this->status->where("type", $this->searchtype)->first()->restrict_type;

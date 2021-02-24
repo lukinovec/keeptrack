@@ -32,11 +32,21 @@ class ItemUser extends Model
     {
         $item = collect($item);
         if($item["status"] !== "none") {
-                self::where("user_id", Auth::id())->where("item_id", $item["id"])->update(
-                    ["user_progress" => $item["user_progress"], "rating" => $item["rating"], "note" => $item["note"], "status" => $item["status"], "is_favorite" => $item["is_favorite"]]
-                );
+            self::where([
+                "user_id" => Auth::id(),
+                "item_id" => $item["id"]
+            ])->update([
+                "user_progress" => $item["user_progress"],
+                "rating" => $item["rating"],
+                "note" => $item["note"],
+                "status" => $item["status"],
+                "is_favorite" => $item["is_favorite"]
+            ]);
         } else {
-            self::where("user_id", Auth::id())->where("item_id", $item["id"])->delete();
+            self::where([
+                "user_id" => Auth::id(),
+                "item_id" => $item["id"]
+            ])->delete();
         }
     }
 }

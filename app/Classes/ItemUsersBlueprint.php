@@ -12,13 +12,7 @@ class ItemUsersBlueprint {
         $this->searchtype = $item["searchtype"];
     }
 
-    private function create()
-    {
-        ItemUser::create((array) $this);
-    }
-
-    public function updateOrCreate()
-    {
+    public function updateOrCreate() {
         $item = ItemUser::firstWhere([
             "user_id" => $this->user_id,
             "item_id" => $this->item_id
@@ -27,7 +21,7 @@ class ItemUsersBlueprint {
         if($item) {
             $item->update(["status" => $this->status]);
         } else {
-            $this->create();
+            ItemUser::create((array) $this);
         }
     }
 }
