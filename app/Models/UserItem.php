@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ItemUser extends Model
+class UserItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'item_users';
+    protected $table = 'user_item';
     protected $guarded = ['id'];
     protected $casts = ['user_progress' => 'object'];
 

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\ItemUser;
+use App\Models\UserItem;
 use Illuminate\Support\Facades\Auth;
 
 class Library extends Component
@@ -55,7 +55,7 @@ class Library extends Component
         $this->toUpdate = $item;
         $this->validate();
 
-        ItemUser::updateDetails($item);
+        UserItem::updateDetails($item);
 
         $this->library = Auth::user()->getItems();
         $this->library_original = $this->library;

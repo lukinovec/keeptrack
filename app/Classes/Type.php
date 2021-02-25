@@ -6,7 +6,7 @@ namespace App\Classes;
  * Proměnné určují, jak se statusy zobrazují uživateli (například in_progress -> "Watching")
  * Většinou nebudete upravovat žádné, nebo jen planning a in_progress (pomocí metody change())
  *
- * @method static new           Vytvoří objekt třídy Type
+ * @method static new()         Vytvoří objekt třídy Type
  * @var string $type            například "movie"
  * @var string $in_progress     například "Watching"
  * @var string $planning        například "Plan to Watch"

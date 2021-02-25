@@ -12,4 +12,8 @@ class Status extends Model
     protected $guarded = [];
     protected $casts = ["restrict_types" => "collection"];
     public $timestamps = false;
+
+    public function items() {
+        return $this->hasMany(Item::class, "searchtype", "type");
+    }
 }

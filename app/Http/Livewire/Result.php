@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Item;
 use App\Models\Status;
 use Livewire\Component;
-use App\Models\ItemUser;
+use App\Models\UserItem;
 
 class Result extends Component
 {
@@ -35,7 +35,7 @@ class Result extends Component
     /**
      * Funkce se aktivuje pokaždé, co se proměnná resultStatus změní
      *
-     * Aktualizuje status položky pomocí metody updateStatus
+     * Aktualizuje status položky pomocí metody handleUpdate
      *
      * @param String $status parametr funkce automaticky obdrží po změně proměnné resultStatus a obsahuje změnu
      * @return void
@@ -46,12 +46,12 @@ class Result extends Component
         // Delete item from user's library
         if ($status === "none") {
             $this->result["status"] = "none";
-            ItemUser::updateDetails(json_decode(collect($this->result)->toJson()));
+            UserItem::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "none";
             $this->emit("changing-status", "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>", "success");
         } else {
             // Update status
-            Item::updateStatus($this->result, $status);
+            Item::handleUpdate($this->result, $status);
             $this->emit("changing-status", "<span>Item status updated. See it in <a class='underline' href='/library'>your library</a></span>", "success");
         }
     }

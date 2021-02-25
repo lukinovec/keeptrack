@@ -95,7 +95,7 @@
                         this.edit = false;
                         setTimeout(function() {
                             window.location.reload();
-                        }, 250);
+                        }, 50);
                     },
 
                     remove: function(item) {

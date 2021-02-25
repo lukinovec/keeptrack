@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\ItemUser;
+use App\Models\UserItem;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function items()
     {
-        return $this->hasMany(ItemUser::class);
+        return $this->hasMany(UserItem::class);
     }
 
     // Use with '()'

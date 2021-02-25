@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Classes\Request;
-use App\Classes\UpdateStatus;
+use App\Classes\ItemHandler;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,12 +18,12 @@ class Item extends Model
 
     public function users()
     {
-        return $this->hasMany(ItemUser::class, "item_id");
+        return $this->hasMany(UserItem::class, "item_id");
     }
 
     public function statuses()
     {
-        return $this->hasOne(Status::class, "type", "searchtype");
+        return $this->belongsTo(Status::class, "searchtype", "type");
     }
 
     /**
@@ -32,8 +32,8 @@ class Item extends Model
      * Item User vytvoříme pomocí metody updateOrCreate - provedeme pokaždé, ať položka existuje, nebo ne,
      * protože metoda ověří existenci položky, pokud existuje jen upraví její status, pokud neexistuje, vytvoří novou
      */
-    public static function updateStatus($item, String $status): void
+    public static function handleUpdate($item, string $status): void
     {
-        (new UpdateStatus($item, $status))->run();
+        (new ItemHandler())($item, $status);
     }
 }

@@ -36,8 +36,8 @@ class ItemObserver
      */
     public function deleted(Item $item)
     {
-        foreach($item->users as $item_users) {
-            $item_users->delete();
+        foreach($item->users as $user_item) {
+            $user_item->delete();
         }
     }
 
