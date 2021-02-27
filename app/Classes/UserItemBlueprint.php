@@ -20,8 +20,7 @@ class UserItemBlueprint extends Abstract\AbstractUserItem {
         "anime" => ["episode" => 0],
     ];
 
-    public function prepare()
-    {
+    public function prepare() {
         if(array_key_exists($this->searchtype, $this->userProgressTypes)) {
             $this->user_progress = $this->userProgressTypes[$this->searchtype];
         } elseif(array_key_exists($this->type, $this->userProgressTypes)) {

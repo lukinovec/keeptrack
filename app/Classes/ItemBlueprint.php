@@ -6,7 +6,7 @@ use App\Models\Item;
 class ItemBlueprint extends Abstract\AbstractItem {
     public function __construct($item) {
         $this->apiID = $item["id"];
-        $this->progress = array_key_exists("progress", $item) ? $item["progress"] : [];
+        $this->progress = array_key_exists("progress", (array) $item) ? $item["progress"] : [];
         $this->searchtype = $item["searchtype"];
         $this->image = $item["image"];
         $this->name = $item["title"];
