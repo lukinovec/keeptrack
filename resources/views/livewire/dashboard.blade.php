@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center justify-between w-full h-full p-1 text-center" :class="{ 'overflow-hidden lg:pt-48': !searchResponse }"
 x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('searchResponse'),  }">
-        <h1 x-show="searchResponse">You can add some {{ $this->getStatusPlural($searchtype) }} to your library by selecting a status</h1>
+        <h1 x-show="searchResponse" class="text-base font-extrabold text-blueGray-300">You can add some {{ $this->getStatusPlural($searchtype) }} to your library by selecting a status</h1>
         <div class="flex flex-col items-center justify-center w-1/2 space-x-2" :class="{ 'visible': !searchResponse }">
                 {{-- <label class="m-1 text-xs" for="searchinput">Search</label> --}}
             <div class="flex flex-col flex-1 w-full sm:flex-row">
