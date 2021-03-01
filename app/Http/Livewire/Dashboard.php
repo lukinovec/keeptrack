@@ -18,6 +18,7 @@ class Dashboard extends Component
     public $maxYear = null;
     public $authUser;
     public $status;
+    public $noResultsMessage = "";
 
     protected $listeners = ["changing-status" => "onStatusChange"];
     /**
@@ -52,6 +53,7 @@ class Dashboard extends Component
         $this->reset('searchResponse');
         if (strlen(trim($this->search)) > 2) {
             $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
+            $this->noResultsMessage = $this->searchResponse === false ? "No results found" : "";
             $this->searching = false;
         } else {
             $this->searchResponse = false;

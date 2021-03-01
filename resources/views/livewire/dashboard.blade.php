@@ -23,25 +23,22 @@ x-data="{ searchtype: @entangle('searchtype'), searchResponse: @entangle('search
 
         <livewire:flash-container />
 
-        <div x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="opacity-0 transform scale-90"
-            x-transition:enter-end="opacity-100 transform scale-100" x-show="searchResponse"
-            class="flex flex-wrap items-center justify-center w-full mt-4">
-
-            @if ($searchResponse && count($searchResponse) > 0)
-
-                @foreach ($searchResponse->unique() as $item)
-                @if($item["type"] != $this->getRestrictedType())
-                    <livewire:result :result="$item" :searchtype="$searchtype" :key="$item['id']" />
-                @endif
-                @endforeach
-
-            @else
-
-                No results found
-
-            @endif
-        </div>
+        @if ($searchResponse)
+            <div x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100" x-show="searchResponse"
+                class="flex flex-wrap items-center justify-center w-full mt-4">
+                    @foreach ($searchResponse->unique() as $item)
+                    @if($item["type"] != $this->getRestrictedType())
+                        <livewire:result :result="$item" :searchtype="$searchtype" :key="$item['id']" />
+                    @endif
+                    @endforeach
+            </div>
+        @else
+            <h1 class="text-2xl font-extrabold text-blueGray-300">
+                {{ $noResultsMessage }}
+            </h1>
+        @endif
 
         <p class="flex flex-wrap items-end justify-center p-3 text-blueGray-300 footer">
                 Icons made by <a href="https://www.freepik.com" class="px-2 underline" title="Freepik">Freepik</a> from <a class="px-2 underline" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>

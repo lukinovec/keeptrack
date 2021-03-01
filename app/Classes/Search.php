@@ -90,9 +90,12 @@ class Search
                 // Convert XML to JSON - https://stackoverflow.com/a/19391553
                 $xml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $response = json_decode(json_encode($xml))->search->results->work ?? false;
-
                 if ($response === false) {
                     return false;
+                }
+
+                if(gettype($response) !== "array") {
+                    $response = [$response];
                 }
 
                 return collect($response)->map(function ($item) use ($statuses) {
