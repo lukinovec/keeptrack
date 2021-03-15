@@ -19,10 +19,10 @@
             wire:model.defer="password" />
         <br>
         <button class="btn auth-btn-primary" wire:click="login">Log In</button>
-        <span class="flex p-2 m-2 space-x-1 text-base justify-evenly text-blueGray-300">
-            <button class="hover:underline" wire:click="forgotPassword">Forgot password?</button>
+        <span class="flex p-2 m-2 space-x-1 text-lg justify-evenly text-blueGray-300">
+            <button class="font-bold hover:underline" wire:click="forgotPassword">Forgot password?</button>
 
-            <button class="hover:underline" wire:click="register">Don't have an account?</button>
+            <button class="font-bold hover:underline" wire:click="register">Don't have an account?</button>
         </span>
         <div wire:loading.delay wire:target='login' class="loader" style="position: fixed; left: 50%; top: 7%">
         </div>
@@ -32,5 +32,4 @@
         {{ $error }}
     </div>
     @endif
-
 </div>

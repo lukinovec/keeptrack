@@ -1,11 +1,13 @@
-<div x-data="{ filter: [], status_filter: [], favorite_only: false, filter_hidden: false, search: '',
+<div x-data="{ filter: [], status_filter: [], favorite_only: false,
+    filter_hidden: false, search: '',
     clearFilters: function() {
         this.filter = [];
         this.status_filter = [];
         this.favorite_only = false;
     }
-}" @item-updated="clearFilters()" class="w-full h-full">
-    <div wire:loading wire:target='updateItem' class="z-50 loader" style="position: fixed; left: 50%; top: 8%"></div>
+}" @item-updated="clearFilters()" class="flex flex-col justify-between w-full h-full">
+    <div wire:loading wire:target='updateItem' class="z-50 loader"
+    style="position: fixed; left: 50%; top: 8%"></div>
 
     @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -39,7 +41,8 @@
                         <span class="flex items-center justify-center space-x-2">
                             <label class="flex items-center justify-center" for="{{ $unique["type"] }}">{{ ucfirst($unique["type"]) }}
                                 <span class="flex text-sm text-blueGray-600">
-                                    <img class="w-3 mx-1" src="{{ asset(\App\Models\Status::where("type", $unique["searchtype"])->first()->image) }}" alt="Searchtype image">
+                                    <img class="w-3 mx-1" alt="Searchtype image"
+                                    src="{{ asset(\App\Models\Status::where("type", $unique["searchtype"])->first()->image) }}">
                                     {{ ucfirst($unique["searchtype"]) }}
                                 </span>
                             </label>
@@ -76,6 +79,7 @@
                         accepted: false,
                         item: {}
                     },
+
                     editButton: function(item) {
                         this.removeConfirmation.item = {};
                         if(item.apiID == this.edit.apiID) {
@@ -141,6 +145,11 @@
         @endforeach
         <span x-show="!$refs.items.getElementsByTagName('div')[0]" class="m-20 font-bold">No items</span>
     </div>
+    <span class="flex items-center justify-center mt-8 text-sm text-center text-blueGray-300">
+        You can click the Edit button to change rating, status, progress and notes.
+        <br>
+        You can also click the star (favorite) button to make an item favorite, or delete an item clicking on the trash can button.
+    </span>
     @else
     <div wire:loading.remove class="w-full mt-40 text-2xl text-center">
         <span class="font-bold">

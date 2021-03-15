@@ -2,7 +2,7 @@
 namespace App\Classes;
 
 use App\Models\UserItem;
-
+// rozšiřitelnost
 class UserItemBlueprint extends Abstract\AbstractUserItem {
     public function __construct($item, string $status) {
         $this->user_id = auth()->id();
@@ -13,7 +13,8 @@ class UserItemBlueprint extends Abstract\AbstractUserItem {
         $this->searchtype = $item["searchtype"];
     }
 
-     // Přidejte typ do pole v případě, že v nové položce uživatel může mít nějaký progress (epizody, knihy)
+     // Přidejte typ do pole v případě, že v nové položce
+     // uživatel může mít nějaký progress (epizody, knihy)
     public $userProgressTypes = [
         "series" => ["episode" => 0, "season" => 1],
         "book" => ["pages_read" => 0],

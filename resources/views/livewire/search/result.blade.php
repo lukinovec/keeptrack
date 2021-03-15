@@ -30,13 +30,13 @@
             class="flex-1 h-8 overflow-hidden text-center select bg-blueGray-900"
             {{-- :class="{ 'bg-green-900': resultStatus !== '' && resultStatus !== 'none' }" --}}
             wire:model="resultStatus" x-on:change="$dispatch('updating-status')">
-            <option value="none" class="bg-blueGray-800" x-text="resultStatus == 'none' || resultStatus == '' ? 'Select status' : statuses[resultStatus]" selected hidden></option>
+            <option value="none" class="bg-blueGray-800" x-text="resultStatus === 'none' || resultStatus === '' || resultStatus === null ? 'Select status' : statuses[resultStatus]" selected hidden></option>
             <option class="bg-blueGray-800" value="completed" x-text="statuses.completed"></option>
             <option class="bg-blueGray-800" value="planning" x-text="statuses.planning"></option>
             @if ($result["type"] !== "movie")
             <option class="bg-blueGray-800" value="in_progress" x-text="statuses.in_progress"></option>
             @endif
-            @if ($resultStatus !== '' && $resultStatus !== 'none')
+            @if ($resultStatus !== '' && $resultStatus !== 'none' && $resultStatus !== null)
             <option value="none" class="bg-blueGray-800">Remove</option>
             @endif
         </select>

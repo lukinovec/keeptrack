@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Classes;
-
+// rozšiřitelnost
 use ErrorException;
 use Illuminate\Support\Facades\Http;
 
@@ -49,12 +49,6 @@ class Request
                     's' => $this->query,
                 ])->json();
 
-            case "movie_details":
-                return Http::get("https://www.omdbapi.com", [
-                    'apikey' => config('services.apikey.omdb'),
-                    'i' => $this->query,
-                ])->json();
-
             case "season":
                 $response = Http::get('https://www.omdbapi.com', [
                     'apikey' => config('services.apikey.omdb'),
@@ -67,6 +61,12 @@ class Request
                 };
 
                 return $response;
+
+                case "movie_details":
+                return Http::get("https://www.omdbapi.com", [
+                    'apikey' => config('services.apikey.omdb'),
+                    'i' => $this->query,
+                ])->json();
 
             case "anime":
                 return Http::get("https://api.jikan.moe/v3/search/anime", [

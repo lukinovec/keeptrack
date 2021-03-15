@@ -16,7 +16,7 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('searchtype');
-            $table->string('apiID')->unique;
+            $table->string('apiID')->unique();
             $table->text('image', 200);
             $table->text('name', 100);
             $table->string('type');

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Classes\Request;
-use App\Classes\ItemHandler;
 use App\Classes\ItemBlueprint;
 use App\Classes\UserItemBlueprint;
 use Illuminate\Database\Eloquent\Model;

@@ -10,38 +10,13 @@ class Library extends Component
 {
     protected $library = [];
     protected $library_original = [];
-    protected $type;
-    public $favorite_only = false;
     public $toUpdate;
-    public $ratingDesc = true;
-    public $nameAsc = true;
-
-    // Form Validation
-    protected $rules = [
-        'toUpdate.user_progress.episode' => 'nullable|integer',
-        'toUpdate.user_progress.pages_read' => 'nullable|integer'
-    ];
-
-    // Validation Error Messages
-    protected $messages = [
-        'toUpdate.user_progress.episode.integer' => "Episode must be a number",
-        'toUpdate.user_progress.pages_read.integer' => "Page must be a number",
-    ];
 
     public function mount()
     {
         $this->library = $this->getUserLibrary();
         $this->library_original = $this->library;
     }
-
-    // public function sortBy(string $criteria, string $direction)
-    // {
-    //     $sortBy = [
-    //         "asc" => "sortBy",
-    //         "desc" => "sortByDesc"
-    //     ];
-    //     $this->library = $this->getUserLibrary()->{$sortBy[$direction]}($criteria);
-    // }
 
     public function getUserLibrary()
     {

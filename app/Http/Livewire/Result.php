@@ -12,7 +12,6 @@ class Result extends Component
     public $result;
     public $searchtype;
     public $resultStatus;
-    public $message = "";
     public $statuses = [];
 
     /**
@@ -48,11 +47,15 @@ class Result extends Component
             $this->result["status"] = "none";
             UserItem::updateDetails(json_decode(collect($this->result)->toJson()));
             $this->resultStatus = "none";
-            $this->emit("changing-status", "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>", "success");
+            $this->emit("changing-status",
+            "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>",
+            "success");
         } else {
             // Update status
             Item::handleUpdate($this->result, $status);
-            $this->emit("changing-status", "<span>Item status updated. See it in <a class='underline' href='/library'>your library</a></span>", "success");
+            $this->emit("changing-status",
+            "<span>Item status updated. See it in <a class='underline' href='/library'>your library</a></span>",
+            "success");
         }
     }
 

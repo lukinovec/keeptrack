@@ -8,12 +8,11 @@ use Livewire\Component;
 
 class Register extends Component
 {
-    public $email = "";
-    public $password = "";
-    public $password_confirmation = "";
+    public string $email = "";
+    public string $password = "";
+    public string $password_confirmation = "";
     public $confirmed;
-    public $newUser;
-    public $getUserByEmail;
+    public User $newUser;
 
     protected $rules = [
         'email' => 'required|email:rfc,dns|unique:users,email',

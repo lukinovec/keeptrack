@@ -36,11 +36,16 @@ class Search
         return $this->format($this->searchtype, $request);
     }
 
+    public function getStatusByApiId($apiID) {
+        $statuses = Auth::user()->items->map(function ($item) {
+            return ["apiID" => $item->item_id, "status" => $item->status];
+        });
+        return $statuses->firstWhere("apiID", $apiID)["status"] ?? "";
+    }
 
     /**
      * Pro rozšíření backendu aplikace je třeba upravit tento soubor, Request.php a database/seeders/StatusSeeder.php
-     * Pokud rozšíření ještě potřebuje další úpravy, například nastavení postupu, nebo získávání sérií, rozšiřte soubor app/models/Item.php
-     *
+     * Pokud rozšíření ještě potřebuje další úpravy, například nastavení postupu, nebo získávání sérií, rozšiřte třídy ItemBlueprint a UserItemBlueprint
      * Pro rozšíření frontendu aplikace je třeba upravit soubor resources/views/livewire/search/result.blade.php - sekce @if($searchtype == ...)
      * Pokud rozšíření obsahuje položku user_progress,
      * je třeba upravit soubor resources/views/components/progress-component.blade.php
@@ -55,23 +60,13 @@ class Search
      */
     public function format($type, $response)
     {
-        $statuses = Auth::user()->items->map(function ($item) {
-            return ["apiID" => $item->item_id, "status" => $item->status];
-        });
-
         switch ($type) {
             case 'movie':
-                // Nejprve zkontrolujeme, jestli data odpovědi existují
                 if ($response["Response"] !== "True") {
                     return false;
                 }
-                /**
-                 * Potom formátujeme odpověď do podoby, kterou lze zobrazit na stránce.
-                 * Všechny položky, na které je pole mapováno, jsou povinné pro každé API.
-                 * Doporučuji kopírovat celý case a měnit jen 1) kontrolu existence dat a 2) přiřazené hodnoty v "return [...]"
-                 */
 
-                return collect($response["Search"])->map(function ($item) use ($statuses) {
+                return collect($response["Search"])->map(function ($item) {
                     return [
                         "id" => $item["imdbID"],
                         "searchtype" => "movie",
@@ -79,7 +74,7 @@ class Search
                         "year" => $item["Year"],
                         "type" => $item["Type"],
                         "image" => preg_replace('/_.*.jpg/', 'SX385', $item["Poster"]),
-                        "status" => $statuses->firstWhere("apiID", $item["imdbID"])["status"] ?? ""
+                        "status" => $this->getStatusByApiId($item["imdbID"])
                     ];
                 });
 
@@ -98,7 +93,7 @@ class Search
                     $response = [$response];
                 }
 
-                return collect($response)->map(function ($item) use ($statuses) {
+                return collect($response)->map(function ($item) {
                     return collect([
                         "id" => is_object($item->best_book->id) ? $item->best_book->id->{"0"} : $item->best_book->id,
                         "searchtype" => "book",
@@ -106,7 +101,7 @@ class Search
                         "year" => is_object($item->original_publication_year) ? $item->original_publication_year->{"0"} ?? null : $item->original_publication_year ?? null,
                         "type" => "book",
                         "image" => preg_replace('/._.*_/', '._SY385_', $item->best_book->image_url),
-                        "status" => $statuses->firstWhere("apiID", $item->best_book->id)["status"] ?? ""
+                        "status" => $this->getStatusByApiId($item->best_book->id)
                     ]);
                 })->whereNotNull("year");
 
@@ -115,7 +110,7 @@ class Search
                     return false;
                 }
 
-                return collect($response)->map(function ($item) use ($statuses) {
+                return collect($response)->map(function ($item) {
                     return [
                         "id" => $item["mal_id"],
                         "searchtype" => "anime",
@@ -124,7 +119,7 @@ class Search
                         "type" => $item["type"],
                         "image" => $item["image_url"],
                         "progress" => ["episodes" => $item["episodes"]],
-                        "status" => $statuses->firstWhere("apiID", $item["mal_id"])["status"] ?? ""
+                        "status" => $this->getStatusByApiId($item["mal_id"])
                     ];
                 });
 

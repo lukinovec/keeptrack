@@ -45,7 +45,8 @@
             <span class="flex-1">
                 <span class="flex items-center space-x-1">
                     <label class="pr-1" for="episodes">Episode</label>
-                    <input min="0" :max="item.progress.episodes" id="episodes" name="episodes" class="w-12 bg-black bg-opacity-25 border-b-2"
+                    <input min="0" :max="item.progress.episodes" id="episodes" name="episodes"
+                     class="w-12 bg-black bg-opacity-25 border-b-2"
                     x-model.number="item.user_progress.episode" type="number">
                     /
                     <span

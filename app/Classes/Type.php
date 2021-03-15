@@ -25,7 +25,8 @@ class Type {
         $this->completed = "Completed";
         $this->restrict_type = "";
         $this->plural = $this->type . "s";
-        $this->image = file_exists(public_path("images/" . $this->type . ".svg")) ? "images/" . $this->type . ".svg" : "images/default-image.svg";
+        $this->image = file_exists(public_path("images/" . $this->type . ".svg")) ?
+        "images/" . $this->type . ".svg" : "images/default-image.svg";
     }
 
     public static function new($type) {

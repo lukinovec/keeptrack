@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Auth;
 
 class Login extends Component
 {
-    public $email = "";
-    public $password = "";
+    public string $email = "";
+    public string $password = "";
     public $error;
 
     public function login()
     {
-        // dd(Hash::make($password))
         if (Auth::attempt(["email" => $this->email, "password" => $this->password])) {
             // Authentication passed...
             return redirect()->intended("home");
         }
-        $this->error = "Invalid credentials. If you don't have an account, click the register button.";
+        $this->error = "Invalid credentials. If you don't have an account, click the 'Don't have an account?' button.";
     }
 
     public function forgotPassword()

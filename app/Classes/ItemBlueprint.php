@@ -2,7 +2,7 @@
 namespace App\Classes;
 
 use App\Models\Item;
-
+// rozšiřitelnost
 class ItemBlueprint extends Abstract\AbstractItem {
     public function __construct($item) {
         $this->apiID = $item["id"];
@@ -31,11 +31,12 @@ class ItemBlueprint extends Abstract\AbstractItem {
                 case 'book':
                     $this->image = preg_replace('/._.*_/', '._SY385_', $this->image);
                     break;
-
-                case 'anime':
-                    $this->progress = ["episodes" => $this->progress["episodes"]];
-                    break;
-
+                /** Můžete přidat další case pro rozšíření,
+                 *  například
+                 *  case 'anime':
+                 *     $this->progress = ["episodes" => $this->progress["episodes"]];
+                 *     break;
+                 */
                 default:
                     break;
         }

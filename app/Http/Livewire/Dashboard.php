@@ -4,27 +4,22 @@ namespace App\Http\Livewire;
 
 use App\Classes\Search;
 use Livewire\Component;
+use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
-
 
 class Dashboard extends Component
 {
-    public $clicked = "";
-    public $searching = false;
-    public String $search = "";
-    public String $searchtype = "movie";
+    public bool $searching = false;
+    public string $search = "";
+    public string $searchtype = "movie";
     public $searchResponse = false;
-    public $minYear = null;
-    public $maxYear = null;
     public $authUser;
-    public $status;
-    public $noResultsMessage = "";
+    public Status $status;
+    public string $noResultsMessage = "";
 
     protected $listeners = ["changing-status" => "onStatusChange"];
-    /**
-     *
-     */
-    public function mount(\App\Models\Status $status)
+
+    public function mount(Status $status)
     {
         $this->authUser = Auth::id() ?: "Not logged in.";
         $this->status = $status;

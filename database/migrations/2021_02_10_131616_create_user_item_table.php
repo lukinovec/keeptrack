@@ -15,10 +15,11 @@ class CreateUserItemTable extends Migration
     {
         Schema::create('user_item', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('item_id');
-            $table->string('type');
+            $table->foreign('item_id')->references('apiID')->on('items');
             $table->string('searchtype');
+            $table->foreign('searchtype')->references('type')->on('statuses');
             $table->text('status');
             $table->text('note')->nullable();
             $table->integer('rating')->nullable();
