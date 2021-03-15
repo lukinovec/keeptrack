@@ -8,7 +8,7 @@
             </span>
          </span>
     @if (session()->has("message"))
-    <div class="auth-error">
+    <div class="text-sm auth-error">
         {!! session("message") !!}
     </div>
     @endif

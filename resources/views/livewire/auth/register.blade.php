@@ -18,7 +18,7 @@
     @if ($errors)
     <div class="auth-error">
         @foreach ($errors->all() as $message)
-        {{$message}}
+        {{ $message }}
         @endforeach
     </div>
     @endif
