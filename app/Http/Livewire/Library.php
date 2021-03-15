@@ -28,7 +28,6 @@ class Library extends Component
     {
         $item["id"] = $item["apiID"];
         $this->toUpdate = $item;
-        $this->validate();
 
         UserItem::updateDetails($item);
 
