@@ -17,7 +17,7 @@
                         Search
                     </a>
 
-                    <a title="Link to your library" x-show="'{{ Auth::check() }}'" href="/library" :class='{"border-b-2 border-blueGray-300": currentRoute === "library"}'>
+                    <a title="Link to your library" x-show="'{{ Auth::check() }}'" href="/library/{{ Auth::id() }}" :class='{"border-b-2 border-blueGray-300": currentRoute === "library"}'>
                         <livewire:library-link />
                     </a>
                 </div>

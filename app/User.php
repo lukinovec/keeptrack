@@ -48,21 +48,27 @@ class User extends Authenticatable
         return $this->hasMany(UserItem::class);
     }
 
+    public function hasPublicLibrary()
+    {
+        return true;
+    }
+
     // Use with '()'
+
     /**
      * @param Integer $count  How many results do you want
      * @return Collection All movies with statuses where the user ID is the current logged users ID
      */
-
     public function getItems($count = 0)
     {
-        $result = $this->items->sortByDesc("updated_at")->sortByDesc("is_favorite")->map(function ($result) {
+        $result = $this->items->sortByDesc('updated_at')->sortByDesc('is_favorite')->map(function ($result) {
             return collect($result)->merge($result->item);
         });
 
         if ($count != 0) {
-            return $result->sortByDesc("updated_at")->sortByDesc("is_favorite")->slice(0, $count);
+            return $result->sortByDesc('updated_at')->sortByDesc('is_favorite')->slice(0, $count);
         }
+
         return $result;
     }
 }

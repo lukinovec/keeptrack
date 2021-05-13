@@ -5,9 +5,12 @@
         {{-- Edit --}}
         <x-edit-component />
 
+        @if ($editable)
         {{-- Remove button --}}
         <x-remove-button />
+        @endif
 
-        <x-item-footer />
+        <x-item-footer :editable='$editable' />
+
     </div>
 </div>

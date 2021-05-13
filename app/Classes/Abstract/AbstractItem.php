@@ -1,21 +1,11 @@
 <?php
+
 namespace App\Classes\Abstract;
 
-abstract class AbstractItem {
-    /**
-     * @var string $apiID
-     * @var array $progress
-     * @var string $searchtype
-     * @var string $image
-     * @var string $name
-     * @var string $type
-     * @var string $year
-     *
-     * @method __construct() $item
-     * @method create()
-     * @method prepare()
-     */
+use App\Models\Item;
 
+abstract class AbstractItem
+{
     public string $apiID;
     public array $progress;
     public string $searchtype;
@@ -24,7 +14,21 @@ abstract class AbstractItem {
     public string $type;
     public string $year;
 
-    public abstract function __construct($item);
-    public abstract function create();
-    public abstract function prepare();
+    public function __construct($item)
+    {
+        $this->apiID = $item['id'];
+        $this->progress = array_key_exists('progress', (array) $item) ? $item['progress'] : [];
+        $this->searchtype = $item['searchtype'];
+        $this->image = $item['image'];
+        $this->name = $item['title'];
+        $this->type = $item['type'];
+        $this->year = $item['year'];
+    }
+
+    public function create()
+    {
+        Item::create((array) $this);
+    }
+
+    abstract public function prepare();
 }

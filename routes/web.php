@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Login;
 use App\Http\Livewire\Register;
 use App\Http\Livewire\Welcome;
 use App\Http\Livewire\Library;
 use App\Http\Livewire\ForgotPassword;
 use App\Http\Livewire\ResetPassword;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,18 +19,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/", Welcome::class)->name("welcome");
+Route::get('/', Welcome::class)->name('welcome');
 
-// Nepříhlášení uživatelé budou přesměrování na login
-Route::middleware(["auth", "cors"])->group(function () {
-    Route::get("/home", Dashboard::class)->name("home");
-    Route::get("/library", Library::class)->name("library");
+// Nepřihlášení uživatelé budou přesměrování na login
+Route::middleware(['auth', 'cors'])->group(function () {
+    Route::get('/home', Dashboard::class)->name('home');
+    Route::get('/library', Library::class)->name('library');
+    Route::get('/library/{library_owner}', Library::class)
+    ->middleware('is_library_public')->name('library');
 });
 
-
-// Příhlášení uživatelé budou přesměrování na home
-Route::middleware(["guest"])->group(function () {
-    Route::get("/register", Register::class)->name("register");
-    Route::get("/forgot-password", ForgotPassword::class)->name("forgot-password");
+// Přihlášení uživatelé budou přesměrování na home
+Route::middleware(['guest'])->group(function () {
+    Route::get('/register', Register::class)->name('register');
+    Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
     Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });

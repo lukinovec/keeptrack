@@ -18,12 +18,12 @@ class Item extends Model
 
     public function users()
     {
-        return $this->hasMany(UserItem::class, "item_id");
+        return $this->hasMany(UserItem::class, 'item_id');
     }
 
     public function statuses()
     {
-        return $this->belongsTo(Status::class, "searchtype", "type");
+        return $this->belongsTo(Status::class, 'searchtype', 'type');
     }
 
     /**
@@ -34,7 +34,7 @@ class Item extends Model
      */
     public static function handleUpdate($item, string $status): void
     {
-        if (!Item::find($item["id"])) {
+        if (!Item::find($item['id'])) {
             (new ItemBlueprint($item))->prepare()->create();
         }
 

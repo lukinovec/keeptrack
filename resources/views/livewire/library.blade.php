@@ -139,7 +139,7 @@
                         }
                     }
                 }' class="flex justify-center w-full p-5 my-10 lg:w-1/2 xl:w-1/3" :key="item.item_id">
-            <x-library-item />
+            <x-library-item :editable='$user_is_owner' />
         </div>
         </template>
         @endforeach

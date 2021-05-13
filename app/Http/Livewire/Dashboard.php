@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Auth;
 class Dashboard extends Component
 {
     public bool $searching = false;
-    public string $search = "";
-    public string $searchtype = "movie";
+    public string $search = '';
+    public string $searchtype = 'movie';
     public $searchResponse = false;
     public $authUser;
     public Status $status;
-    public string $noResultsMessage = "";
+    public string $noResultsMessage = '';
 
-    protected $listeners = ["changing-status" => "onStatusChange"];
+    protected $listeners = ['changing-status' => 'onStatusChange'];
 
     public function mount(Status $status)
     {
-        $this->authUser = Auth::id() ?: "Not logged in.";
+        $this->authUser = Auth::id() ?: 'Not logged in.';
         $this->status = $status;
     }
 
@@ -32,12 +32,12 @@ class Dashboard extends Component
 
     public function getStatusPlural(string $status_name)
     {
-        return $this->status->where("type", $status_name)->first()->plural;
+        return $this->status->where('type', $status_name)->first()->plural;
     }
 
     public function getRestrictedType()
     {
-        return $this->status->where("type", $this->searchtype)->first()->restrict_type;
+        return $this->status->where('type', $this->searchtype)->first()->restrict_type;
     }
 
     /**
@@ -47,15 +47,15 @@ class Dashboard extends Component
     {
         $this->reset('searchResponse');
         if (strlen(trim($this->search)) > 2) {
-            $this->searchResponse = Search::start($this->searchtype, trim($this->search))->makeRequest();
-            $this->noResultsMessage = $this->searchResponse === false ? "No results found" : "";
+            $this->searchResponse = Search::start($this->searchtype, trim($this->search))->make();
+            $this->noResultsMessage = $this->searchResponse === false ? 'No results found' : '';
             $this->searching = false;
         } else {
             $this->searchResponse = false;
         }
     }
 
-    public function onStatusChange($message, $type = "info")
+    public function onStatusChange($message, $type = 'info')
     {
         flash($message)->{$type}()->livewire($this);
     }
@@ -65,18 +65,18 @@ class Dashboard extends Component
      */
     public function updated($updated_property)
     {
-        if ($updated_property == "search" || $updated_property == "searchtype" && !$this->searching) {
+        if ($updated_property == 'search' || $updated_property == 'searchtype' && !$this->searching) {
             $this->startSearching();
         }
     }
 
     public function render()
     {
-        return view("livewire.dashboard", [
-            "searchResponse" => $this->searchResponse,
-            "authUser" => $this->authUser,
+        return view('livewire.dashboard', [
+            'searchResponse' => $this->searchResponse,
+            'authUser' => $this->authUser,
         ])
-            ->extends("app")
-            ->section("content");
+            ->extends('app')
+            ->section('content');
     }
 }

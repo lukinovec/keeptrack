@@ -22,13 +22,12 @@ class Result extends Component
      * @param array|object $item   prop - výsledek vyhledávání
      * @param String $searchtype   prop - typ vyhledávané položky (film nebo kniha)
      */
-
     public function mount($result, String $searchtype, Status $status): void
     {
         $this->result = $result;
         $this->searchtype = $searchtype;
-        $this->resultStatus = $result["status"];
-        $this->statuses = $status->where("type", $searchtype)->firstOrFail();
+        $this->resultStatus = $result['status'];
+        $this->statuses = $status->where('type', $searchtype)->firstOrFail();
     }
 
     /**
@@ -39,28 +38,31 @@ class Result extends Component
      * @param String $status parametr funkce automaticky obdrží po změně proměnné resultStatus a obsahuje změnu
      * @return void
      */
-
     public function updatedResultStatus(String $status): void
     {
         // Delete item from user's library
-        if ($status === "none") {
-            $this->result["status"] = "none";
+        if ($status === 'none') {
+            $this->result['status'] = 'none';
             UserItem::updateDetails(json_decode(collect($this->result)->toJson()));
-            $this->resultStatus = "none";
-            $this->emit("changing-status",
-            "<span>Item deleted from <a class='underline' href='/library'>your library</a></span>",
-            "success");
+            $this->resultStatus = 'none';
+            $this->emit(
+                'changing-status',
+                "<span>Item deleted from <a class='underline' href='/library/" . auth()->id() . "'>your library</a></span>",
+                'success'
+            );
         } else {
             // Update status
             Item::handleUpdate($this->result, $status);
-            $this->emit("changing-status",
-            "<span>Item status updated. See it in <a class='underline' href='/library'>your library</a></span>",
-            "success");
+            $this->emit(
+                'changing-status',
+                "<span>Item status updated. See it in <a class='underline' href='/library/" . auth()->id() . "'>your library</a></span>",
+                'success'
+            );
         }
     }
 
     public function render()
     {
-        return view('livewire.search.result', ["result" => $this->result]);
+        return view('livewire.search.result', ['result' => $this->result]);
     }
 }
