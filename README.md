@@ -5,5 +5,6 @@
 <br><br>
 
 <ul>
-    <li>Made with TALL Stack - Laravel + Livewire backend with TailwindCSS + AlpineJS frontend</li>
+    <li>Stack: TailwindCSS, AlpineJS, Laravel, Livewire</li>
+    <li>Results are fetched from different APIs (Goodreads API, OMDb API)</li>
 </ul>
